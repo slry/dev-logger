@@ -1,6 +1,7 @@
-import { dirname } from "path";
-import { fileURLToPath } from "url";
-import { FlatCompat } from "@eslint/eslintrc";
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
+
+import { FlatCompat } from '@eslint/eslintrc';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -10,7 +11,41 @@ const compat = new FlatCompat({
 });
 
 const eslintConfig = [
-  ...compat.extends("next/core-web-vitals", "next/typescript"),
+  ...compat.extends('next/core-web-vitals', 'next/typescript'),
+  {
+    rules: {
+      'import/order': [
+        'error',
+        {
+          pathGroups: [
+            {
+              pattern: '@/app/**',
+              group: 'internal',
+            },
+            {
+              pattern: '@/views/**',
+              group: 'internal',
+            },
+            {
+              pattern: '@/widgets/**',
+              group: 'internal',
+            },
+            {
+              pattern: '@/features/**',
+              group: 'internal',
+            },
+            {
+              pattern: '@/shared/**',
+              group: 'internal',
+            },
+          ],
+          groups: ['builtin', 'external', 'internal', ['parent', 'sibling', 'index']],
+          'newlines-between': 'always',
+          alphabetize: { order: 'asc', caseInsensitive: true },
+        },
+      ],
+    },
+  },
 ];
 
 export default eslintConfig;
