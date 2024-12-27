@@ -1,0 +1,19 @@
+---
+
+services:
+  next-app:
+    container_name: next-app
+    build:
+      dockerfile: prod.Dockerfile
+      args:
+        NEXT_PUBLIC_SUPABASE_URL: ${SUPABASE_URL}
+        NEXT_PUBLIC_SUPABASE_ANON_KEY: ${NEXT_PUBLIC_ENV_VARIABLE}
+    restart: always
+    ports:
+      - 3000:3000
+    networks:
+      - dev_network
+
+networks:
+  dev_network:
+    external: true
