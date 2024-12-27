@@ -16,26 +16,57 @@ import {
 } from '@/shared/shadcn/ui/form';
 import { Input } from '@/shared/shadcn/ui/input';
 
-import { login } from '../../api';
-import { loginSchema, LoginSchema } from '../../model';
+import { signup } from '../../api';
+import { signupSchema, SignupSchema } from '../../model';
 
-export const LoginForm = () => {
-  const form = useForm<LoginSchema>({
-    resolver: zodResolver(loginSchema),
+export const SignupForm = () => {
+  const form = useForm<SignupSchema>({
+    resolver: zodResolver(signupSchema),
     defaultValues: {
+      name: '',
+      surname: '',
       email: '',
       password: '',
     },
   });
 
-  const submit = form.handleSubmit(login);
+  const submit = form.handleSubmit(signup);
   return (
     <Form {...form}>
       <form
         onSubmit={submit}
         className="flex w-[500px] flex-col gap-5 rounded-xl border p-10 shadow"
       >
-        <h1 className="text-2xl">Login to your account</h1>
+        <h1 className="text-2xl">Sign up to your account</h1>
+        <div className="flex w-full gap-4">
+          <FormField
+            control={form.control}
+            name="name"
+            render={({ field }) => (
+              <FormItem className="w-full">
+                <FormLabel>Name</FormLabel>
+                <FormControl>
+                  <Input placeholder="Enter name" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="surname"
+            render={({ field }) => (
+              <FormItem className="w-full">
+                <FormLabel>Surname</FormLabel>
+                <FormControl>
+                  <Input placeholder="Enter surname" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+
         <FormField
           control={form.control}
           name="email"
@@ -68,10 +99,9 @@ export const LoginForm = () => {
           Login
         </Button>
         <div className="flex justify-center gap-4">
-          <span>Don&apos;t have an account?</span>
-          <Link href="/signup" className="flex items-center gap-2">
-            <span>Sign up</span>
-            <ArrowRight className="h-4 w-4" />
+          <span>Already have an account?</span>
+          <Link href="/login" className="flex items-center gap-2">
+            Login <ArrowRight className="h-4 w-4" />
           </Link>
         </div>
       </form>

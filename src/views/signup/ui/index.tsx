@@ -1,9 +1,9 @@
-import { LoginForm } from './login-form';
+import { SignupForm } from './signup-form';
 
-export const LoginPage = async () => {
+export const SignupPage = () => {
   return (
     <main className="flex h-screen w-screen items-center justify-center">
-      <LoginForm />
+      <SignupForm />
     </main>
   );
 };
