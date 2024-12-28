@@ -3,6 +3,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 
 import { Button } from '@/shared/shadcn/ui/button';
@@ -20,6 +21,7 @@ import { signup } from '../../api';
 import { signupSchema, SignupSchema } from '../../model';
 
 export const SignupForm = () => {
+  const router = useRouter();
   const form = useForm<SignupSchema>({
     resolver: zodResolver(signupSchema),
     defaultValues: {
@@ -30,7 +32,20 @@ export const SignupForm = () => {
     },
   });
 
-  const submit = form.handleSubmit(signup);
+  const submit = form.handleSubmit(async (data) => {
+    const response = await signup(data);
+
+    if (response.type === 'success') {
+      form.clearErrors();
+      router.push('/');
+    } else {
+      form.setError('email', {
+        type: 'manual',
+        message: response.message,
+      });
+    }
+  });
+
   return (
     <Form {...form}>
       <form
@@ -96,7 +111,7 @@ export const SignupForm = () => {
         />
 
         <Button name="login" type="submit">
-          Login
+          Sign up
         </Button>
         <div className="flex justify-center gap-4">
           <span>Already have an account?</span>

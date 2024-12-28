@@ -4,7 +4,12 @@ import { createClient } from '@/shared/api/supabase/server';
 
 import { signupSchema, SignupSchema } from '../model';
 
-export async function signup(data: SignupSchema) {
+interface SingupResponse {
+  type: 'success' | 'error';
+  message: string;
+}
+
+export async function signup(data: SignupSchema): Promise<SingupResponse> {
   const supabase = await createClient();
 
   const { email, password, name, surname } = signupSchema.parse(data);

@@ -3,6 +3,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 
 import { Button } from '@/shared/shadcn/ui/button';
@@ -20,6 +21,7 @@ import { login } from '../../api';
 import { loginSchema, LoginSchema } from '../../model';
 
 export const LoginForm = () => {
+  const router = useRouter();
   const form = useForm<LoginSchema>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -28,7 +30,19 @@ export const LoginForm = () => {
     },
   });
 
-  const submit = form.handleSubmit(login);
+  const submit = form.handleSubmit(async (data) => {
+    const response = await login(data);
+    if (response.type === 'success') {
+      form.clearErrors();
+      router.push('/');
+    } else {
+      form.setError('email', {
+        type: 'manual',
+        message: response.message,
+      });
+    }
+  });
+
   return (
     <Form {...form}>
       <form
