@@ -4,12 +4,12 @@ import tailwindAnimate from 'tailwindcss-animate';
 export default {
   darkMode: ['class'],
   content: [
-    './src/shared/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/entities/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/features/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/widgets/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/views/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/app/**/*.{js,ts,jsx,tsx,mdx}',
+    'src/shared/**/*.{js,ts,jsx,tsx,mdx}',
+    'src/entities/**/*.{js,ts,jsx,tsx,mdx}',
+    'src/features/**/*.{js,ts,jsx,tsx,mdx}',
+    'src/widgets/**/*.{js,ts,jsx,tsx,mdx}',
+    'src/views/**/*.{js,ts,jsx,tsx,mdx}',
+    'src/app/**/*.{js,ts,jsx,tsx,mdx,css}',
   ],
   theme: {
     extend: {
