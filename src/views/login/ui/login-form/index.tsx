@@ -1,6 +1,7 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useQueryClient } from '@tanstack/react-query';
 import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -22,6 +23,7 @@ import { loginSchema, LoginSchema } from '../../model';
 
 export const LoginForm = () => {
   const router = useRouter();
+  const queryClient = useQueryClient();
   const form = useForm<LoginSchema>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -33,6 +35,7 @@ export const LoginForm = () => {
   const submit = form.handleSubmit(async (data) => {
     const response = await login(data);
     if (response.type === 'success') {
+      queryClient.invalidateQueries({ queryKey: ['user'] });
       form.clearErrors();
       router.push('/');
     } else {
