@@ -5,6 +5,7 @@ import { TeamSwitcher } from '@/shared/shadcn/components/team-switcher';
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
@@ -12,6 +13,7 @@ import {
 } from '@/shared/shadcn/ui/sidebar';
 
 import { menuItems, mockTeams } from '../model';
+import { SidebarFooterUser } from './footer-user';
 
 export const AppSidebar = () => {
   return (
@@ -33,6 +35,9 @@ export const AppSidebar = () => {
           ))}
         </SidebarMenu>
       </SidebarContent>
+      <SidebarFooter>
+        <SidebarFooterUser />
+      </SidebarFooter>
     </Sidebar>
   );
 };
