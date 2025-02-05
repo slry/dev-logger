@@ -2,6 +2,9 @@ import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 
 import './globals.css';
+import { AuthProvider } from '@/shared/providers/auth-context';
+
+import { ReactQueryClientProvider } from './query-provider';
 import { ThemeProvider } from './theme-provider';
 
 const geistSans = Geist({
@@ -25,19 +28,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} bg-background antialiased`}
-      >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
+    <ReactQueryClientProvider>
+      <html lang="en" suppressHydrationWarning>
+        <body
+          className={`${geistSans.variable} ${geistMono.variable} bg-background antialiased`}
         >
-          {children}
-        </ThemeProvider>
-      </body>
-    </html>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <AuthProvider>{children}</AuthProvider>
+          </ThemeProvider>
+        </body>
+      </html>
+    </ReactQueryClientProvider>
   );
 }
