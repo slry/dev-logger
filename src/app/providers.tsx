@@ -5,8 +5,7 @@
 import { isServer, QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import { AuthProvider } from '@/shared/providers/auth-context';
-
-import { ThemeProvider } from './theme-provider';
+import { ThemeProvider } from '@/shared/providers/theme-provider';
 
 function makeQueryClient() {
   return new QueryClient({
