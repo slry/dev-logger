@@ -1,3 +1,3 @@
-export default function ApiSettings() {
-  return <div></div>;
-}
+import { ApiSettingsPage } from '@/views/api-settings/ui';
+
+export default ApiSettingsPage;
