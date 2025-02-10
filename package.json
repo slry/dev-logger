@@ -7,7 +7,11 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "supabase:start": "npx supabase start",
+    "supabase:gen": "npx supabase gen types typescript --local > src/shared/api/supabase/types/index.d.ts",
+    "supabase:stop": "npx supabase stop",
+    "supabase:migrate": "scripts/migrate.sh"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",
