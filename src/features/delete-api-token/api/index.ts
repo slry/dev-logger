@@ -12,7 +12,7 @@ export const deleteAPIToken = async (id: number) => {
   const userId = authData.user.id;
 
   const { error } = await supabase
-    .from('extenstion_api_keys')
+    .from('api_tokens')
     .delete()
     .eq('user_id', userId)
     .eq('id', id);

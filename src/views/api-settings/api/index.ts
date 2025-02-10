@@ -15,7 +15,7 @@ export const getAPITokensList = async () => {
   const userId = authData.user.id;
 
   const { data: tokensData, error: tokensError } = await supabase
-    .from('extenstion_api_keys')
+    .from('api_tokens')
     .select('id,name,key')
     .eq('user_id', userId);
 

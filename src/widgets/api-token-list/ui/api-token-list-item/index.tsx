@@ -7,8 +7,8 @@ export const APITokenListItem: FC<APITokenItem> = ({ id, name, partialKey }) => 
   return (
     <div className="flex w-full items-center justify-between border-b p-2 last:border-b-0">
       <div className="flex w-full items-center gap-4">
-        <span className="w-52 truncate">{name}</span>
-        <span>
+        <span className="w-52 truncate text-sm">{name}</span>
+        <span className="text-sm">
           {partialKey}
           &bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;
         </span>

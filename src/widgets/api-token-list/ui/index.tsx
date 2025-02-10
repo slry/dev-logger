@@ -11,7 +11,7 @@ export const APITokenList = () => {
     queryFn: getAPITokensList,
   });
 
-  if (isLoading || error) return null;
+  if (isLoading || !data || error) return null;
   return (
     <div className="flex max-w-[800px] flex-col gap-1 rounded-lg border">
       {data?.map((d) => <APITokenListItem key={d.id} {...d} />)}
