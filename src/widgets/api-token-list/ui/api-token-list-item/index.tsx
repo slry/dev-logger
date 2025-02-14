@@ -5,15 +5,17 @@ import { DeleteApiTokenButton } from '@/features/delete-api-token/ui';
 
 export const APITokenListItem: FC<APITokenItem> = ({ id, name, partialKey }) => {
   return (
-    <div className="flex w-full items-center justify-between border-b p-2 last:border-b-0">
-      <div className="flex w-full items-center gap-4">
-        <span className="w-52 truncate text-sm">{name}</span>
-        <span className="text-sm">
-          {partialKey}
-          &bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;
-        </span>
-      </div>
-      <DeleteApiTokenButton tokenId={id} />
-    </div>
+    <tr className="w-full border-b last:border-b-0">
+      <td className="max-w-[200px] truncate p-2">{name}</td>
+      <td className="p-2">
+        <div className="flex gap-1 text-sm">
+          <span>{partialKey}</span>
+          <span className="select-none blurred-text">g4-bkf3-324k-fovm3-b4vmf594</span>
+        </div>
+      </td>
+      <td className="p-2">
+        <DeleteApiTokenButton tokenId={id} />
+      </td>
+    </tr>
   );
 };

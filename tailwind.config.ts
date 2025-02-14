@@ -1,4 +1,5 @@
 import type { Config } from 'tailwindcss';
+import plugin from 'tailwindcss/plugin';
 import tailwindAnimate from 'tailwindcss-animate';
 
 export default {
@@ -72,5 +73,19 @@ export default {
       },
     },
   },
-  plugins: [tailwindAnimate],
+  plugins: [
+    tailwindAnimate,
+    plugin(({ addUtilities }) => {
+      addUtilities({
+        '.blurred-text': {
+          textShadow: '0 0 10px black',
+          color: 'transparent',
+        },
+        '.dark .blurred-text': {
+          textShadow: '0 0 10px white',
+          color: 'transparent',
+        },
+      });
+    }),
+  ],
 } satisfies Config;
