@@ -25,6 +25,12 @@ export const APITokenList = () => {
         {data && data.length > 0 && (
           <div className="rounded-lg border">
             <table className="max-w-[800px] table-fixed border-collapse border-spacing-4">
+              <thead>
+                <tr className="w-full border-b">
+                  <th className="p-4 text-start">Name</th>
+                  <th className="p-4 text-start">Key</th>
+                </tr>
+              </thead>
               <tbody>
                 {data.map((d) => (
                   <APITokenListItem key={d.id} {...d} />
