@@ -1,11 +1,11 @@
 'use client';
 import { useQueryClient } from '@tanstack/react-query';
 import { Trash } from 'lucide-react';
-import { FC } from 'react';
+import { FC, useState } from 'react';
 
+import { useLoadingHandleClick } from '@/shared/hooks/useLoadingHandleClick';
 import {
   AlertDialog,
-  AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
@@ -27,17 +27,19 @@ export const DeleteApiTokenButton: FC<DeleteApiTokenButtonProps> = ({
   tokenName,
   tokenId,
 }) => {
+  const [open, setOpen] = useState(false);
   const queryClient = useQueryClient();
 
-  const handleDelete = async () => {
+  const { loading, handleClick } = useLoadingHandleClick(async () => {
     await deleteAPIToken(tokenId);
     await queryClient.invalidateQueries({
       queryKey: ['api-tokens-list'],
     });
-  };
+    setOpen(false);
+  });
 
   return (
-    <AlertDialog>
+    <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger
         title="Delete"
         className="flex h-8 w-8 items-center justify-center"
@@ -60,11 +62,9 @@ export const DeleteApiTokenButton: FC<DeleteApiTokenButtonProps> = ({
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
 
-          <AlertDialogAction asChild>
-            <Button variant="red" onClick={handleDelete}>
-              Delete
-            </Button>
-          </AlertDialogAction>
+          <Button variant="red" loading={loading} onClick={handleClick}>
+            Delete
+          </Button>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

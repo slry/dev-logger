@@ -2,9 +2,12 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useQueryClient } from '@tanstack/react-query';
-import { FC, PropsWithChildren } from 'react';
+import { FC, PropsWithChildren, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
+import { useLoadingHandleClick } from '@/shared/hooks/useLoadingHandleClick';
+import { Button } from '@/shared/shadcn/ui/button';
+import { CopyField } from '@/shared/shadcn/ui/copy-field';
 import {
   Form,
   FormControl,
@@ -28,6 +31,7 @@ import { createAPITokenSchema, CreateAPITokenSchema } from '../../model';
 import { expiresAt } from '../../utils/expiresAt';
 
 export const CreateAPITokenForm: FC<PropsWithChildren> = ({ children }) => {
+  const [newKey, setNewKey] = useState<string | null>(null);
   const queryClient = useQueryClient();
   const form = useForm<CreateAPITokenSchema>({
     resolver: zodResolver(createAPITokenSchema),
@@ -37,16 +41,31 @@ export const CreateAPITokenForm: FC<PropsWithChildren> = ({ children }) => {
     },
   });
 
-  const submit = form.handleSubmit(async (data) => {
-    await createAPIToken(data);
-    await queryClient.invalidateQueries({
-      queryKey: ['api-tokens-list'],
-    });
-  });
+  const { loading, handleClick } = useLoadingHandleClick(
+    async (data: CreateAPITokenSchema) => {
+      const newKey = await createAPIToken(data);
+      await queryClient.invalidateQueries({
+        queryKey: ['api-tokens-list'],
+      });
+
+      setNewKey(newKey);
+    },
+  );
+
+  const submit = form.handleSubmit(handleClick);
+
+  if (newKey) {
+    return (
+      <div className="flex flex-col gap-4">
+        <CopyField value={newKey} />
+        <div className="flex justify-end">{children}</div>
+      </div>
+    );
+  }
 
   return (
     <Form {...form}>
-      <form onSubmit={submit}>
+      <form className="flex flex-col gap-2" onSubmit={submit}>
         <FormField
           control={form.control}
           name="name"
@@ -84,13 +103,17 @@ export const CreateAPITokenForm: FC<PropsWithChildren> = ({ children }) => {
                 </SelectContent>
               </Select>
               <FormDescription>
-                This token will expire after {expiresAt(Number(field.value))}.
+                This token will expire after {expiresAt(Number(field.value))}
               </FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
-        <div>{children}</div>
+        <div className="flex justify-end">
+          <Button loading={loading} variant="green" type="submit">
+            Generate API Token
+          </Button>
+        </div>
       </form>
     </Form>
   );

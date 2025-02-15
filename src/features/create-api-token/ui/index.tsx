@@ -27,9 +27,7 @@ export const CreateAPIToken = () => {
         </DialogHeader>
         <CreateAPITokenForm>
           <DialogClose asChild>
-            <Button variant="green" type="submit">
-              Generate API Token
-            </Button>
+            <Button>Close</Button>
           </DialogClose>
         </CreateAPITokenForm>
       </DialogContent>
