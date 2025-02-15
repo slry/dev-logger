@@ -36,18 +36,21 @@ export type Database = {
     Tables: {
       api_tokens: {
         Row: {
+          expires_at: string;
           id: number;
           key: string;
           name: string;
           user_id: string;
         };
         Insert: {
+          expires_at?: string;
           id?: number;
           key?: string;
           name?: string;
           user_id: string;
         };
         Update: {
+          expires_at?: string;
           id?: number;
           key?: string;
           name?: string;
