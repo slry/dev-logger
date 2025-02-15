@@ -1,6 +1,6 @@
 import { KeyRound } from 'lucide-react';
 
-import { CreateApiTokenButton } from '@/features/create-api-token/ui';
+import { CreateAPIToken } from '@/features/create-api-token/ui';
 
 export const APITokenListEmpty = () => {
   return (
@@ -10,7 +10,7 @@ export const APITokenListEmpty = () => {
       <p className="text-md font-medium text-gray-400">
         Need a token for extension? Create a new API Token to connect with account.
       </p>
-      <CreateApiTokenButton />
+      <CreateAPIToken />
     </section>
   );
 };
