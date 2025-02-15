@@ -1,24 +1,38 @@
-'use client';
-
-import { useQueryClient } from '@tanstack/react-query';
+import { DialogTitle } from '@radix-ui/react-dialog';
 
 import { Button } from '@/shared/shadcn/ui/button';
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTrigger,
+} from '@/shared/shadcn/ui/dialog';
 
-import { createAPIToken } from '../api';
+import { CreateAPITokenForm } from './create-api-token-form';
 
-export const CreateApiTokenButton = () => {
-  const queryClient = useQueryClient();
-
-  const handleCreate = async () => {
-    await createAPIToken();
-    await queryClient.invalidateQueries({
-      queryKey: ['api-tokens-list'],
-    });
-  };
-
+export const CreateAPIToken = () => {
   return (
-    <Button variant="green" onClick={handleCreate}>
-      Create New Token
-    </Button>
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button variant="green">Create API Token</Button>
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Generate New API Token</DialogTitle>
+          <DialogDescription className="hidden">
+            This form generates new API Token
+          </DialogDescription>
+        </DialogHeader>
+        <CreateAPITokenForm>
+          <DialogClose asChild>
+            <Button variant="green" type="submit">
+              Generate API Token
+            </Button>
+          </DialogClose>
+        </CreateAPITokenForm>
+      </DialogContent>
+    </Dialog>
   );
 };
