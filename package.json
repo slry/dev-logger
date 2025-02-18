@@ -50,6 +50,8 @@
     "eslint": "^9",
     "eslint-config-next": "15.1.2",
     "husky": ">=7",
+    "jsrsasign": "^11.1.0",
+    "jsrsasign-util": "^1.0.5",
     "lint-staged": ">=10",
     "postcss": "^8",
     "prettier": "^3.4.2",
