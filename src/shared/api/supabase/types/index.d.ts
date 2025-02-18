@@ -58,6 +58,27 @@ export type Database = {
         };
         Relationships: [];
       };
+      developer_total_loc: {
+        Row: {
+          filename: string;
+          loc_added: number | null;
+          loc_removed: number | null;
+          user_id: string;
+        };
+        Insert: {
+          filename?: string;
+          loc_added?: number | null;
+          loc_removed?: number | null;
+          user_id: string;
+        };
+        Update: {
+          filename?: string;
+          loc_added?: number | null;
+          loc_removed?: number | null;
+          user_id?: string;
+        };
+        Relationships: [];
+      };
     };
     Views: {
       [_ in never]: never;
