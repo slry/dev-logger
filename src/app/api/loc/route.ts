@@ -3,6 +3,7 @@ import { z } from 'zod';
 
 import { createClient } from '@/shared/api/supabase/next';
 import { validateToken } from '@/shared/api/validate-token';
+import { parseBody } from '@/shared/lib/parseBody';
 
 const changeSchema = z.object({
   file: z.string(),
@@ -14,15 +15,6 @@ const bodySchema = z.object({
   changes: changeSchema.array(),
   timestamp: z.string(),
 });
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-async function streamToString(stream: any) {
-  const chunks = [];
-  for await (const chunk of stream) {
-    chunks.push(chunk);
-  }
-  return Buffer.concat(chunks).toString('utf8');
-}
 
 export async function POST(req: NextRequest) {
   const { searchParams } = new URL(req.url);
@@ -39,19 +31,11 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(error, { status: 400 });
   }
 
-  if (!req.body) {
-    return NextResponse.json('Missing body', { status: 400 });
+  const { data: body, error: bodyError } = await parseBody(req, bodySchema);
+
+  if (bodyError || !body) {
+    return NextResponse.json(bodyError, { status: 400 });
   }
-
-  const bodyString = await streamToString(req.body);
-
-  const bodyParsed = bodySchema.safeParse(JSON.parse(bodyString));
-
-  if (!bodyParsed.success) {
-    return NextResponse.json('Invalid body', { status: 400 });
-  }
-
-  const body = bodyParsed.data;
 
   const supabase = await createClient();
 
@@ -79,5 +63,10 @@ export async function POST(req: NextRequest) {
     }
   });
 
-  return NextResponse.json('ok');
+  return NextResponse.json(
+    {
+      success: true,
+    },
+    { status: 200 },
+  );
 }
