@@ -58,6 +58,27 @@ export type Database = {
         };
         Relationships: [];
       };
+      developer_loc_per_day: {
+        Row: {
+          datetime: string;
+          id: number;
+          loc: number;
+          user_id: string;
+        };
+        Insert: {
+          datetime?: string;
+          id?: number;
+          loc?: number;
+          user_id: string;
+        };
+        Update: {
+          datetime?: string;
+          id?: number;
+          loc?: number;
+          user_id?: string;
+        };
+        Relationships: [];
+      };
       developer_total_loc: {
         Row: {
           filename: string;

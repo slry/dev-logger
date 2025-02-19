@@ -16,3 +16,5 @@ export async function createClient() {
     },
   );
 }
+
+export type NextSupabaseClient = Awaited<ReturnType<typeof createClient>>;
