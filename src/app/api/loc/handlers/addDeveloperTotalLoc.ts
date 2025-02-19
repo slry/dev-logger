@@ -1,6 +1,6 @@
 import { NextSupabaseClient } from '@/shared/api/supabase/next';
 
-import { ChangeSchema } from './model';
+import { ChangeSchema } from '../model';
 
 interface AddDeveloperTotalLocParams {
   supabaseClient: NextSupabaseClient;

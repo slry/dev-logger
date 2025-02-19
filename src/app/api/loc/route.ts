@@ -4,7 +4,8 @@ import { createClient } from '@/shared/api/supabase/next';
 import { validateToken } from '@/shared/api/validate-token';
 import { parseBody } from '@/shared/lib/parseBody';
 
-import { addDeveloperTotalLoc } from './addDeveloperTotalLoc';
+import { addDeveloperLocPerDay } from './handlers/addDeveloperLocPerDay';
+import { addDeveloperTotalLoc } from './handlers/addDeveloperTotalLoc';
 import { bodySchema } from './model';
 
 export async function POST(req: NextRequest) {
@@ -33,6 +34,13 @@ export async function POST(req: NextRequest) {
   await addDeveloperTotalLoc({
     supabaseClient: supabase,
     changes: body.changes,
+    userId,
+  });
+
+  await addDeveloperLocPerDay({
+    supabaseClient: supabase,
+    changes: body.changes,
+    timestamp: body.timestamp,
     userId,
   });
 

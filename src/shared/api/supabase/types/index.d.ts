@@ -61,20 +61,20 @@ export type Database = {
       developer_loc_per_day: {
         Row: {
           datetime: string;
-          id: number;
-          loc: number;
+          loc_added: number;
+          loc_removed: number;
           user_id: string;
         };
         Insert: {
           datetime?: string;
-          id?: number;
-          loc?: number;
+          loc_added?: number;
+          loc_removed?: number;
           user_id: string;
         };
         Update: {
           datetime?: string;
-          id?: number;
-          loc?: number;
+          loc_added?: number;
+          loc_removed?: number;
           user_id?: string;
         };
         Relationships: [];
