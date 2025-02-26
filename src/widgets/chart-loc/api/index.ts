@@ -13,8 +13,6 @@ export const getLocAddedRemovedPerDay = async () => {
     return [];
   }
 
-  console.log(data, error);
-
   return data.map(snakeToCamelCase).map((item) => ({
     ...item,
     datetime: new Date(item.datetime).toLocaleDateString('en-US', {

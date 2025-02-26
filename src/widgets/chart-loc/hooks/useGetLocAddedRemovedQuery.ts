@@ -1,16 +1,13 @@
+'use client';
 import { RealtimePostgresChangesPayload } from '@supabase/supabase-js';
-import { queryOptions, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useCallback } from 'react';
 
 import { useRealtime } from '@/shared/hooks/useRealtime';
 
-import { getLocAddedRemovedPerDay } from '../api';
-import { LocPerDayDTOSchema, locPerDaySchema, LocPerDaySchema } from '../model';
+import { developerLocPerDayQueryOptions } from '../api/queryKeys';
+import { LocPerDayDTOSchema, locPerDaySchema } from '../model';
 
-const developerLocPerDayQueryOptions = queryOptions<LocPerDaySchema[]>({
-  queryKey: ['developer_loc_per_day'],
-  queryFn: getLocAddedRemovedPerDay,
-});
 export const useGetLocAddedRemovedQuery = () => {
   const queryClient = useQueryClient();
 
