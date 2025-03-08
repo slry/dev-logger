@@ -6,14 +6,21 @@ import {
 } from '@tanstack/react-query';
 import { ComponentProps, FC } from 'react';
 
-export const withHydrationBoundary = <T, P extends object>(
+export const withHydrationBoundary = <
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  T extends FetchQueryOptions<any>,
+  P extends object,
+>(
   Component: FC<P>,
-  queryOptions: FetchQueryOptions<T>,
+  queryOptions: T[],
 ) => {
   const queryClient = new QueryClient();
 
   const WithHydrationBoundary: FC<ComponentProps<typeof Component>> = async (props) => {
-    await queryClient.prefetchQuery(queryOptions);
+    const promises = queryOptions.map((qo) => queryClient.prefetchQuery(qo));
+
+    await Promise.all(promises);
+
     return (
       <HydrationBoundary state={dehydrate(queryClient)}>
         <Component {...props} />
