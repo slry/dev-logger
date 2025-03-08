@@ -106,20 +106,20 @@ export type Database = {
       developer_total_loc: {
         Row: {
           filename: string;
-          loc_added: number | null;
-          loc_removed: number | null;
+          loc_added: number;
+          loc_removed: number;
           user_id: string;
         };
         Insert: {
           filename?: string;
-          loc_added?: number | null;
-          loc_removed?: number | null;
+          loc_added?: number;
+          loc_removed?: number;
           user_id: string;
         };
         Update: {
           filename?: string;
-          loc_added?: number | null;
-          loc_removed?: number | null;
+          loc_added?: number;
+          loc_removed?: number;
           user_id?: string;
         };
         Relationships: [];
