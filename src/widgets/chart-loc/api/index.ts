@@ -1,7 +1,8 @@
 'use server';
 
 import { createClient } from '@/shared/api/supabase/server';
-import { snakeToCamelCase } from '@/shared/lib/snakeToCamelCase';
+
+import { locPerDaySchema } from '../model';
 
 export const getLocAddedRemovedPerDay = async () => {
   const supabase = await createClient();
@@ -16,11 +17,5 @@ export const getLocAddedRemovedPerDay = async () => {
     return [];
   }
 
-  return data.map(snakeToCamelCase).map((item) => ({
-    ...item,
-    datetime: new Date(item.datetime).toLocaleDateString('en-US', {
-      month: 'short',
-      day: 'numeric',
-    }),
-  }));
+  return locPerDaySchema.array().parse(data);
 };

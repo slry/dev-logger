@@ -15,7 +15,7 @@ import {
   ChartTooltipContent,
 } from '@/shared/shadcn/ui/chart';
 
-import { useGetLocAddedRemovedQuery } from '../hooks/useGetLocAddedRemovedQuery';
+import { useGetLocPerFileQuery } from '../hooks/useGetLocPerFileQuery';
 
 const chartConfig = {
   locAdded: {
@@ -28,24 +28,24 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-export const ChartLOC = () => {
-  const { data } = useGetLocAddedRemovedQuery();
+export const ChartFileLOC = () => {
+  const { data } = useGetLocPerFileQuery();
 
   if (!data) {
     return null;
   }
 
   return (
-    <Card className="w-[400px]">
+    <Card className="w-full">
       <CardHeader>
-        <CardTitle>LOC Per Day Chart</CardTitle>
-        <CardDescription>Lines of code added and removed per day</CardDescription>
+        <CardTitle>LOC Per File Chart</CardTitle>
+        <CardDescription>Lines of code added and removed per file</CardDescription>
       </CardHeader>
       <CardContent>
-        <ChartContainer config={chartConfig} className="min-h-[200px]">
+        <ChartContainer config={chartConfig} className="h-[200px] w-full">
           <BarChart accessibilityLayer data={data} reverseStackOrder>
             <CartesianGrid vertical={false} />
-            <XAxis dataKey="datetime" tickLine={false} tickMargin={10} axisLine={false} />
+            <XAxis dataKey="filename" tickLine={false} tickMargin={10} axisLine={false} />
             <Bar
               dataKey="locAdded"
               fill="var(--color-locAdded)"
