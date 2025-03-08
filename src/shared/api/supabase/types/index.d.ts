@@ -58,6 +58,30 @@ export type Database = {
         };
         Relationships: [];
       };
+      developer_file_operations: {
+        Row: {
+          filename: string;
+          id: number;
+          operation: Database['public']['Enums']['file_operation'];
+          timestamp: string;
+          user_id: string;
+        };
+        Insert: {
+          filename?: string;
+          id?: number;
+          operation: Database['public']['Enums']['file_operation'];
+          timestamp: string;
+          user_id: string;
+        };
+        Update: {
+          filename?: string;
+          id?: number;
+          operation?: Database['public']['Enums']['file_operation'];
+          timestamp?: string;
+          user_id?: string;
+        };
+        Relationships: [];
+      };
       developer_loc_per_day: {
         Row: {
           datetime: string;
@@ -108,7 +132,7 @@ export type Database = {
       [_ in never]: never;
     };
     Enums: {
-      [_ in never]: never;
+      file_operation: 'DELETE' | 'CREATE';
     };
     CompositeTypes: {
       [_ in never]: never;
