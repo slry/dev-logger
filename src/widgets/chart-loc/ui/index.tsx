@@ -36,13 +36,13 @@ export const ChartLOC = () => {
   }
 
   return (
-    <Card className="w-[400px]">
+    <Card>
       <CardHeader>
         <CardTitle>LOC Per Day Chart</CardTitle>
         <CardDescription>Lines of code added and removed per day</CardDescription>
       </CardHeader>
       <CardContent>
-        <ChartContainer config={chartConfig} className="min-h-[200px]">
+        <ChartContainer config={chartConfig} className="h-[200px] w-full">
           <BarChart accessibilityLayer data={data} reverseStackOrder>
             <CartesianGrid vertical={false} />
             <XAxis dataKey="datetime" tickLine={false} tickMargin={10} axisLine={false} />

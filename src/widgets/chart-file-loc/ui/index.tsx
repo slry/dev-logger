@@ -36,7 +36,7 @@ export const ChartFileLOC = () => {
   }
 
   return (
-    <Card className="w-full">
+    <Card>
       <CardHeader>
         <CardTitle>LOC Per File Chart</CardTitle>
         <CardDescription>Lines of code added and removed per file</CardDescription>
