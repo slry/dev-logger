@@ -132,7 +132,7 @@ export type Database = {
       [_ in never]: never;
     };
     Enums: {
-      file_operation: 'DELETE' | 'CREATE';
+      file_operation: 'DELETE' | 'CREATE' | 'EDIT';
     };
     CompositeTypes: {
       [_ in never]: never;
