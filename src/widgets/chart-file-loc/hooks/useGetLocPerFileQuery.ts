@@ -41,7 +41,7 @@ export const useGetLocPerFileQuery = () => {
 
   useRealtime<LocPerFileDTOSchema>({
     channel: 'loc-per-file-channel',
-    table: 'developer_loc_per_day',
+    table: 'developer_total_loc',
     onPostgresChanges: mutateLocPerFile,
   });
 
