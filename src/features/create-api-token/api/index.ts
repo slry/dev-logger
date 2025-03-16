@@ -4,7 +4,7 @@ import { getUserId } from '@/shared/api/get-user-id';
 import { createClient } from '@/shared/api/supabase/server';
 
 import { CreateAPITokenSchema } from '../model';
-import { expiresAt } from '../utils/expiresAt';
+import { expiresAtISO } from '../utils/expiresAtISO';
 
 export const createAPIToken = async (data: CreateAPITokenSchema) => {
   const supabase = await createClient();
@@ -16,7 +16,7 @@ export const createAPIToken = async (data: CreateAPITokenSchema) => {
     .insert({
       user_id: userId,
       name: data.name,
-      expires_at: expiresAt(Number(data.expiration)),
+      expires_at: expiresAtISO(Number(data.expiration)),
     })
     .select('key');
 

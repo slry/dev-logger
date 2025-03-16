@@ -28,7 +28,7 @@ import {
 
 import { createAPIToken } from '../../api';
 import { createAPITokenSchema, CreateAPITokenSchema } from '../../model';
-import { expiresAt } from '../../utils/expiresAt';
+import { expiresAtLocale } from '../../utils/expiresAtLocale';
 
 export const CreateAPITokenForm: FC<PropsWithChildren> = ({ children }) => {
   const [newKey, setNewKey] = useState<string | null>(null);
@@ -103,7 +103,7 @@ export const CreateAPITokenForm: FC<PropsWithChildren> = ({ children }) => {
                 </SelectContent>
               </Select>
               <FormDescription>
-                This token will expire after {expiresAt(Number(field.value))}
+                This token will expire after {expiresAtLocale(Number(field.value))}
               </FormDescription>
               <FormMessage />
             </FormItem>
