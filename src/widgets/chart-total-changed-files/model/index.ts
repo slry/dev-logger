@@ -6,10 +6,9 @@ import { Expect, IsSameType } from '@/shared/test/types';
 
 export const fileOperationsDTOSchema = z.object({
   user_id: z.string(),
-  id: z.number(),
   timestamp: z.string(),
   filename: z.string(),
-  operation: z.union([z.literal('CREATE'), z.literal('DELETE')]),
+  operation: z.union([z.literal('CREATE'), z.literal('DELETE'), z.literal('EDIT')]),
 });
 
 export const fileOperationsSchema = fileOperationsDTOSchema.transform(snakeToCamelCase);

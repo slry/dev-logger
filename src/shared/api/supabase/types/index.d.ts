@@ -61,21 +61,18 @@ export type Database = {
       developer_file_operations: {
         Row: {
           filename: string;
-          id: number;
           operation: Database['public']['Enums']['file_operation'];
           timestamp: string;
           user_id: string;
         };
         Insert: {
           filename?: string;
-          id?: number;
           operation: Database['public']['Enums']['file_operation'];
           timestamp: string;
           user_id: string;
         };
         Update: {
           filename?: string;
-          id?: number;
           operation?: Database['public']['Enums']['file_operation'];
           timestamp?: string;
           user_id?: string;

@@ -26,6 +26,10 @@ const chartConfig = {
     label: 'Files Deleted',
     color: '#60a5fa',
   },
+  EDIT: {
+    label: 'Files Edited',
+    color: '#93c5fd',
+  },
   filesChanged: {
     label: 'Files Changed',
   },
