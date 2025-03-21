@@ -53,7 +53,7 @@ export const ChartFileLOC = () => {
               stackId="a"
             />
             <Bar dataKey="locRemoved" fill="var(--color-locRemoved)" stackId="a" />
-            <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
+            <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
           </BarChart>
         </ChartContainer>
       </CardContent>
