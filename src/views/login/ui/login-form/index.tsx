@@ -40,7 +40,12 @@ export const LoginForm = () => {
       router.push('/');
     } else {
       form.setError('email', {
-        type: 'manual',
+        type: 'server',
+        message: response.message,
+      });
+
+      form.setError('password', {
+        type: 'server',
         message: response.message,
       });
     }
@@ -56,13 +61,13 @@ export const LoginForm = () => {
         <FormField
           control={form.control}
           name="email"
-          render={({ field }) => (
+          render={({ field, fieldState: { error } }) => (
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
                 <Input placeholder="Enter email" {...field} />
               </FormControl>
-              <FormMessage />
+              <FormMessage>{error?.message}</FormMessage>
             </FormItem>
           )}
         />
@@ -70,13 +75,13 @@ export const LoginForm = () => {
         <FormField
           control={form.control}
           name="password"
-          render={({ field }) => (
+          render={({ field, fieldState: { error } }) => (
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormControl>
                 <Input type="password" placeholder="Enter password" {...field} />
               </FormControl>
-              <FormMessage />
+              <FormMessage>{error?.message}</FormMessage>
             </FormItem>
           )}
         />
