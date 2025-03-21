@@ -10,6 +10,8 @@ import { developerLocPerDayQueryOptions } from '@/widgets/chart-loc/api/queryKey
 import { ChartLOC } from '@/widgets/chart-loc/ui';
 import { developerFileOperationsQueryOptions } from '@/widgets/chart-total-changed-files/api/queryKeys';
 import { ChartTotalChangedFiles } from '@/widgets/chart-total-changed-files/ui';
+import { developerTotalLocQueryOptions } from '@/widgets/chart-total-loc/api/queryKeys';
+import { ChartTotalLOC } from '@/widgets/chart-total-loc/ui';
 
 export const DashboardPage = withHydrationBoundary(() => {
   return (
@@ -33,8 +35,8 @@ export const DashboardPage = withHydrationBoundary(() => {
 
         <ResizableHandle className="w-4 bg-transparent" />
 
-        <ResizablePanel defaultSize={50} minSize={25}>
-          <ChartTotalChangedFiles />
+        <ResizablePanel defaultSize={50} minSize={30}>
+          <ChartTotalLOC />
         </ResizablePanel>
       </ResizablePanelGroup>
     </div>
@@ -43,4 +45,5 @@ export const DashboardPage = withHydrationBoundary(() => {
   developerLocPerDayQueryOptions,
   developerLocPerFileQueryOptions,
   developerFileOperationsQueryOptions,
+  developerTotalLocQueryOptions,
 ]);
