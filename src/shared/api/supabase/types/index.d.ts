@@ -100,6 +100,24 @@ export type Database = {
         };
         Relationships: [];
       };
+      developer_time_spent_per_day: {
+        Row: {
+          date: string;
+          time_spent: number;
+          user_id: string;
+        };
+        Insert: {
+          date: string;
+          time_spent: number;
+          user_id: string;
+        };
+        Update: {
+          date?: string;
+          time_spent?: number;
+          user_id?: string;
+        };
+        Relationships: [];
+      };
       developer_total_loc: {
         Row: {
           filename: string;
