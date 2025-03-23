@@ -40,7 +40,7 @@ export const SignupForm = () => {
       router.push('/');
     } else {
       form.setError('email', {
-        type: 'manual',
+        type: 'server',
         message: response.message,
       });
     }
