@@ -8,6 +8,8 @@ import { developerLocPerFileQueryOptions } from '@/widgets/chart-file-loc/api/qu
 import { ChartFileLOC } from '@/widgets/chart-file-loc/ui';
 import { developerLocPerDayQueryOptions } from '@/widgets/chart-loc/api/queryKeys';
 import { ChartLOC } from '@/widgets/chart-loc/ui';
+import { developerTimeSpentPerDayQueryOptions } from '@/widgets/chart-time/api/queryKeys';
+import { ChartTimeSpentPerDay } from '@/widgets/chart-time/ui';
 import { developerFileOperationsQueryOptions } from '@/widgets/chart-total-changed-files/api/queryKeys';
 import { ChartTotalChangedFiles } from '@/widgets/chart-total-changed-files/ui';
 import { developerTotalLocQueryOptions } from '@/widgets/chart-total-loc/api/queryKeys';
@@ -39,6 +41,8 @@ export const DashboardPage = withHydrationBoundary(() => {
           <ChartTotalLOC />
         </ResizablePanel>
       </ResizablePanelGroup>
+
+      <ChartTimeSpentPerDay />
     </div>
   );
 }, [
@@ -46,4 +50,5 @@ export const DashboardPage = withHydrationBoundary(() => {
   developerLocPerFileQueryOptions,
   developerFileOperationsQueryOptions,
   developerTotalLocQueryOptions,
+  developerTimeSpentPerDayQueryOptions,
 ]);
