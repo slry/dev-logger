@@ -1,6 +1,7 @@
 import { z } from 'zod';
 
 import { Database } from '@/shared/api/supabase/types';
+import { parseChartDate } from '@/shared/lib/parseChartDate';
 import { snakeToCamelCase } from '@/shared/lib/snakeToCamelCase';
 import { Expect, IsSameType } from '@/shared/test/types';
 
@@ -15,10 +16,7 @@ export const locPerDaySchema = locPerDayDTOSchema
   .transform(snakeToCamelCase)
   .transform((data) => ({
     ...data,
-    datetime: new Date(data.datetime).toLocaleString('en-US', {
-      month: 'short',
-      day: 'numeric',
-    }),
+    datetime: parseChartDate(data.datetime),
   }));
 
 export type LocPerDaySchema = z.infer<typeof locPerDaySchema>;
