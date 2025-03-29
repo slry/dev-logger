@@ -1,3 +1,3 @@
-export default function Integrations() {
-  return <div></div>;
-}
+import { IntegrationsPage } from '@/views/integrations/ui';
+
+export default IntegrationsPage;
