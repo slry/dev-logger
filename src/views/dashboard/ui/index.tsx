@@ -19,26 +19,26 @@ export const DashboardPage = withHydrationBoundary(() => {
   return (
     <div className="w-full space-y-4 px-4">
       <ResizablePanelGroup direction="horizontal">
-        <ResizablePanel defaultSize={50} minSize={25}>
+        <ResizablePanel defaultSize={70} minSize={30}>
           <ChartLOC />
         </ResizablePanel>
 
         <ResizableHandle className="w-4 bg-transparent" />
 
-        <ResizablePanel defaultSize={50} minSize={25}>
-          <ChartFileLOC />
+        <ResizablePanel defaultSize={30} minSize={30}>
+          <ChartTotalLOC />
         </ResizablePanel>
       </ResizablePanelGroup>
 
       <ResizablePanelGroup direction="horizontal">
-        <ResizablePanel defaultSize={50} minSize={25}>
+        <ResizablePanel defaultSize={30} minSize={30}>
           <ChartTotalChangedFiles />
         </ResizablePanel>
 
         <ResizableHandle className="w-4 bg-transparent" />
 
-        <ResizablePanel defaultSize={50} minSize={30}>
-          <ChartTotalLOC />
+        <ResizablePanel defaultSize={70} minSize={30}>
+          <ChartFileLOC />
         </ResizablePanel>
       </ResizablePanelGroup>
 

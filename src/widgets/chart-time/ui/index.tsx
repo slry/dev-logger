@@ -1,6 +1,6 @@
 'use client';
 
-import { Area, AreaChart, CartesianGrid, XAxis } from 'recharts';
+import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from 'recharts';
 
 import {
   Card,
@@ -42,9 +42,22 @@ export const ChartTimeSpentPerDay = () => {
       <CardContent>
         <ChartContainer config={chartConfig} className="h-[200px] w-full">
           <AreaChart accessibilityLayer data={data}>
+            <defs>
+              <linearGradient id="fillDesktop" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="var(--color-timeSpent)" stopOpacity={1.0} />
+                <stop offset="95%" stopColor="var(--color-timeSpent)" stopOpacity={0.1} />
+              </linearGradient>
+            </defs>
             <CartesianGrid vertical={false} />
             <XAxis dataKey="date" tickLine={false} tickMargin={10} axisLine={false} />
-            <Area dataKey="timeSpent" fill="var(--color-timeSpent)" />
+            <YAxis
+              dataKey="timeSpent"
+              tickLine={false}
+              tickMargin={10}
+              axisLine={false}
+              tickFormatter={(value) => parseMsToTime(value as number)}
+            />
+            <Area type="monotone" dataKey="timeSpent" fill="url(#fillDesktop)" />
             <ChartTooltip
               cursor={false}
               content={
