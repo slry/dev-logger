@@ -139,6 +139,24 @@ export type Database = {
         };
         Relationships: [];
       };
+      integration_tokens: {
+        Row: {
+          provider: Database['public']['Enums']['integration_provider'];
+          token: string | null;
+          user_id: string;
+        };
+        Insert: {
+          provider: Database['public']['Enums']['integration_provider'];
+          token?: string | null;
+          user_id: string;
+        };
+        Update: {
+          provider?: Database['public']['Enums']['integration_provider'];
+          token?: string | null;
+          user_id?: string;
+        };
+        Relationships: [];
+      };
     };
     Views: {
       [_ in never]: never;
@@ -148,6 +166,7 @@ export type Database = {
     };
     Enums: {
       file_operation: 'DELETE' | 'CREATE' | 'EDIT';
+      integration_provider: 'TAIGA' | 'GITLAB';
     };
     CompositeTypes: {
       [_ in never]: never;
