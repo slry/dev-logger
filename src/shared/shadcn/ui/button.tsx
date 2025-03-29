@@ -37,6 +37,25 @@ const buttonVariants = cva(
   },
 );
 
+const loaderVariants = cva('', {
+  variants: {
+    variant: {
+      default: 'loader dark:loader-dark',
+      destructive: 'loader dark:loader-dark',
+      outline: 'loader loader-dark dark:loader',
+      secondary: 'loader loader-dark',
+      ghost: 'loader',
+      link: 'loader',
+      'muted-red': 'loader',
+      red: 'loader',
+      green: 'loader',
+    },
+  },
+  defaultVariants: {
+    variant: 'default',
+  },
+});
+
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
@@ -58,7 +77,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         {...props}
       >
         {children}
-        {loading && <div className="loader" />}
+        {loading && <div className={loaderVariants({ variant, className })} />}
       </Comp>
     );
   },

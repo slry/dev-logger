@@ -106,6 +106,10 @@ body {
     animation: prixClipFix 2s linear infinite;
   }
 
+  .loader-dark::before {
+    border: 1.5px solid #000;
+  }
+
   @keyframes rotate {
     100% {
       transform: rotate(360deg);

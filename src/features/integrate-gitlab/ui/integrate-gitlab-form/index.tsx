@@ -40,7 +40,7 @@ export const IntegrateGitlabForm = () => {
             </FormItem>
           )}
         />
-        <Button loading={form.formState.isSubmitting} type="submit">
+        <Button variant="outline" loading={form.formState.isSubmitting} type="submit">
           Integrate
         </Button>
       </form>
