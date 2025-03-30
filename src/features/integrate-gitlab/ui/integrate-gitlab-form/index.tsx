@@ -1,5 +1,6 @@
 'use client';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useQueryClient } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 
 import { Button } from '@/shared/shadcn/ui/button';
@@ -12,9 +13,12 @@ import {
 } from '@/shared/shadcn/ui/form';
 import { PasswordInput } from '@/shared/shadcn/ui/input';
 
+import { integrateGitlabToken } from '../../api';
+import { isGitlabIntegratedQueryOptions } from '../../api/queryOptions';
 import { integrateGitlabSchema } from '../../model';
 
 export const IntegrateGitlabForm = () => {
+  const queryClient = useQueryClient();
   const form = useForm({
     resolver: zodResolver(integrateGitlabSchema),
     defaultValues: {
@@ -23,8 +27,17 @@ export const IntegrateGitlabForm = () => {
   });
 
   const formSubmit = form.handleSubmit(async (data) => {
-    console.log('data', data);
+    try {
+      await integrateGitlabToken(data.token);
+      queryClient.invalidateQueries(isGitlabIntegratedQueryOptions);
+    } catch {
+      form.setError('root', {
+        type: 'manual',
+        message: 'Invalid token',
+      });
+    }
   });
+
   return (
     <Form {...form}>
       <form onSubmit={formSubmit} className="flex gap-4">
