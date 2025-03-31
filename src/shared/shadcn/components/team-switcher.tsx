@@ -1,8 +1,9 @@
 'use client';
 
-import { ChevronsUpDown, Plus } from 'lucide-react';
+import { ChevronsUpDown } from 'lucide-react';
 import * as React from 'react';
 
+import { CreateTeamDialog } from '@/features/create-team/ui';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -30,11 +31,12 @@ export function TeamSwitcher({
 }) {
   const { isMobile } = useSidebar();
   const [activeTeam, setActiveTeam] = React.useState(teams[0]);
+  const [open, setOpen] = React.useState(false);
 
   return (
     <SidebarMenu>
       <SidebarMenuItem>
-        <DropdownMenu>
+        <DropdownMenu modal={false} open={open} onOpenChange={setOpen}>
           <DropdownMenuTrigger asChild>
             <SidebarMenuButton
               size="lg"
@@ -73,12 +75,7 @@ export function TeamSwitcher({
               </DropdownMenuItem>
             ))}
             <DropdownMenuSeparator />
-            <DropdownMenuItem className="gap-2 p-2">
-              <div className="flex size-6 items-center justify-center rounded-md border bg-background">
-                <Plus className="size-4" />
-              </div>
-              <div className="font-medium text-muted-foreground">Add team</div>
-            </DropdownMenuItem>
+            <CreateTeamDialog />
           </DropdownMenuContent>
         </DropdownMenu>
       </SidebarMenuItem>
