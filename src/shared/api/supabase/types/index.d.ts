@@ -100,6 +100,32 @@ export type Database = {
         };
         Relationships: [];
       };
+      developer_team: {
+        Row: {
+          role: Database['public']['Enums']['team_role'];
+          team_id: string;
+          user_id: string;
+        };
+        Insert: {
+          role?: Database['public']['Enums']['team_role'];
+          team_id: string;
+          user_id: string;
+        };
+        Update: {
+          role?: Database['public']['Enums']['team_role'];
+          team_id?: string;
+          user_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'developer_team_team_id_fkey';
+            columns: ['team_id'];
+            isOneToOne: false;
+            referencedRelation: 'teams';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
       developer_time_spent_per_day: {
         Row: {
           date: string;
@@ -157,6 +183,21 @@ export type Database = {
         };
         Relationships: [];
       };
+      teams: {
+        Row: {
+          id: string;
+          name: string | null;
+        };
+        Insert: {
+          id?: string;
+          name?: string | null;
+        };
+        Update: {
+          id?: string;
+          name?: string | null;
+        };
+        Relationships: [];
+      };
     };
     Views: {
       [_ in never]: never;
@@ -167,6 +208,7 @@ export type Database = {
     Enums: {
       file_operation: 'DELETE' | 'CREATE' | 'EDIT';
       integration_provider: 'TAIGA' | 'GITLAB';
+      team_role: 'OWNER' | 'DEVELOPER';
     };
     CompositeTypes: {
       [_ in never]: never;
