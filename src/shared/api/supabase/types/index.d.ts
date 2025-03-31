@@ -185,14 +185,17 @@ export type Database = {
       };
       teams: {
         Row: {
+          icon: string;
           id: string;
           name: string | null;
         };
         Insert: {
+          icon: string;
           id?: string;
           name?: string | null;
         };
         Update: {
+          icon?: string;
           id?: string;
           name?: string | null;
         };
