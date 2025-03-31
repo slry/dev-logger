@@ -11,17 +11,18 @@ import { IntegrateGitlabRevokeAlertDialog } from '../integrate-gitlab-alert-dial
 
 export const IntegrateGitlabDropdown = () => {
   const [open, setOpen] = useState(false);
+
+  const onComplete = () => {
+    setOpen(false);
+  };
+
   return (
     <DropdownMenu modal={false} open={open} onOpenChange={setOpen}>
       <DropdownMenuTrigger>
-        <EllipsisVerticalIcon className="h-5 w-5" />
+        <EllipsisVerticalIcon width={16} height={16} />
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-        <IntegrateGitlabRevokeAlertDialog
-          onCompelete={() => {
-            setOpen(false);
-          }}
-        />
+        <IntegrateGitlabRevokeAlertDialog onCompelete={onComplete} />
       </DropdownMenuContent>
     </DropdownMenu>
   );
