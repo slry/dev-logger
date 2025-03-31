@@ -1,7 +1,8 @@
 'use server';
 
-import { createGitlabClient } from '@/shared/api/create-gitlab-client';
 import { getUserId } from '@/shared/api/get-user-id';
+import { getGitlabToken } from '@/shared/api/gitlab/get-gitlab-token';
+import { createGitlabClient } from '@/shared/api/gitlab/server';
 import { createClient } from '@/shared/api/supabase/server';
 
 export const validateGitlabToken = async (token: string) => {
@@ -34,14 +35,8 @@ export const revokeGitlabToken = async () => {
 };
 
 export const isGitlabIntegrated = async () => {
-  const supabaseClient = await createClient();
   const userId = await getUserId();
-  const { data } = await supabaseClient
-    .from('integration_tokens')
-    .select('token')
-    .eq('user_id', userId)
-    .eq('provider', 'GITLAB')
-    .single();
+  const token = await getGitlabToken(userId);
 
-  return !!data?.token;
+  return !!token;
 };
