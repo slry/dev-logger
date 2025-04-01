@@ -11,7 +11,8 @@
     "supabase:start": "supabase start",
     "supabase:gen": "supabase gen types typescript --local > src/shared/api/supabase/types/index.d.ts",
     "supabase:stop": "supabase stop",
-    "supabase:migrate": "scripts/migrate.sh"
+    "supabase:migrate": "scripts/migrate.sh",
+    "supabase:pull": "scripts/pull.sh"
   },
   "dependencies": {
     "@gitbeaker/rest": "^42.2.0",
@@ -40,7 +41,7 @@
     "react-hook-form": "^7.54.2",
     "react-resizable-panels": "^2.1.7",
     "recharts": "^2.15.1",
-    "supabase": "2.19.7",
+    "supabase": "2.20.8",
     "tailwind-merge": "^2.6.0",
     "tailwindcss-animate": "^1.0.7",
     "zod": "^3.24.1"
