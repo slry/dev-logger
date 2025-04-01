@@ -1,7 +1,5 @@
-'use client';
 import Link from 'next/link';
 
-import { TeamSwitcher } from '@/shared/shadcn/components/team-switcher';
 import {
   Sidebar,
   SidebarContent,
@@ -12,14 +10,15 @@ import {
   SidebarMenuItem,
 } from '@/shared/shadcn/ui/sidebar';
 
-import { menuItems, mockTeams } from '../model';
+import { menuItems } from '../model';
 import { SidebarFooterUser } from './footer-user';
+import { TeamSwitcher } from './team-switcher';
 
 export const AppSidebar = () => {
   return (
     <Sidebar collapsible="icon">
       <SidebarHeader>
-        <TeamSwitcher teams={mockTeams} />
+        <TeamSwitcher />
       </SidebarHeader>
       <SidebarContent>
         <SidebarMenu>
