@@ -6,7 +6,7 @@ import { Expect, IsSameType } from '@/shared/test/types';
 
 export const teamDTOSchema = z.object({
   id: z.string(),
-  name: z.string().nullable(),
+  name: z.string(),
   icon: z.string(),
 });
 

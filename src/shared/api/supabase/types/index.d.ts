@@ -210,17 +210,17 @@ export type Database = {
         Row: {
           icon: string;
           id: string;
-          name: string | null;
+          name: string;
         };
         Insert: {
           icon: string;
           id?: string;
-          name?: string | null;
+          name: string;
         };
         Update: {
           icon?: string;
           id?: string;
-          name?: string | null;
+          name?: string;
         };
         Relationships: [];
       };

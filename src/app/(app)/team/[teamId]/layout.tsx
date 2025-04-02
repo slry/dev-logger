@@ -14,7 +14,7 @@ export default async function Layout({
     <SidebarProvider>
       <AppSidebar teamId={teamId} />
       <SidebarInset>
-        <HeaderBreadcrumbs />
+        <HeaderBreadcrumbs teamId={teamId} />
         <div>{children}</div>
       </SidebarInset>
     </SidebarProvider>
