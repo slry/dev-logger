@@ -1,12 +1,8 @@
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
-import {
-  ChevronsUpDown,
-  GalleryHorizontalIcon,
-  icons as lucideIcons,
-} from 'lucide-react';
-import { useState } from 'react';
+import { ChevronsUpDown, icons as lucideIcons } from 'lucide-react';
+import { FC, useState } from 'react';
 
 import { TeamItem } from '@/entities/team-item/ui';
 import { CreateTeamDialog } from '@/features/create-team/ui';
@@ -25,21 +21,35 @@ import {
   useSidebar,
 } from '@/shared/shadcn/ui/sidebar';
 
-import { getTeamsListQueryOptions } from '../../api/queryKeys';
+import {
+  getCurrentTeamQueryOptions,
+  getTeamsListQueryOptions,
+} from '../../api/queryKeys';
 
-export const TeamSwitcher = () => {
+interface TeamSwitcherProps {
+  teamId: string;
+}
+
+export const TeamSwitcher: FC<TeamSwitcherProps> = ({ teamId }) => {
   const { isMobile } = useSidebar();
   const [open, setOpen] = useState(false);
 
   const { data: teams } = useQuery(getTeamsListQueryOptions);
+  const { data: currentTeam } = useQuery(getCurrentTeamQueryOptions(teamId));
 
   if (!teams) return null;
+  if (!currentTeam) return null;
 
-  const teamsList = teams.map((team) => ({
-    teamId: team.id,
-    name: team.name || 'No name',
-    Icon: lucideIcons[team.icon as keyof typeof lucideIcons] || lucideIcons['Cat'],
-  }));
+  const teamsList = teams
+    .filter((team) => team.id !== teamId)
+    .map((team) => ({
+      teamId: team.id,
+      name: team.name || 'No name',
+      Icon: lucideIcons[team.icon as keyof typeof lucideIcons] || lucideIcons['Cat'],
+    }));
+
+  const CurrentTeamIcon =
+    lucideIcons[currentTeam.icon as keyof typeof lucideIcons] || lucideIcons['Cat'];
 
   return (
     <SidebarMenu>
@@ -51,10 +61,10 @@ export const TeamSwitcher = () => {
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
               <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
-                <GalleryHorizontalIcon className="size-4" />
+                <CurrentTeamIcon className="size-4" />
               </div>
               <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-semibold">Test</span>
+                <span className="truncate font-semibold">{currentTeam.name}</span>
                 <span className="truncate text-xs">Test 2</span>
               </div>
               <ChevronsUpDown className="ml-auto" />
