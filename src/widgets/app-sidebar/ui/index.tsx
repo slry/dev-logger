@@ -15,7 +15,11 @@ import {
 import { menuItems } from '../model';
 import { SidebarFooterUser } from './footer-user';
 import { TeamSwitcher } from './team-switcher';
-import { getCurrentTeamQueryOptions, getTeamsListQueryOptions } from '../api/queryKeys';
+import {
+  getCurrentTeamQueryOptions,
+  getPersonalTeamIdQueryOptions,
+  getTeamsListQueryOptions,
+} from '../api/queryKeys';
 
 interface AppSidebarProps {
   teamId: string;
@@ -33,7 +37,7 @@ export const AppSidebar = withHydrationBoundary<AppSidebarProps>(
             {menuItems.map((item) => (
               <SidebarMenuItem key={item.name} className="px-2">
                 <SidebarMenuButton asChild>
-                  <Link href={item.url}>
+                  <Link href={`/team/${teamId}${item.url}`}>
                     <item.logo />
                     <span>{item.name}</span>
                   </Link>
@@ -50,6 +54,7 @@ export const AppSidebar = withHydrationBoundary<AppSidebarProps>(
   },
   [
     getTeamsListQueryOptions,
+    getPersonalTeamIdQueryOptions,
     userQueryOptions,
     ({ teamId }) => getCurrentTeamQueryOptions(teamId),
   ],

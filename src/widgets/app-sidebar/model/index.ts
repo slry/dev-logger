@@ -1,29 +1,8 @@
-import {
-  GalleryVerticalEnd,
-  AudioWaveform,
-  Command,
-  LayoutDashboard,
-  Settings,
-  Microchip,
-} from 'lucide-react';
+import { LayoutDashboard, Settings, Microchip } from 'lucide-react';
+import { z } from 'zod';
 
-export const mockTeams = [
-  {
-    name: 'Acme Inc',
-    logo: GalleryVerticalEnd,
-    plan: 'Enterprise',
-  },
-  {
-    name: 'Acme Corp.',
-    logo: AudioWaveform,
-    plan: 'Startup',
-  },
-  {
-    name: 'Evil Corp.',
-    logo: Command,
-    plan: 'Free',
-  },
-];
+import { teamDTOSchema } from '@/entities/team-item/model';
+import { snakeToCamelCase } from '@/shared/lib/snakeToCamelCase';
 
 export const menuItems = [
   {
@@ -42,3 +21,16 @@ export const menuItems = [
     url: '/api-settings',
   },
 ];
+
+export const currentTeamSchema = teamDTOSchema
+  .extend({
+    role: z.enum(['OWNER', 'DEVELOPER']),
+  })
+  .transform(snakeToCamelCase);
+
+export type CurrentTeamSchema = z.infer<typeof currentTeamSchema>;
+
+export const mapTeamRoleLabel = {
+  OWNER: 'Owner',
+  DEVELOPER: 'Developer',
+} satisfies Record<CurrentTeamSchema['role'], string>;

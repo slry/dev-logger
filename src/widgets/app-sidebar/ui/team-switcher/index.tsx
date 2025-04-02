@@ -23,8 +23,10 @@ import {
 
 import {
   getCurrentTeamQueryOptions,
+  getPersonalTeamIdQueryOptions,
   getTeamsListQueryOptions,
 } from '../../api/queryKeys';
+import { mapTeamRoleLabel } from '../../model';
 
 interface TeamSwitcherProps {
   teamId: string;
@@ -35,16 +37,20 @@ export const TeamSwitcher: FC<TeamSwitcherProps> = ({ teamId }) => {
   const [open, setOpen] = useState(false);
 
   const { data: teams } = useQuery(getTeamsListQueryOptions);
+  const { data: personalTeamId } = useQuery(getPersonalTeamIdQueryOptions);
   const { data: currentTeam } = useQuery(getCurrentTeamQueryOptions(teamId));
 
   if (!teams) return null;
   if (!currentTeam) return null;
+  if (!personalTeamId) return null;
 
   const teamsList = teams
     .filter((team) => team.id !== teamId)
+    .filter((team) => (teamId === 'personal' ? team.id !== personalTeamId : true))
     .map((team) => ({
       teamId: team.id,
       name: team.name || 'No name',
+      personal: team.id === personalTeamId,
       Icon: lucideIcons[team.icon as keyof typeof lucideIcons] || lucideIcons['Cat'],
     }));
 
@@ -65,7 +71,9 @@ export const TeamSwitcher: FC<TeamSwitcherProps> = ({ teamId }) => {
               </div>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-semibold">{currentTeam.name}</span>
-                <span className="truncate text-xs">Test 2</span>
+                <span className="truncate text-xs">
+                  {mapTeamRoleLabel[currentTeam.role]}
+                </span>
               </div>
               <ChevronsUpDown className="ml-auto" />
             </SidebarMenuButton>
