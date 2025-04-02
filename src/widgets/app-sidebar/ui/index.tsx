@@ -1,5 +1,7 @@
 import Link from 'next/link';
 
+import { userQueryOptions } from '@/entities/user/model/queryKeys';
+import { withHydrationBoundary } from '@/shared/hocs/withHydrationBoundary';
 import {
   Sidebar,
   SidebarContent,
@@ -13,8 +15,9 @@ import {
 import { menuItems } from '../model';
 import { SidebarFooterUser } from './footer-user';
 import { TeamSwitcher } from './team-switcher';
+import { getTeamsListQueryOptions } from '../api/queryKeys';
 
-export const AppSidebar = () => {
+export const AppSidebar = withHydrationBoundary(() => {
   return (
     <Sidebar collapsible="icon">
       <SidebarHeader>
@@ -39,4 +42,4 @@ export const AppSidebar = () => {
       </SidebarFooter>
     </Sidebar>
   );
-};
+}, [getTeamsListQueryOptions, userQueryOptions]);

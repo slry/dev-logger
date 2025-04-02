@@ -17,6 +17,7 @@ import {
   FormMessage,
 } from '@/shared/shadcn/ui/form';
 import { Input } from '@/shared/shadcn/ui/input';
+import { getTeamsListQueryOptions } from '@/widgets/app-sidebar/api/queryKeys';
 
 import { createTeam } from '../../api';
 import { createTeamSchema, CreateTeamSchema } from '../../model';
@@ -50,9 +51,7 @@ export const CreateTeamForm: FC<CreateTeamFormProps> = ({ onComplete }) => {
     const data = await createTeam(name, RandomIcon.displayName);
 
     if (data) {
-      queryClient.invalidateQueries({
-        queryKey: ['teams-list'],
-      });
+      queryClient.invalidateQueries(getTeamsListQueryOptions);
       onComplete?.();
     }
   });

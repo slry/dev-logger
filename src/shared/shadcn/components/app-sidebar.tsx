@@ -17,7 +17,6 @@ import * as React from 'react';
 import { NavMain } from '@/shared/shadcn/components/nav-main';
 import { NavProjects } from '@/shared/shadcn/components/nav-projects';
 import { NavUser } from '@/shared/shadcn/components/nav-user';
-import { TeamSwitcher } from '@/shared/shadcn/components/team-switcher';
 import {
   Sidebar,
   SidebarContent,
@@ -25,6 +24,7 @@ import {
   SidebarHeader,
   SidebarRail,
 } from '@/shared/shadcn/ui/sidebar';
+import { TeamSwitcher } from '@/widgets/app-sidebar/ui/team-switcher';
 
 // This is sample data.
 const data = {
@@ -160,7 +160,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
-        <TeamSwitcher teams={data.teams} />
+        <TeamSwitcher />
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />

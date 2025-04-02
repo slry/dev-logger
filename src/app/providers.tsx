@@ -4,7 +4,6 @@
 // Since QueryClientProvider relies on useContext under the hood, we have to put 'use client' on top
 import { isServer, QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-import { AuthProvider } from '@/shared/providers/auth-context';
 import { ThemeProvider } from '@/shared/providers/theme-provider';
 
 function makeQueryClient() {
@@ -50,7 +49,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
         enableSystem
         disableTransitionOnChange
       >
-        <AuthProvider>{children}</AuthProvider>
+        {children}
       </ThemeProvider>
     </QueryClientProvider>
   );

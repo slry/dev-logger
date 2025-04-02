@@ -1,9 +1,9 @@
 'use client';
+import { useQuery } from '@tanstack/react-query';
 import { ChevronsUpDown, LogOut, Settings } from 'lucide-react';
-import { useContext } from 'react';
 
+import { userQueryOptions } from '@/entities/user/model/queryKeys';
 import { clientSignout } from '@/shared/api/client-signout';
-import { AuthContext } from '@/shared/providers/auth-context';
 import { Avatar, AvatarFallback } from '@/shared/shadcn/ui/avatar';
 import {
   DropdownMenu,
@@ -23,11 +23,11 @@ import {
 
 export const SidebarFooterUser = () => {
   const { isMobile } = useSidebar();
-  const authCtx = useContext(AuthContext);
+  const { data: userData } = useQuery(userQueryOptions);
 
-  if (!authCtx) return null;
+  if (!userData) return null;
 
-  const { name, surname, email } = authCtx;
+  const { name, surname, email } = userData;
 
   const fullName = `${name} ${surname}`;
   const fallback = `${name[0]}${surname[0]}`;
