@@ -6,6 +6,7 @@ import { icons as lucideIcons } from 'lucide-react';
 import { FC } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
 
+import { useChangeTeam } from '@/shared/hooks/useChangeTeam';
 import { Button } from '@/shared/shadcn/ui/button';
 import { DialogFooter } from '@/shared/shadcn/ui/dialog';
 import {
@@ -30,6 +31,7 @@ export const CreateTeamForm: FC<CreateTeamFormProps> = ({ onComplete }) => {
   const icons = Object.values(lucideIcons);
   const RandomIcon = icons[Math.floor(Math.random() * icons.length)];
   const queryClient = useQueryClient();
+  const { changeTeam } = useChangeTeam();
   const form = useForm<CreateTeamSchema>({
     resolver: zodResolver(createTeamSchema),
     defaultValues: {
@@ -52,6 +54,7 @@ export const CreateTeamForm: FC<CreateTeamFormProps> = ({ onComplete }) => {
 
     if (data) {
       queryClient.invalidateQueries(getTeamsListQueryOptions);
+      changeTeam(data.id);
       onComplete?.();
     }
   });

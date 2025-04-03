@@ -45,7 +45,7 @@ export async function signup(data: SignupSchema): Promise<SingupResponse> {
 
   const { error: memberError } = await supabaseNext
     .from('developer_team')
-    .insert({ user_id: userData.user.id, team_id: teamData.id });
+    .insert({ user_id: userData.user.id, team_id: teamData.id, role: 'OWNER' });
 
   if (memberError) {
     return { type: 'error', message: memberError.message };

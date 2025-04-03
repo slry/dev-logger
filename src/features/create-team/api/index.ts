@@ -34,7 +34,7 @@ export const createTeam = async (teamName: string, teamIcon: string) => {
 
   const { error: memberError } = await supabaseClient
     .from('developer_team')
-    .insert({ user_id: userId, team_id: data.id });
+    .insert({ user_id: userId, team_id: data.id, role: 'OWNER' });
 
   if (memberError) {
     throw new Error(`Error adding user to team: ${memberError.message}`);
