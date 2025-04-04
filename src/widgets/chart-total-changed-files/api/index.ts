@@ -4,12 +4,13 @@ import { createClient } from '@/shared/api/supabase/server';
 
 import { fileOperationsSchema } from '../model';
 
-export const getFileOperations = async () => {
+export const getFileOperations = async (teamId: string) => {
   const supabase = await createClient();
 
   const { data, error } = await supabase
     .from('developer_file_operations')
     .select('*')
+    .eq('team_id', teamId)
     .order('timestamp');
 
   if (error) {

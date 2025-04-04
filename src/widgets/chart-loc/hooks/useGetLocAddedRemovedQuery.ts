@@ -4,21 +4,24 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useCallback } from 'react';
 
 import { useRealtime } from '@/shared/hooks/useRealtime';
+import { useTeamContext } from '@/shared/providers/team-context';
 
 import { developerLocPerDayQueryOptions } from '../api/queryKeys';
 import { LocPerDayDTOSchema, locPerDaySchema } from '../model';
 
 export const useGetLocAddedRemovedQuery = () => {
   const queryClient = useQueryClient();
+  const currentTeamId = useTeamContext();
+  const qo = developerLocPerDayQueryOptions(currentTeamId);
 
-  const { data } = useQuery(developerLocPerDayQueryOptions);
+  const { data } = useQuery(qo);
 
   const mutateLocAddedRemoved = useCallback(
     (payload: RealtimePostgresChangesPayload<LocPerDayDTOSchema>) => {
       try {
         const parsedData = locPerDaySchema.parse(payload.new);
 
-        queryClient.setQueryData(developerLocPerDayQueryOptions.queryKey, (draft) => {
+        queryClient.setQueryData(qo.queryKey, (draft) => {
           if (draft) {
             const oldData = draft.find(
               (d) => d.datetime === parsedData.datetime && d.userId === parsedData.userId,
@@ -37,7 +40,7 @@ export const useGetLocAddedRemovedQuery = () => {
         });
       } catch {}
     },
-    [queryClient],
+    [queryClient, qo.queryKey],
   );
 
   useRealtime<LocPerDayDTOSchema>({

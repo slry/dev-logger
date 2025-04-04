@@ -6,7 +6,7 @@ import { createClient } from '@/shared/api/supabase/server';
 import { CreateAPITokenSchema } from '../model';
 import { expiresAtISO } from '../utils/expiresAtISO';
 
-export const createAPIToken = async (data: CreateAPITokenSchema) => {
+export const createAPIToken = async (data: CreateAPITokenSchema, teamId: string) => {
   const supabase = await createClient();
 
   const userId = await getUserId();
@@ -14,6 +14,7 @@ export const createAPIToken = async (data: CreateAPITokenSchema) => {
   const { data: newData, error } = await supabase
     .from('api_tokens')
     .insert({
+      team_id: teamId,
       user_id: userId,
       name: data.name,
       expires_at: expiresAtISO(Number(data.expiration)),

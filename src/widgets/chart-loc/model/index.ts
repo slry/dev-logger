@@ -6,6 +6,7 @@ import { snakeToCamelCase } from '@/shared/lib/snakeToCamelCase';
 import { Expect, IsSameType } from '@/shared/test/types';
 
 export const locPerDayDTOSchema = z.object({
+  team_id: z.string(),
   user_id: z.string(),
   datetime: z.string(),
   loc_added: z.number(),

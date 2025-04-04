@@ -21,10 +21,5 @@ export const getPersonalTeamIdQueryOptions = queryOptions<string>({
 export const getCurrentTeamQueryOptions = (teamId: string) =>
   queryOptions<CurrentTeamSchema>({
     queryKey: ['current_team', teamId],
-    queryFn: () => {
-      if (teamId === 'personal') {
-        return getPersonalTeam();
-      }
-      return getTeamById(teamId);
-    },
+    queryFn: () => getTeamById(teamId),
   });

@@ -40,6 +40,7 @@ export type Database = {
           id: number;
           key: string;
           name: string;
+          team_id: string;
           user_id: string;
         };
         Insert: {
@@ -47,6 +48,7 @@ export type Database = {
           id?: number;
           key?: string;
           name?: string;
+          team_id: string;
           user_id: string;
         };
         Update: {
@@ -54,51 +56,114 @@ export type Database = {
           id?: number;
           key?: string;
           name?: string;
+          team_id?: string;
           user_id?: string;
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: 'api_tokens_team_id_fkey';
+            columns: ['team_id'];
+            isOneToOne: false;
+            referencedRelation: 'teams';
+            referencedColumns: ['id'];
+          },
+        ];
       };
       developer_file_operations: {
         Row: {
           filename: string;
           operation: Database['public']['Enums']['file_operation'];
+          team_id: string;
           timestamp: string;
           user_id: string;
         };
         Insert: {
           filename?: string;
           operation: Database['public']['Enums']['file_operation'];
+          team_id: string;
           timestamp: string;
           user_id: string;
         };
         Update: {
           filename?: string;
           operation?: Database['public']['Enums']['file_operation'];
+          team_id?: string;
           timestamp?: string;
           user_id?: string;
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: 'developer_file_operations_team_id_fkey';
+            columns: ['team_id'];
+            isOneToOne: false;
+            referencedRelation: 'teams';
+            referencedColumns: ['id'];
+          },
+        ];
       };
       developer_loc_per_day: {
         Row: {
           datetime: string;
           loc_added: number;
           loc_removed: number;
+          team_id: string;
           user_id: string;
         };
         Insert: {
           datetime?: string;
           loc_added?: number;
           loc_removed?: number;
+          team_id: string;
           user_id: string;
         };
         Update: {
           datetime?: string;
           loc_added?: number;
           loc_removed?: number;
+          team_id?: string;
           user_id?: string;
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: 'developer_loc_per_day_team_id_fkey';
+            columns: ['team_id'];
+            isOneToOne: false;
+            referencedRelation: 'teams';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      developer_loc_per_file: {
+        Row: {
+          filename: string;
+          loc_added: number;
+          loc_removed: number;
+          team_id: string;
+          user_id: string;
+        };
+        Insert: {
+          filename?: string;
+          loc_added?: number;
+          loc_removed?: number;
+          team_id: string;
+          user_id: string;
+        };
+        Update: {
+          filename?: string;
+          loc_added?: number;
+          loc_removed?: number;
+          team_id?: string;
+          user_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'developer_total_loc_team_id_fkey';
+            columns: ['team_id'];
+            isOneToOne: false;
+            referencedRelation: 'teams';
+            referencedColumns: ['id'];
+          },
+        ];
       };
       developer_team: {
         Row: {
@@ -129,41 +194,31 @@ export type Database = {
       developer_time_spent_per_day: {
         Row: {
           date: string;
+          team_id: string;
           time_spent: number;
           user_id: string;
         };
         Insert: {
           date: string;
+          team_id: string;
           time_spent: number;
           user_id: string;
         };
         Update: {
           date?: string;
+          team_id?: string;
           time_spent?: number;
           user_id?: string;
         };
-        Relationships: [];
-      };
-      developer_total_loc: {
-        Row: {
-          filename: string;
-          loc_added: number;
-          loc_removed: number;
-          user_id: string;
-        };
-        Insert: {
-          filename?: string;
-          loc_added?: number;
-          loc_removed?: number;
-          user_id: string;
-        };
-        Update: {
-          filename?: string;
-          loc_added?: number;
-          loc_removed?: number;
-          user_id?: string;
-        };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: 'developer_time_spent_per_day_team_id_fkey';
+            columns: ['team_id'];
+            isOneToOne: false;
+            referencedRelation: 'teams';
+            referencedColumns: ['id'];
+          },
+        ];
       };
       integration_tokens: {
         Row: {

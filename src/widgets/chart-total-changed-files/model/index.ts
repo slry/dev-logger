@@ -5,6 +5,7 @@ import { snakeToCamelCase } from '@/shared/lib/snakeToCamelCase';
 import { Expect, IsSameType } from '@/shared/test/types';
 
 export const fileOperationsDTOSchema = z.object({
+  team_id: z.string(),
   user_id: z.string(),
   timestamp: z.string(),
   filename: z.string(),

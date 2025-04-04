@@ -5,6 +5,7 @@ interface AddDeveloperTimeSpentPerDayParams {
   time: number;
   timestamp: string;
   userId: string;
+  teamId: string;
 }
 
 export const addDeveloperTimeSpentPerDay = async ({
@@ -12,6 +13,7 @@ export const addDeveloperTimeSpentPerDay = async ({
   time,
   timestamp,
   userId,
+  teamId,
 }: AddDeveloperTimeSpentPerDayParams) => {
   const date = timestamp.split('T')[0];
 
@@ -23,6 +25,7 @@ export const addDeveloperTimeSpentPerDay = async ({
   const currentTimeSpent = existingData.data?.[0]?.time_spent || 0;
 
   await table.upsert({
+    team_id: teamId,
     user_id: userId,
     date,
     time_spent: time + currentTimeSpent,

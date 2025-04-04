@@ -16,11 +16,13 @@ export async function POST(req: NextRequest) {
     return NextResponse.json('Missing token', { status: 400 });
   }
 
-  const { data: userId, error } = await validateToken(token);
+  const { data: tokenData, error } = await validateToken(token);
 
-  if (error || !userId) {
+  if (error || !tokenData) {
     return NextResponse.json(error, { status: 400 });
   }
+
+  const { user_id: userId, team_id: teamId } = tokenData;
 
   const { data: body, error: bodyError } = await parseBody(req, bodySchema);
 
@@ -35,6 +37,7 @@ export async function POST(req: NextRequest) {
       supabaseClient: supabase,
       operation: body,
       userId,
+      teamId,
     });
   } catch (e) {
     console.error(e);

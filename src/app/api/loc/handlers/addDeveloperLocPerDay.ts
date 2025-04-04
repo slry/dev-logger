@@ -6,6 +6,7 @@ interface AddDeveloperLocPerDayParams {
   supabaseClient: NextSupabaseClient;
   changes: ChangeSchema[];
   timestamp: string;
+  teamId: string;
   userId: string;
 }
 
@@ -14,6 +15,7 @@ export const addDeveloperLocPerDay = async ({
   changes,
   timestamp,
   userId,
+  teamId,
 }: AddDeveloperLocPerDayParams) => {
   const table = supabaseClient.from('developer_loc_per_day');
   const selector = table.select('*');
@@ -32,6 +34,7 @@ export const addDeveloperLocPerDay = async ({
   const { data } = await selector.eq('datetime', datetime).eq('user_id', userId);
 
   await table.upsert({
+    team_id: teamId,
     user_id: userId,
     datetime,
     loc_added: totalAdded + (data?.[0]?.loc_added || 0),

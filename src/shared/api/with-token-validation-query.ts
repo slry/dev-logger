@@ -7,6 +7,7 @@ import { parseBody } from '../lib/parseBody';
 type HandlerParams<T> = {
   req: NextRequest;
   token: string;
+  teamId: string;
   userId: string;
   body: T;
 };
@@ -29,11 +30,13 @@ export const withTokenValidationQuery =
       return NextResponse.json('Missing token', { status: 400 });
     }
 
-    const { data: userId, error } = await validateToken(token);
+    const { data: tokenData, error } = await validateToken(token);
 
-    if (error || !userId) {
+    if (error || !tokenData) {
       return NextResponse.json(error, { status: 400 });
     }
+
+    const { user_id: userId, team_id: teamId } = tokenData;
 
     const { data: body, error: bodyError } = await parseBody(req, bodySchema);
 
@@ -41,5 +44,5 @@ export const withTokenValidationQuery =
       return NextResponse.json(bodyError, { status: 400 });
     }
 
-    return handler({ req, token, userId, body });
+    return handler({ req, token, userId, teamId, body });
   };

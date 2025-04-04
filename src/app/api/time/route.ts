@@ -7,7 +7,7 @@ import { addDeveloperTimeSpentPerDay } from './handler/addDeveloperTimeSpentPerD
 import { bodySchema } from './model';
 
 export const POST = withTokenValidationQuery({
-  handler: async ({ userId, body }) => {
+  handler: async ({ userId, teamId, body }) => {
     const supabase = await createClient();
 
     await addDeveloperTimeSpentPerDay({
@@ -15,6 +15,7 @@ export const POST = withTokenValidationQuery({
       time: body.time,
       timestamp: body.timestamp,
       userId,
+      teamId,
     });
 
     return NextResponse.json(

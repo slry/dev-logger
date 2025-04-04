@@ -1,3 +1,6 @@
+import { redirect } from 'next/navigation';
+
+import { validateTeamId } from '@/shared/api/validate-team-id';
 import { withHydrationBoundary } from '@/shared/hocs/withHydrationBoundary';
 import {
   ResizableHandle,
@@ -15,7 +18,18 @@ import { ChartTotalChangedFiles } from '@/widgets/chart-total-changed-files/ui';
 import { developerTotalLocQueryOptions } from '@/widgets/chart-total-loc/api/queryKeys';
 import { ChartTotalLOC } from '@/widgets/chart-total-loc/ui';
 
-export const DashboardPage = withHydrationBoundary(() => {
+interface DashboardPageProps {
+  params: Promise<{ teamId: string }>;
+}
+
+export const DashboardPage = async (props: DashboardPageProps) => {
+  const { teamId } = await props.params;
+  const { valid, teamId: validatedTeamId } = await validateTeamId(teamId);
+  if (!valid || !validatedTeamId) redirect('/team/personal/dashboard');
+  return <Dashboard teamId={validatedTeamId} />;
+};
+
+const Dashboard = withHydrationBoundary<{ teamId: string }>(() => {
   return (
     <div className="w-full space-y-4 px-4">
       <ResizablePanelGroup direction="horizontal">
@@ -46,9 +60,9 @@ export const DashboardPage = withHydrationBoundary(() => {
     </div>
   );
 }, [
-  developerLocPerDayQueryOptions,
-  developerLocPerFileQueryOptions,
-  developerFileOperationsQueryOptions,
-  developerTotalLocQueryOptions,
-  developerTimeSpentPerDayQueryOptions,
+  ({ teamId }) => developerLocPerDayQueryOptions(teamId),
+  ({ teamId }) => developerLocPerFileQueryOptions(teamId),
+  ({ teamId }) => developerFileOperationsQueryOptions(teamId),
+  ({ teamId }) => developerTotalLocQueryOptions(teamId),
+  ({ teamId }) => developerTimeSpentPerDayQueryOptions(teamId),
 ]);

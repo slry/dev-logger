@@ -5,6 +5,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useCallback } from 'react';
 
 import { useRealtime } from '@/shared/hooks/useRealtime';
+import { useTeamContext } from '@/shared/providers/team-context';
 import { developerLocPerDayQueryOptions } from '@/widgets/chart-loc/api/queryKeys';
 import { LocPerDayDTOSchema, locPerDaySchema } from '@/widgets/chart-loc/model';
 
@@ -12,8 +13,10 @@ import { developerTotalLocQueryOptions } from '../api/queryKeys';
 
 export const useGetTotalLoc = () => {
   const queryClient = useQueryClient();
+  const currentTeamId = useTeamContext();
+  const qo = developerTotalLocQueryOptions(currentTeamId);
 
-  const { data } = useQuery(developerTotalLocQueryOptions);
+  const { data } = useQuery(qo);
 
   const currentLocPerDayData = queryClient.getQueryData(
     developerLocPerDayQueryOptions.queryKey,
@@ -33,7 +36,7 @@ export const useGetTotalLoc = () => {
           locRemoved: parsedData.locRemoved - (currentLocData?.locRemoved ?? 0),
         };
 
-        queryClient.setQueryData(developerTotalLocQueryOptions.queryKey, (draft) => {
+        queryClient.setQueryData(qo.queryKey, (draft) => {
           if (draft) {
             return {
               locAdded: draft.locAdded + diffedData.locAdded,
@@ -48,7 +51,7 @@ export const useGetTotalLoc = () => {
         });
       } catch {}
     },
-    [queryClient, currentLocPerDayData],
+    [queryClient, currentLocPerDayData, qo.queryKey],
   );
 
   useRealtime<LocPerDayDTOSchema>({

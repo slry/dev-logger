@@ -6,6 +6,7 @@ import { FC, PropsWithChildren, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { useLoadingHandleClick } from '@/shared/hooks/useLoadingHandleClick';
+import { useTeamContext } from '@/shared/providers/team-context';
 import { Button } from '@/shared/shadcn/ui/button';
 import { CopyField } from '@/shared/shadcn/ui/copy-field';
 import {
@@ -33,6 +34,7 @@ import { expiresAtLocale } from '../../utils/expiresAtLocale';
 export const CreateAPITokenForm: FC<PropsWithChildren> = ({ children }) => {
   const [newKey, setNewKey] = useState<string | null>(null);
   const queryClient = useQueryClient();
+  const currentTeamId = useTeamContext();
   const form = useForm<CreateAPITokenSchema>({
     resolver: zodResolver(createAPITokenSchema),
     defaultValues: {
@@ -43,7 +45,7 @@ export const CreateAPITokenForm: FC<PropsWithChildren> = ({ children }) => {
 
   const { loading, handleClick } = useLoadingHandleClick(
     async (data: CreateAPITokenSchema) => {
-      const newKey = await createAPIToken(data);
+      const newKey = await createAPIToken(data, currentTeamId);
       await queryClient.invalidateQueries({
         queryKey: ['api-tokens-list'],
       });

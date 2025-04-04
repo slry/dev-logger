@@ -8,6 +8,7 @@ import { Expect, IsSameType } from '@/shared/test/types';
 import { parseMsToTime } from '../lib/parseTime';
 
 export const timeSpentPerDayDTOSchema = z.object({
+  team_id: z.string(),
   user_id: z.string(),
   date: z.string(),
   time_spent: z.number(),

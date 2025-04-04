@@ -4,12 +4,13 @@ import { createClient } from '@/shared/api/supabase/server';
 
 import { totalLocSchema } from '../model';
 
-export const getTotalLoc = async () => {
+export const getTotalLoc = async (teamId: string) => {
   const supabase = await createClient();
 
   const { data, error } = await supabase
     .from('developer_loc_per_day')
-    .select('loc_added, loc_removed');
+    .select('loc_added, loc_removed')
+    .eq('team_id', teamId);
 
   if (error) {
     console.error(error);
