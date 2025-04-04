@@ -1,22 +1,28 @@
-import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
+import { redirect } from 'next/navigation';
 
+import { validateTeamId } from '@/shared/api/validate-team-id';
+import { withHydrationBoundary } from '@/shared/hocs/withHydrationBoundary';
 import { APITokenList } from '@/widgets/api-token-list/ui';
 
-import { getAPITokensList } from '../api';
+import { getApiTokensListQueryOptions } from '../api/queryKeys';
 
-export const ApiSettingsPage = async () => {
-  const queryClient = new QueryClient();
+interface ApiSettingsPageProps {
+  params: Promise<{
+    teamId: string;
+  }>;
+}
 
-  await queryClient.prefetchQuery({
-    queryKey: ['api-tokens-list'],
-    queryFn: getAPITokensList,
-  });
-
-  return (
-    <HydrationBoundary state={dehydrate(queryClient)}>
-      <section className="px-4">
-        <APITokenList />
-      </section>
-    </HydrationBoundary>
-  );
+export const ApiSettingsPage = async (props: ApiSettingsPageProps) => {
+  const { teamId } = await props.params;
+  const { valid, teamId: validatedTeamId } = await validateTeamId(teamId);
+  if (!valid || !validatedTeamId) redirect('/team/personal/api-settings');
+  return <ApiSettings teamId={validatedTeamId} />;
 };
+
+export const ApiSettings = withHydrationBoundary<{ teamId: string }>(() => {
+  return (
+    <section className="px-4">
+      <APITokenList />
+    </section>
+  );
+}, [({ teamId }) => getApiTokensListQueryOptions(teamId)]);

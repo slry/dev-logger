@@ -1,22 +1,18 @@
 'use server';
 
-import { ZodError } from 'zod';
-
 import { apiTokenSchema } from '@/entities/api-token-item/model';
+import { getUserId } from '@/shared/api/get-user-id';
 import { createClient } from '@/shared/api/supabase/server';
 
-export const getAPITokensList = async () => {
+export const getAPITokensList = async (teamId: string) => {
   const supabase = await createClient();
 
-  const { data: authData, error: authError } = await supabase.auth.getUser();
-
-  if (authError) throw new Error(authError.message);
-
-  const userId = authData.user.id;
+  const userId = await getUserId();
 
   const { data: tokensData, error: tokensError } = await supabase
     .from('api_tokens')
     .select('id,name,key,expires_at')
+    .eq('team_id', teamId)
     .eq('user_id', userId);
 
   if (tokensError) throw new Error(tokensError.message);
@@ -28,9 +24,5 @@ export const getAPITokensList = async () => {
     expiresAt: data.expires_at,
   }));
 
-  try {
-    return apiTokenSchema.array().parse(safeTokensData);
-  } catch (error) {
-    if (error instanceof ZodError) throw new Error('Failed to parse tokens data:', error);
-  }
+  return apiTokenSchema.array().parse(safeTokensData);
 };

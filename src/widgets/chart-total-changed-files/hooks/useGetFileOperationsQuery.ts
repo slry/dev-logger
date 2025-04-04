@@ -24,12 +24,16 @@ export const useGetFileOperationsQuery = () => {
           if (draft) {
             const oldData = draft.find(
               (d) =>
-                d.timestamp === parsedData.timestamp && d.userId === parsedData.userId,
+                d.userId === parsedData.userId &&
+                d.filename === parsedData.filename &&
+                d.operation === parsedData.operation,
             );
 
             if (oldData) {
               return draft.map((d) =>
-                d.timestamp === parsedData.timestamp && d.userId === parsedData.userId
+                d.userId === parsedData.userId &&
+                d.filename === parsedData.filename &&
+                d.operation === parsedData.operation
                   ? parsedData
                   : d,
               );

@@ -2,16 +2,16 @@
 import { useQuery } from '@tanstack/react-query';
 
 import { CreateAPIToken } from '@/features/create-api-token/ui';
-import { getAPITokensList } from '@/views/api-settings/api';
+import { useTeamContext } from '@/shared/providers/team-context';
+import { getApiTokensListQueryOptions } from '@/views/api-settings/api/queryKeys';
 
 import { APITokenListEmpty } from './api-token-list-empty';
 import { APITokenListItem } from './api-token-list-item';
 
 export const APITokenList = () => {
-  const { data, isLoading, error } = useQuery({
-    queryKey: ['api-tokens-list'],
-    queryFn: getAPITokensList,
-  });
+  const currentTeamId = useTeamContext();
+  const qo = getApiTokensListQueryOptions(currentTeamId);
+  const { data, isLoading, error } = useQuery(qo);
 
   if (isLoading || error) return null;
   return (
