@@ -8,4 +8,4 @@ RUN pnpm install
 COPY ./supabase ./supabase
 
 # pnpm supabase db push --db-url="postgres://$SUPABASE_PG_HOST:$SUPABASE_PG_PASS@$SUPABASE_HOST:$SUPABASE_PG_PORT/postgres"
-CMD ["pnpm", "supabase", "db", "push", "--db-url=postgres://$SUPABASE_PG_HOST:$SUPABASE_PG_PASS@$SUPABASE_HOST:$SUPABASE_PG_PORT/postgres"]
+CMD ["sh", "-c", "pnpm supabase db push --db-url='postgres://${SUPABASE_PG_HOST}:${SUPABASE_PG_PASS}@${SUPABASE_HOST}:${SUPABASE_PG_PORT}/postgres'"]
