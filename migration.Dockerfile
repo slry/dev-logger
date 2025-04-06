@@ -6,5 +6,6 @@ COPY package.json pnpm-lock.yaml ./
 RUN pnpm install
 
 COPY ./scripts ./scripts
+COPY ./supabase ./supabase
 
 CMD ["pnpm", "supabase:migrate"]
