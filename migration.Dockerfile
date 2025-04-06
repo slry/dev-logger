@@ -5,7 +5,7 @@ RUN npm install -g corepack@latest && corepack enable pnpm
 COPY package.json pnpm-lock.yaml ./
 RUN pnpm install
 
-COPY ./scripts ./scripts
 COPY ./supabase ./supabase
 
-CMD ["pnpm", "supabase:migrate"]
+# pnpm supabase db push --db-url="postgres://$SUPABASE_PG_HOST:$SUPABASE_PG_PASS@$SUPABASE_HOST:$SUPABASE_PG_PORT/postgres"
+CMD ["pnpm", "supabase", "db", "push", "--db-url=postgres://$SUPABASE_PG_HOST:$SUPABASE_PG_PASS@$SUPABASE_HOST:$SUPABASE_PG_PORT/postgres"]
