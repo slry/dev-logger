@@ -14,13 +14,12 @@ import { developerTotalLocQueryOptions } from '../api/queryKeys';
 export const useGetTotalLoc = () => {
   const queryClient = useQueryClient();
   const currentTeamId = useTeamContext();
-  const qo = developerTotalLocQueryOptions(currentTeamId);
+  const totalLocQueryOptions = developerTotalLocQueryOptions(currentTeamId);
+  const locPerDayQueryOptions = developerLocPerDayQueryOptions(currentTeamId);
 
-  const { data } = useQuery(qo);
+  const { data } = useQuery(totalLocQueryOptions);
 
-  const currentLocPerDayData = queryClient.getQueryData(
-    developerLocPerDayQueryOptions.queryKey,
-  );
+  const currentLocPerDayData = queryClient.getQueryData(locPerDayQueryOptions.queryKey);
 
   const mutateTotalLoc = useCallback(
     (payload: RealtimePostgresChangesPayload<LocPerDayDTOSchema>) => {
@@ -36,7 +35,7 @@ export const useGetTotalLoc = () => {
           locRemoved: parsedData.locRemoved - (currentLocData?.locRemoved ?? 0),
         };
 
-        queryClient.setQueryData(qo.queryKey, (draft) => {
+        queryClient.setQueryData(totalLocQueryOptions.queryKey, (draft) => {
           if (draft) {
             return {
               locAdded: draft.locAdded + diffedData.locAdded,
@@ -51,7 +50,7 @@ export const useGetTotalLoc = () => {
         });
       } catch {}
     },
-    [queryClient, currentLocPerDayData, qo.queryKey],
+    [queryClient, currentLocPerDayData, totalLocQueryOptions.queryKey],
   );
 
   useRealtime<LocPerDayDTOSchema>({
