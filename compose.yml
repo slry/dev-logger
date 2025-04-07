@@ -1,0 +1,18 @@
+---
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      NEXT_PUBLIC_SUPABASE_URL: ${NEXT_PUBLIC_SUPABASE_URL}
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: ${NEXT_PUBLIC_SUPABASE_ANON_KEY}
+      SUPABASE_PG_HOST: ${SUPABASE_PG_HOST}
+      SUPABASE_PG_PASS: ${SUPABASE_PG_PASS}
+      SUPABASE_HOST: ${SUPABASE_HOST}
+      SUPABASE_PG_PORT: ${SUPABASE_PG_PORT}
+      SUPABASE_SERVICE_ROLE_KEY: ${SUPABASE_SERVICE_ROLE_KEY}
+      GITLAB_HOST: ${GITLAB_HOST}
