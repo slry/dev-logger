@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 
 import { CreateAPIToken } from '@/features/create-api-token/ui';
 import { useTeamContext } from '@/shared/providers/team-context';
+import { Table, TableBody, TableHead, TableHeader, TableRow } from '@/shared/ui/table';
 import { getApiTokensListQueryOptions } from '@/views/api-settings/api/queryKeys';
 
 import { APITokenListEmpty } from './api-token-list-empty';
@@ -23,22 +24,20 @@ export const APITokenList = () => {
       <div className="flex w-full items-center justify-center">
         {data && data.length === 0 && <APITokenListEmpty />}
         {data && data.length > 0 && (
-          <div className="rounded-lg border">
-            <table className="max-w-[800px] table-fixed border-collapse border-spacing-4">
-              <thead>
-                <tr className="w-full border-b">
-                  <th className="p-4 text-start">Name</th>
-                  <th className="p-4 text-start">Key</th>
-                  <th className="p-4 text-start">Expires At</th>
-                </tr>
-              </thead>
-              <tbody>
-                {data.map((d) => (
-                  <APITokenListItem key={d.id} {...d} />
-                ))}
-              </tbody>
-            </table>
-          </div>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Name</TableHead>
+                <TableHead>Key</TableHead>
+                <TableHead>Expires At</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {data.map((d) => (
+                <APITokenListItem key={d.id} {...d} />
+              ))}
+            </TableBody>
+          </Table>
         )}
       </div>
     </section>
