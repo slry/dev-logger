@@ -284,7 +284,16 @@ export type Database = {
       [_ in never]: never;
     };
     Functions: {
-      [_ in never]: never;
+      get_team_members: {
+        Args: {
+          team_id: string;
+        };
+        Returns: {
+          user_id: string;
+          role: Database['public']['Enums']['team_role'];
+          raw_user_metadata: Json;
+        }[];
+      };
     };
     Enums: {
       file_operation: 'DELETE' | 'CREATE' | 'EDIT';
