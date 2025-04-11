@@ -2,7 +2,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { ChevronsUpDown, LogOut, Settings } from 'lucide-react';
 
-import { userQueryOptions } from '@/entities/user/model/queryKeys';
+import { userQueryOptions } from '@/entities/user/api/queryKeys';
 import { clientSignout } from '@/shared/api/client-signout';
 import { Avatar, AvatarFallback } from '@/shared/shadcn/ui/avatar';
 import {

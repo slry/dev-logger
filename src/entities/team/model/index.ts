@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { userSchema } from '@/entities/user/model';
+import { userMetadataSchema } from '@/entities/user/model';
 import { Database } from '@/shared/api/supabase/types';
 import { snakeToCamelCase } from '@/shared/lib/snakeToCamelCase';
 import { Expect, IsSameType } from '@/shared/test/types';
@@ -8,7 +8,7 @@ import { Expect, IsSameType } from '@/shared/test/types';
 export const teamMemberDTOSchema = z.object({
   user_id: z.string(),
   role: z.enum(['OWNER', 'DEVELOPER']),
-  raw_user_metadata: userSchema,
+  raw_user_metadata: userMetadataSchema,
 });
 
 export const teamMemberSchema = teamMemberDTOSchema
@@ -17,6 +17,11 @@ export const teamMemberSchema = teamMemberDTOSchema
     ...data,
     ...rawUserMetadata,
   }));
+
+export const teamRoleMapper = {
+  OWNER: 'Owner',
+  DEVELOPER: 'Developer',
+} satisfies Record<TeamMemberSchema['role'], string>;
 
 export type TeamMemberSchema = z.infer<typeof teamMemberSchema>;
 export type teamMemberDTOSchema = Omit<

@@ -1,7 +1,7 @@
 import { queryOptions } from '@tanstack/react-query';
 
-import { UserSchema } from '.';
-import { getUser } from '../api';
+import { getUser } from '.';
+import { UserSchema } from '../model';
 
 export const userQueryOptions = queryOptions<UserSchema>({
   queryKey: ['user'],

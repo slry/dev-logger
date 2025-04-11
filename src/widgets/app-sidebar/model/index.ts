@@ -1,4 +1,4 @@
-import { LayoutDashboard, Settings, Microchip } from 'lucide-react';
+import { LayoutDashboard, Settings, Microchip, UserCog } from 'lucide-react';
 import { z } from 'zod';
 
 import { teamDTOSchema } from '@/entities/team-item/model';
@@ -19,6 +19,11 @@ export const menuItems = [
     name: 'API Settings',
     logo: Settings,
     url: '/api-settings',
+  },
+  {
+    name: 'Team Settings',
+    logo: UserCog,
+    url: '/team-settings',
   },
 ];
 

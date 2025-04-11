@@ -10,5 +10,5 @@ export const getUser = async () => {
 
   if (error) throw new Error(error.message);
 
-  return userSchema.parse(data.user.user_metadata);
+  return userSchema.parse(data.user);
 };
