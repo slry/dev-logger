@@ -220,6 +220,35 @@ export type Database = {
           },
         ];
       };
+      gitlab_repos: {
+        Row: {
+          description: string;
+          name: string;
+          team_id: string;
+          url: string;
+        };
+        Insert: {
+          description?: string;
+          name?: string;
+          team_id: string;
+          url: string;
+        };
+        Update: {
+          description?: string;
+          name?: string;
+          team_id?: string;
+          url?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'gitlab_repos_team_id_fkey';
+            columns: ['team_id'];
+            isOneToOne: false;
+            referencedRelation: 'teams';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
       integration_tokens: {
         Row: {
           provider: Database['public']['Enums']['integration_provider'];
