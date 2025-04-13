@@ -16,10 +16,10 @@ export const TeamMembersList: FC<TeamMemberListProps> = ({ teamId }) => {
   const { data } = useQuery(qo);
   return (
     <section className="flex flex-col gap-6">
-      <header className="flex items-center justify-between border-b pb-2">
+      <div className="flex items-center justify-between border-b pb-2">
         <h2 className="text-xl">Team members</h2>
         {/* {data && data.length > 0 && <CreateAPIToken />} */}
-      </header>
+      </div>
       <div className="flex w-full items-center justify-center">
         {data && data.length > 0 && (
           <Table>
