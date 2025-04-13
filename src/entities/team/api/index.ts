@@ -3,24 +3,8 @@
 import { getUserId } from '@/shared/api/get-user-id';
 import { createClient } from '@/shared/api/supabase/server';
 
+import { isUserTeamOwner } from '../../../shared/api/is-user-team-owner';
 import { teamMemberSchema } from '../model';
-
-export const isUserTeamOwner = async (teamId: string, userId: string) => {
-  const supabase = await createClient();
-  const { data, error } = await supabase
-    .from('developer_team')
-    .select('role')
-    .eq('team_id', teamId)
-    .eq('user_id', userId)
-    .single();
-
-  if (error) {
-    console.error(error);
-    return false;
-  }
-
-  return data.role === 'OWNER';
-};
 
 export const getTeamMemberList = async (teamId: string) => {
   const userId = await getUserId();
