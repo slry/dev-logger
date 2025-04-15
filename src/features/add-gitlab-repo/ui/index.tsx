@@ -1,4 +1,5 @@
-import { FC } from 'react';
+'use client';
+import { FC, useState } from 'react';
 
 import { Button } from '@/shared/shadcn/ui/button';
 import {
@@ -11,16 +12,34 @@ import {
 } from '@/shared/shadcn/ui/dialog';
 
 import { AddGitlabRepoForm } from './add-gitlab-repo-form';
+import { useGetGitlabReposOptionsQuery } from '../hooks';
 
 interface AddGitlabRepoProps {
   teamId: string;
 }
 
 export const AddGitlabRepo: FC<AddGitlabRepoProps> = ({ teamId }) => {
+  const query = useGetGitlabReposOptionsQuery(teamId);
+  const [open, setOpen] = useState(false);
+
+  const onComplete = () => {
+    setOpen(false);
+  };
+
+  if (!query) {
+    return null;
+  }
+
+  const { repos } = query;
+
+  const isButtonDisabled = repos.length === 0;
+
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="green">Add Gitlab Repo</Button>
+        <Button variant="green" disabled={isButtonDisabled}>
+          Add new repository
+        </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
@@ -29,7 +48,7 @@ export const AddGitlabRepo: FC<AddGitlabRepoProps> = ({ teamId }) => {
             This form adds a new Gitlab repository to the team
           </DialogDescription>
         </DialogHeader>
-        <AddGitlabRepoForm teamId={teamId} />
+        <AddGitlabRepoForm onComplete={onComplete} teamId={teamId} />
       </DialogContent>
     </Dialog>
   );

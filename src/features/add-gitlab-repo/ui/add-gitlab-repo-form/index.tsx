@@ -1,7 +1,7 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 
@@ -22,56 +22,39 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/shared/shadcn/ui/select';
-import { getTeamGitlabReposQueryOptions } from '@/widgets/gitlab-repo-list/api/queryKeys';
 
 import { addRepoToTeam } from '../../api';
-import { getReposQueryOptions } from '../../api/queryKeys';
-import {
-  addGitlabRepoFormSchema,
-  AddGitlabRepoFormSchema,
-  GitlabRepoTransformed,
-} from '../../model';
+import { useGetGitlabReposOptionsQuery } from '../../hooks';
+import { addGitlabRepoFormSchema, AddGitlabRepoFormSchema } from '../../model';
 
 interface AddGitlabRepoFormProps {
   teamId: string;
+  onComplete?: () => void;
 }
 
-export const AddGitlabRepoForm: FC<AddGitlabRepoFormProps> = ({ teamId }) => {
-  const queryClient = useQueryClient();
-  const getTeamReposQOs = getTeamGitlabReposQueryOptions(teamId);
-  const getReposQOs = getReposQueryOptions(teamId);
-  const { data: reposData } = useQuery(getReposQOs);
-  const { data: teamReposData } = useQuery(getTeamReposQOs);
-
+export const AddGitlabRepoForm: FC<AddGitlabRepoFormProps> = ({ teamId, onComplete }) => {
   const form = useForm<AddGitlabRepoFormSchema>({
     resolver: zodResolver(addGitlabRepoFormSchema),
   });
 
-  if (!reposData) {
+  const query = useGetGitlabReposOptionsQuery(teamId);
+  const queryClient = useQueryClient();
+
+  if (!query) {
     return null;
   }
 
-  const filteredRepos = reposData.filter((repo) => {
-    const isRepoInTeam = teamReposData?.some((teamRepo) => teamRepo.url === repo.url);
-    return !isRepoInTeam;
-  });
-
-  const mappedRepos = filteredRepos.reduce<Record<string, GitlabRepoTransformed>>(
-    (acc, repo) => {
-      acc[`repo-#${repo.id}`] = repo;
-      return acc;
-    },
-    {},
-  );
+  const { repos, mappedRepos, getTeamReposQOs, getReposQOs } = query;
 
   const submit = form.handleSubmit(async (data) => {
     try {
       const selectedRepo = mappedRepos[data.repo];
-      console.log('selectedRepo', selectedRepo);
 
       await addRepoToTeam(teamId, selectedRepo);
       await queryClient.invalidateQueries(getTeamReposQOs);
       await queryClient.invalidateQueries(getReposQOs);
+
+      onComplete?.();
     } catch {
       console.error('Error adding repo to team');
       form.setError('repo', {
@@ -99,7 +82,7 @@ export const AddGitlabRepoForm: FC<AddGitlabRepoFormProps> = ({ teamId }) => {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  {filteredRepos.map((repo) => (
+                  {repos.map((repo) => (
                     <SelectItem key={`repo-#${repo.id}`} value={`repo-#${repo.id}`}>
                       {repo.name}
                     </SelectItem>
