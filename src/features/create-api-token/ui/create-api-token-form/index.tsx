@@ -1,12 +1,10 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useQueryClient } from '@tanstack/react-query';
-import { FC, PropsWithChildren, useState } from 'react';
+import { FC, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { useLoadingHandleClick } from '@/shared/hooks/useLoadingHandleClick';
-import { useTeamContext } from '@/shared/providers/team-context';
 import { Button } from '@/shared/shadcn/ui/button';
 import { CopyField } from '@/shared/shadcn/ui/copy-field';
 import {
@@ -31,10 +29,16 @@ import { createAPIToken } from '../../api';
 import { createAPITokenSchema, CreateAPITokenSchema } from '../../model';
 import { expiresAtLocale } from '../../utils/expiresAtLocale';
 
-export const CreateAPITokenForm: FC<PropsWithChildren> = ({ children }) => {
+interface CreateAPITokenFormProps {
+  onComplete: () => Promise<void>;
+  teamId: string;
+}
+
+export const CreateAPITokenForm: FC<CreateAPITokenFormProps> = ({
+  onComplete,
+  teamId,
+}) => {
   const [newKey, setNewKey] = useState<string | null>(null);
-  const queryClient = useQueryClient();
-  const currentTeamId = useTeamContext();
   const form = useForm<CreateAPITokenSchema>({
     resolver: zodResolver(createAPITokenSchema),
     defaultValues: {
@@ -43,24 +47,27 @@ export const CreateAPITokenForm: FC<PropsWithChildren> = ({ children }) => {
     },
   });
 
-  const { loading, handleClick } = useLoadingHandleClick(
-    async (data: CreateAPITokenSchema) => {
-      const newKey = await createAPIToken(data, currentTeamId);
-      await queryClient.invalidateQueries({
-        queryKey: ['api-tokens-list'],
-      });
-
+  const submit = form.handleSubmit(async (data) => {
+    try {
+      const newKey = await createAPIToken(data, teamId);
       setNewKey(newKey);
-    },
-  );
+    } catch (error) {
+      console.error('Error creating API token:', error);
+    }
+  });
 
-  const submit = form.handleSubmit(handleClick);
+  const { loading: dialogCloseLoading, handleClick: onDialogClose } =
+    useLoadingHandleClick(onComplete);
 
   if (newKey) {
     return (
       <div className="flex flex-col gap-4">
         <CopyField value={newKey} />
-        <div className="flex justify-end">{children}</div>
+        <div className="flex justify-end">
+          <Button loading={dialogCloseLoading} onClick={onDialogClose}>
+            Close
+          </Button>
+        </div>
       </div>
     );
   }
@@ -112,7 +119,7 @@ export const CreateAPITokenForm: FC<PropsWithChildren> = ({ children }) => {
           )}
         />
         <div className="flex justify-end">
-          <Button loading={loading} variant="green" type="submit">
+          <Button loading={form.formState.isSubmitting} variant="green" type="submit">
             Generate API Token
           </Button>
         </div>

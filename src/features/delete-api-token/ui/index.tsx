@@ -4,6 +4,7 @@ import { Trash } from 'lucide-react';
 import { FC, useState } from 'react';
 
 import { useLoadingHandleClick } from '@/shared/hooks/useLoadingHandleClick';
+import { useTeamContext } from '@/shared/providers/team-context';
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -15,6 +16,7 @@ import {
   AlertDialogTrigger,
 } from '@/shared/shadcn/ui/alert-dialog';
 import { Button } from '@/shared/shadcn/ui/button';
+import { getApiTokensListQueryOptions } from '@/views/api-settings/api/queryKeys';
 
 import { deleteAPIToken } from '../api';
 
@@ -29,12 +31,12 @@ export const DeleteApiTokenButton: FC<DeleteApiTokenButtonProps> = ({
 }) => {
   const [open, setOpen] = useState(false);
   const queryClient = useQueryClient();
+  const currentTeamId = useTeamContext();
+  const qo = getApiTokensListQueryOptions(currentTeamId);
 
   const { loading, handleClick } = useLoadingHandleClick(async () => {
     await deleteAPIToken(tokenId);
-    await queryClient.invalidateQueries({
-      queryKey: ['api-tokens-list'],
-    });
+    await queryClient.invalidateQueries(qo);
     setOpen(false);
   });
 
