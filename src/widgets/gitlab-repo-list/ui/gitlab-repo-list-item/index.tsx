@@ -2,12 +2,18 @@ import { LinkIcon } from 'lucide-react';
 import Link from 'next/link';
 import { FC } from 'react';
 
+import { RemoveGitlabRepo } from '@/features/remove-gitlab-repo/ui';
 import { Badge } from '@/shared/shadcn/ui/badge';
 import { TableCell, TableRow } from '@/shared/ui/table';
 
 import { GitlabRepoSchema } from '../../model';
 
-export const GitlabRepoListItem: FC<GitlabRepoSchema> = ({ name, description, url }) => {
+export const GitlabRepoListItem: FC<GitlabRepoSchema> = ({
+  name,
+  description,
+  url,
+  teamId,
+}) => {
   return (
     <TableRow className="last:border-b-0">
       <TableCell className="max-w-[300px] items-center truncate">{name}</TableCell>
@@ -21,7 +27,10 @@ export const GitlabRepoListItem: FC<GitlabRepoSchema> = ({ name, description, ur
           </Badge>
         </div>
       </TableCell>
-      <TableCell>{description}</TableCell>
+      <TableCell>{description || 'No project description'}</TableCell>
+      <TableCell>
+        <RemoveGitlabRepo teamId={teamId} repoUrl={url} />
+      </TableCell>
     </TableRow>
   );
 };

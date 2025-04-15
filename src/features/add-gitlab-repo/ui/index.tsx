@@ -26,13 +26,7 @@ export const AddGitlabRepo: FC<AddGitlabRepoProps> = ({ teamId }) => {
     setOpen(false);
   };
 
-  if (!query) {
-    return null;
-  }
-
-  const { repos } = query;
-
-  const isButtonDisabled = repos.length === 0;
+  const isButtonDisabled = !query || query.repos.length === 0;
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
