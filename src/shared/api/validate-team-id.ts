@@ -1,7 +1,7 @@
 'use server';
 
 import { createClient as createNextClient } from './supabase/next';
-import { createClient } from './supabase/server';
+import { createClient as createServerClient } from './supabase/server';
 
 export const getTeamById = async (teamId: string) => {
   const supabase = await createNextClient();
@@ -21,7 +21,7 @@ export const getTeamById = async (teamId: string) => {
 };
 
 export const getPersonalTeam = async () => {
-  const supabase = await createClient();
+  const supabase = await createServerClient();
 
   const { data, error } = await supabase.from('personal_teams').select('*').single();
 

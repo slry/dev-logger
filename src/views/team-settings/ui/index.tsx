@@ -2,6 +2,7 @@ import { headers } from 'next/headers';
 
 import { getTeamMembersListQueryOptions } from '@/entities/team/api/queryKeys';
 import { getReposQueryOptions } from '@/features/add-gitlab-repo/api/queryKeys';
+import { isPersonalTeamQueryOptions } from '@/features/invite-team-member/api/queryKeys';
 import { withHydrationBoundary } from '@/shared/hocs/withHydrationBoundary';
 import { withTeamValidationGuard } from '@/shared/hocs/withTeamValidationGuard';
 import { getTeamGitlabReposQueryOptions } from '@/widgets/gitlab-repo-list/api/queryKeys';
@@ -21,6 +22,7 @@ const TeamSettings = withHydrationBoundary<{ teamId: string }>(
     );
   },
   [
+    ({ teamId }) => isPersonalTeamQueryOptions(teamId),
     ({ teamId }) => getTeamMembersListQueryOptions(teamId),
     ({ teamId }) => getTeamGitlabReposQueryOptions(teamId),
     ({ teamId }) => getReposQueryOptions(teamId),

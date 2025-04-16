@@ -1,4 +1,5 @@
 'use client';
+import { useQuery } from '@tanstack/react-query';
 import { MailIcon } from 'lucide-react';
 import { FC, useState } from 'react';
 
@@ -13,6 +14,7 @@ import {
 } from '@/shared/shadcn/ui/dialog';
 
 import { InviteTeamMemberForm } from './invite-team-member-form';
+import { isPersonalTeamQueryOptions } from '../api/queryKeys';
 
 interface InviteTeamMemberProps {
   teamId: string;
@@ -26,10 +28,13 @@ export const InviteTeamMember: FC<InviteTeamMemberProps> = ({ teamId, baseUrl })
     setOpen(false);
   };
 
+  const qo = isPersonalTeamQueryOptions(teamId);
+  const { data: isPersonalTeam } = useQuery(qo);
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="green" className="flex gap-1">
+        <Button disabled={!!isPersonalTeam} variant="green" className="flex gap-1">
           <MailIcon className="size-4" />
           <span>Invite new member</span>
         </Button>
