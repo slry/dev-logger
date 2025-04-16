@@ -10,6 +10,7 @@ export const locPerFileDTOSchema = z.object({
   filename: z.string(),
   loc_added: z.number(),
   loc_removed: z.number(),
+  repo_url: z.string().nullable(),
 });
 
 export const locPerFileSchema = locPerFileDTOSchema.transform(snakeToCamelCase);

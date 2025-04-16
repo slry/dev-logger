@@ -7,6 +7,7 @@ export const changeSchema = z.object({
 });
 
 export const bodySchema = z.object({
+  repoUrl: z.string().nullable(),
   changes: changeSchema.array(),
   timestamp: z.string(),
 });

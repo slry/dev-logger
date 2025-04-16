@@ -7,6 +7,7 @@ interface AddDeveloperTotalLocParams {
   changes: ChangeSchema[];
   userId: string;
   teamId: string;
+  repoUrl: string | null;
 }
 
 export const addDeveloperTotalLoc = async ({
@@ -14,6 +15,7 @@ export const addDeveloperTotalLoc = async ({
   changes,
   userId,
   teamId,
+  repoUrl,
 }: AddDeveloperTotalLocParams) => {
   const table = supabaseClient.from('developer_loc_per_file');
   const selector = table.select('*');
@@ -23,6 +25,7 @@ export const addDeveloperTotalLoc = async ({
     await table.upsert({
       team_id: teamId,
       user_id: userId,
+      repo_url: repoUrl,
       filename: file,
       loc_added: added + (data?.[0]?.loc_added || 0),
       loc_removed: deleted + (data?.[0]?.loc_removed || 0),

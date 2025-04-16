@@ -10,6 +10,7 @@ export const fileOperationsDTOSchema = z.object({
   timestamp: z.string(),
   filename: z.string(),
   operation: z.union([z.literal('CREATE'), z.literal('DELETE'), z.literal('EDIT')]),
+  repo_url: z.string().nullable(),
 });
 
 export const fileOperationsSchema = fileOperationsDTOSchema.transform(snakeToCamelCase);

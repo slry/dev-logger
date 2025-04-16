@@ -4,23 +4,26 @@ import { ZodType } from 'zod';
 import { validateToken } from './validate-token';
 import { parseBody } from '../lib/parseBody';
 
-type HandlerParams<T> = {
+type HandlerParamsBase = {
   req: NextRequest;
   token: string;
   teamId: string;
   userId: string;
-  body: T;
 };
 
-type Handler<T> = (params: HandlerParams<T>) => Promise<NextResponse>;
+type HandlerParams<BodyType> = BodyType extends object
+  ? HandlerParamsBase & { body: BodyType }
+  : HandlerParamsBase;
 
-type WithTokenValidationQueryParams<T> = {
-  handler: Handler<T>;
-  bodySchema: ZodType<T>;
+type Handler<BodyType> = (params: HandlerParams<BodyType>) => Promise<NextResponse>;
+
+type WithTokenValidationQueryParams<BodyType> = {
+  handler: Handler<BodyType>;
+  bodySchema?: ZodType<BodyType>;
 };
 
 export const withTokenValidationQuery =
-  <T>({ handler, bodySchema }: WithTokenValidationQueryParams<T>) =>
+  <BodyType>({ handler, bodySchema }: WithTokenValidationQueryParams<BodyType>) =>
   async (req: NextRequest) => {
     const { searchParams } = new URL(req.url);
 
@@ -38,11 +41,15 @@ export const withTokenValidationQuery =
 
     const { user_id: userId, team_id: teamId } = tokenData;
 
-    const { data: body, error: bodyError } = await parseBody(req, bodySchema);
+    if (bodySchema) {
+      const { data: body, error: bodyError } = await parseBody(req, bodySchema);
 
-    if (bodyError || !body) {
-      return NextResponse.json(bodyError, { status: 400 });
+      if (bodyError || !body) {
+        return NextResponse.json(bodyError, { status: 400 });
+      }
+
+      return handler({ req, token, userId, teamId, body } as HandlerParams<BodyType>);
     }
 
-    return handler({ req, token, userId, teamId, body });
+    return handler({ req, token, userId, teamId } as HandlerParams<never>);
   };

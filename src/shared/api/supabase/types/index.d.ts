@@ -73,6 +73,7 @@ export type Database = {
         Row: {
           filename: string;
           operation: Database['public']['Enums']['file_operation'];
+          repo_url: string | null;
           team_id: string;
           timestamp: string;
           user_id: string;
@@ -80,6 +81,7 @@ export type Database = {
         Insert: {
           filename?: string;
           operation: Database['public']['Enums']['file_operation'];
+          repo_url?: string | null;
           team_id: string;
           timestamp: string;
           user_id: string;
@@ -87,6 +89,7 @@ export type Database = {
         Update: {
           filename?: string;
           operation?: Database['public']['Enums']['file_operation'];
+          repo_url?: string | null;
           team_id?: string;
           timestamp?: string;
           user_id?: string;
@@ -106,6 +109,7 @@ export type Database = {
           datetime: string;
           loc_added: number;
           loc_removed: number;
+          repo_url: string | null;
           team_id: string;
           user_id: string;
         };
@@ -113,6 +117,7 @@ export type Database = {
           datetime?: string;
           loc_added?: number;
           loc_removed?: number;
+          repo_url?: string | null;
           team_id: string;
           user_id: string;
         };
@@ -120,6 +125,7 @@ export type Database = {
           datetime?: string;
           loc_added?: number;
           loc_removed?: number;
+          repo_url?: string | null;
           team_id?: string;
           user_id?: string;
         };
@@ -138,6 +144,7 @@ export type Database = {
           filename: string;
           loc_added: number;
           loc_removed: number;
+          repo_url: string | null;
           team_id: string;
           user_id: string;
         };
@@ -145,6 +152,7 @@ export type Database = {
           filename?: string;
           loc_added?: number;
           loc_removed?: number;
+          repo_url?: string | null;
           team_id: string;
           user_id: string;
         };
@@ -152,6 +160,7 @@ export type Database = {
           filename?: string;
           loc_added?: number;
           loc_removed?: number;
+          repo_url?: string | null;
           team_id?: string;
           user_id?: string;
         };
@@ -194,18 +203,21 @@ export type Database = {
       developer_time_spent_per_day: {
         Row: {
           date: string;
+          repo_url: string | null;
           team_id: string;
           time_spent: number;
           user_id: string;
         };
         Insert: {
           date: string;
+          repo_url?: string | null;
           team_id: string;
           time_spent: number;
           user_id: string;
         };
         Update: {
           date?: string;
+          repo_url?: string | null;
           team_id?: string;
           time_spent?: number;
           user_id?: string;

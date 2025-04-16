@@ -14,6 +14,7 @@ export const POST = withTokenValidationQuery({
       supabaseClient: supabase,
       time: body.time,
       timestamp: body.timestamp,
+      repoUrl: body.repoUrl,
       userId,
       teamId,
     });

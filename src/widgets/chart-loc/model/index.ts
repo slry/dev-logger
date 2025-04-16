@@ -11,6 +11,7 @@ export const locPerDayDTOSchema = z.object({
   datetime: z.string(),
   loc_added: z.number(),
   loc_removed: z.number(),
+  repo_url: z.string().nullable(),
 });
 
 export const locPerDaySchema = locPerDayDTOSchema

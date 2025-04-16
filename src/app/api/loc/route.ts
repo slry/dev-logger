@@ -37,6 +37,7 @@ export async function POST(req: NextRequest) {
   await addDeveloperTotalLoc({
     supabaseClient: supabase,
     changes: body.changes,
+    repoUrl: body.repoUrl,
     userId,
     teamId,
   });
@@ -45,6 +46,7 @@ export async function POST(req: NextRequest) {
     supabaseClient: supabase,
     changes: body.changes,
     timestamp: body.timestamp,
+    repoUrl: body.repoUrl,
     userId,
     teamId,
   });
@@ -53,6 +55,7 @@ export async function POST(req: NextRequest) {
     supabaseClient: supabase,
     changes: body.changes,
     timestamp: body.timestamp,
+    repoUrl: body.repoUrl,
     userId,
     teamId,
   });

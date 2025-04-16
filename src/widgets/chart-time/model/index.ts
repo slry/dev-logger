@@ -12,6 +12,7 @@ export const timeSpentPerDayDTOSchema = z.object({
   user_id: z.string(),
   date: z.string(),
   time_spent: z.number(),
+  repo_url: z.string().nullable(),
 });
 
 export const timeSpentPerDaySchema = timeSpentPerDayDTOSchema
