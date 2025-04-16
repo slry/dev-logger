@@ -290,6 +290,32 @@ export type Database = {
           },
         ];
       };
+      team_invites: {
+        Row: {
+          expires_after: string;
+          id: string;
+          team_id: string;
+        };
+        Insert: {
+          expires_after?: string;
+          id?: string;
+          team_id: string;
+        };
+        Update: {
+          expires_after?: string;
+          id?: string;
+          team_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'team_invites_team_id_fkey';
+            columns: ['team_id'];
+            isOneToOne: false;
+            referencedRelation: 'teams';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
       teams: {
         Row: {
           icon: string;

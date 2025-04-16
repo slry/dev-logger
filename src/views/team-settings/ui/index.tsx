@@ -1,3 +1,5 @@
+import { headers } from 'next/headers';
+
 import { getTeamMembersListQueryOptions } from '@/entities/team/api/queryKeys';
 import { getReposQueryOptions } from '@/features/add-gitlab-repo/api/queryKeys';
 import { withHydrationBoundary } from '@/shared/hocs/withHydrationBoundary';
@@ -7,10 +9,13 @@ import { GitlabRepoList } from '@/widgets/gitlab-repo-list/ui';
 import { TeamMembersList } from '@/widgets/team-member-list/ui';
 
 const TeamSettings = withHydrationBoundary<{ teamId: string }>(
-  ({ teamId }) => {
+  async ({ teamId }) => {
+    const headersList = await headers();
+    const hostname = headersList.get('host');
+    const protocol = headersList.get('x-forwarded-proto') || 'http';
     return (
       <section className="flex flex-col gap-4 px-4">
-        <TeamMembersList teamId={teamId} />
+        <TeamMembersList baseUrl={`${protocol}://${hostname}`} teamId={teamId} />
         <GitlabRepoList teamId={teamId} />
       </section>
     );
