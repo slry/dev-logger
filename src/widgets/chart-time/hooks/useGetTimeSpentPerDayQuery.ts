@@ -5,6 +5,7 @@ import { useCallback } from 'react';
 
 import { useRealtime } from '@/shared/hooks/useRealtime';
 import { useTeamContext } from '@/shared/providers/team-context';
+import { useUserDashboardContext } from '@/shared/providers/user-dashboard-context';
 
 import { developerTimeSpentPerDayQueryOptions } from '../api/queryKeys';
 import { TimeSpentPerDayDTOSchema, timeSpentPerDaySchema } from '../model';
@@ -12,7 +13,8 @@ import { TimeSpentPerDayDTOSchema, timeSpentPerDaySchema } from '../model';
 export const useGetTimeSpentPerDayQuery = () => {
   const queryClient = useQueryClient();
   const currentTeamId = useTeamContext();
-  const qo = developerTimeSpentPerDayQueryOptions(currentTeamId);
+  const { userId: currentUserId } = useUserDashboardContext();
+  const qo = developerTimeSpentPerDayQueryOptions(currentTeamId, currentUserId);
 
   const { data } = useQuery(qo);
 

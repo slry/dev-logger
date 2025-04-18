@@ -5,6 +5,7 @@ import { useCallback } from 'react';
 
 import { useRealtime } from '@/shared/hooks/useRealtime';
 import { useTeamContext } from '@/shared/providers/team-context';
+import { useUserDashboardContext } from '@/shared/providers/user-dashboard-context';
 
 import { developerLocPerDayQueryOptions } from '../api/queryKeys';
 import { LocPerDayDTOSchema, locPerDaySchema } from '../model';
@@ -12,7 +13,8 @@ import { LocPerDayDTOSchema, locPerDaySchema } from '../model';
 export const useGetLocAddedRemovedQuery = () => {
   const queryClient = useQueryClient();
   const currentTeamId = useTeamContext();
-  const qo = developerLocPerDayQueryOptions(currentTeamId);
+  const { userId: currentUserId } = useUserDashboardContext();
+  const qo = developerLocPerDayQueryOptions(currentTeamId, currentUserId);
 
   const { data } = useQuery(qo);
 

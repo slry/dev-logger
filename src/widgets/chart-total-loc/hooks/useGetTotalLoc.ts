@@ -6,6 +6,7 @@ import { useCallback } from 'react';
 
 import { useRealtime } from '@/shared/hooks/useRealtime';
 import { useTeamContext } from '@/shared/providers/team-context';
+import { useUserDashboardContext } from '@/shared/providers/user-dashboard-context';
 import { developerLocPerDayQueryOptions } from '@/widgets/chart-loc/api/queryKeys';
 import { LocPerDayDTOSchema, locPerDaySchema } from '@/widgets/chart-loc/model';
 
@@ -14,8 +15,15 @@ import { developerTotalLocQueryOptions } from '../api/queryKeys';
 export const useGetTotalLoc = () => {
   const queryClient = useQueryClient();
   const currentTeamId = useTeamContext();
-  const totalLocQueryOptions = developerTotalLocQueryOptions(currentTeamId);
-  const locPerDayQueryOptions = developerLocPerDayQueryOptions(currentTeamId);
+  const { userId: currentUserId } = useUserDashboardContext();
+  const totalLocQueryOptions = developerTotalLocQueryOptions(
+    currentTeamId,
+    currentUserId,
+  );
+  const locPerDayQueryOptions = developerLocPerDayQueryOptions(
+    currentTeamId,
+    currentUserId,
+  );
 
   const { data } = useQuery(totalLocQueryOptions);
 

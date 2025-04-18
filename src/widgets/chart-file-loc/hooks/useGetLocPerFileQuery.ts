@@ -4,6 +4,7 @@ import { useCallback } from 'react';
 
 import { useRealtime } from '@/shared/hooks/useRealtime';
 import { useTeamContext } from '@/shared/providers/team-context';
+import { useUserDashboardContext } from '@/shared/providers/user-dashboard-context';
 
 import { developerLocPerFileQueryOptions } from '../api/queryKeys';
 import { LocPerFileDTOSchema, locPerFileSchema } from '../model';
@@ -11,7 +12,8 @@ import { LocPerFileDTOSchema, locPerFileSchema } from '../model';
 export const useGetLocPerFileQuery = () => {
   const queryClient = useQueryClient();
   const currentTeamId = useTeamContext();
-  const qo = developerLocPerFileQueryOptions(currentTeamId);
+  const { userId: currentUserId } = useUserDashboardContext();
+  const qo = developerLocPerFileQueryOptions(currentTeamId, currentUserId);
 
   const { data } = useQuery(qo);
 

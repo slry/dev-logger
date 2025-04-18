@@ -3,8 +3,8 @@ import { queryOptions } from '@tanstack/react-query';
 import { getLocAddedRemovedPerDay } from '.';
 import { LocPerDaySchema } from '../model';
 
-export const developerLocPerDayQueryOptions = (teamId: string) =>
+export const developerLocPerDayQueryOptions = (teamId: string, userId: string) =>
   queryOptions<LocPerDaySchema[]>({
-    queryKey: ['developer_loc_per_day', teamId],
-    queryFn: () => getLocAddedRemovedPerDay(teamId),
+    queryKey: ['developer_loc_per_day', teamId, userId],
+    queryFn: () => getLocAddedRemovedPerDay(teamId, userId),
   });

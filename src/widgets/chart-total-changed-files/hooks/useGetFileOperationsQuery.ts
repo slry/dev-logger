@@ -4,6 +4,7 @@ import { useCallback } from 'react';
 
 import { useRealtime } from '@/shared/hooks/useRealtime';
 import { useTeamContext } from '@/shared/providers/team-context';
+import { useUserDashboardContext } from '@/shared/providers/user-dashboard-context';
 
 import { developerFileOperationsQueryOptions } from '../api/queryKeys';
 import { fileOperationsSchema, FileOperationsDTOSchema } from '../model';
@@ -11,7 +12,8 @@ import { fileOperationsSchema, FileOperationsDTOSchema } from '../model';
 export const useGetFileOperationsQuery = () => {
   const queryClient = useQueryClient();
   const currentTeamId = useTeamContext();
-  const qo = developerFileOperationsQueryOptions(currentTeamId);
+  const { userId: currentUserId } = useUserDashboardContext();
+  const qo = developerFileOperationsQueryOptions(currentTeamId, currentUserId);
 
   const { data } = useQuery(qo);
 

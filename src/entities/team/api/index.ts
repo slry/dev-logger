@@ -11,12 +11,35 @@ export const getTeamMemberList = async (teamId: string) => {
 
   const isOwner = await isUserTeamOwner(teamId, userId);
 
-  if (!isOwner) {
-    console.error(`User ${userId} is not an owner of team ${teamId}`);
-    return [];
-  }
-
   const supabase = await createClient();
+
+  if (!isOwner) {
+    const { data: memberData, error: memberError } = await supabase
+      .from('developer_team')
+      .select()
+      .eq('team_id', teamId)
+      .eq('user_id', userId)
+      .single();
+
+    if (memberError) {
+      console.error(`User ${userId} is not a member of team ${teamId}`);
+      return [];
+    }
+
+    const { data: userData, error: getUserError } = await supabase.auth.getUser();
+
+    if (getUserError) {
+      console.error(`Error fetching user data: ${getUserError.message}`);
+      return [];
+    }
+
+    return teamMemberSchema.array().parse([
+      {
+        ...memberData,
+        raw_user_metadata: userData.user.user_metadata,
+      },
+    ]);
+  }
 
   const { data, error } = await supabase.rpc('get_team_members', { team_id: teamId });
 
