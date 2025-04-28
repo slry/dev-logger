@@ -1,21 +1,3 @@
-// type SnakeToCamelCase<S extends string> = S extends `${infer T}_${infer U}`
-//   ? `${Lowercase<T>}${Capitalize<SnakeToCamelCase<U>>}`
-//   : S;
-//
-// type Prettify<T> = {
-//   [K in keyof T]: T[K];
-// } & {};
-//
-// export type CamelCase<T extends object> = Prettify<{
-//   [K in keyof T as SnakeToCamelCase<string & K>]: T[K] extends Array<infer U>
-//     ? U extends object
-//       ? CamelCase<U>[]
-//       : U[]
-//     : T[K] extends object
-//       ? CamelCase<T[K]>
-//       : T[K];
-// }>;
-
 type SnakeToCamelCase<S extends string> = S extends `${infer T}_${infer U}`
   ? `${T}${Capitalize<SnakeToCamelCase<U>>}`
   : S;
@@ -53,5 +35,5 @@ export const snakeToCamelCase = <T extends object>(data: T): CamelCase<T> => {
       });
     }
   }
-  return camelCaseData as CamelCase<T>;
+  return camelCaseData;
 };

@@ -27,8 +27,8 @@ export const addDeveloperTotalLoc = async ({
       user_id: userId,
       repo_url: repoUrl,
       filename: file,
-      loc_added: added + (data?.[0]?.loc_added || 0),
-      loc_removed: deleted + (data?.[0]?.loc_removed || 0),
+      loc_added: added + (data?.[0]?.loc_added ?? 0),
+      loc_removed: deleted + (data?.[0]?.loc_removed ?? 0),
     });
   });
 };

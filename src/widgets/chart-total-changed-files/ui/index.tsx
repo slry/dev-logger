@@ -94,7 +94,7 @@ export const ChartTotalChangedFiles = () => {
                         </tspan>
                         <tspan
                           x={viewBox.cx}
-                          y={(viewBox.cy || 0) + 24}
+                          y={(viewBox.cy ?? 0) + 24}
                           className="fill-muted-foreground"
                         >
                           Files Changed

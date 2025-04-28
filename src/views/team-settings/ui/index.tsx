@@ -13,7 +13,7 @@ const TeamSettings = withHydrationBoundary<{ teamId: string }>(
   async ({ teamId }) => {
     const headersList = await headers();
     const hostname = headersList.get('host');
-    const protocol = headersList.get('x-forwarded-proto') || 'http';
+    const protocol = headersList.get('x-forwarded-proto') ?? 'http';
     return (
       <section className="flex flex-col gap-4 px-4">
         <TeamMembersList baseUrl={`${protocol}://${hostname}`} teamId={teamId} />

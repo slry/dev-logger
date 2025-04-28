@@ -34,9 +34,8 @@ export const withHydrationBoundary = <
 
   const WithHydrationBoundary: FC<Props> = async (props) => {
     const promises = queryOptions.map((qo) => {
-      const queryOption =
-        typeof qo === 'function' ? qo(props) : (qo as FetchQueryOptions<any>);
-      return queryClient.prefetchQuery(queryOption);
+      const queryOption = typeof qo === 'function' ? qo(props) : qo;
+      return queryClient.prefetchQuery(queryOption as FetchQueryOptions<any>);
     });
 
     await Promise.all(promises);
@@ -48,7 +47,7 @@ export const withHydrationBoundary = <
     );
   };
 
-  WithHydrationBoundary.displayName = `WithHydrationBoundary(${Component.displayName || Component.name})`;
+  WithHydrationBoundary.displayName = `WithHydrationBoundary(${Component.displayName ?? Component.name})`;
 
   return WithHydrationBoundary;
 };

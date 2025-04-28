@@ -36,7 +36,7 @@ export const BreadcrumbItemsList: FC<BreadcrumbItemsList> = ({ teamId }) => {
   return (
     <BreadcrumbList>
       {breadcrumbs.map((b, i) => (
-        <Fragment key={i}>
+        <Fragment key={`${b.url}-${i}`}>
           <BreadcrumbItem className="hidden md:block">
             <BreadcrumbLink>{b.label}</BreadcrumbLink>
           </BreadcrumbItem>

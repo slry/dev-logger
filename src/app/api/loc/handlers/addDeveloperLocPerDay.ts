@@ -40,7 +40,7 @@ export const addDeveloperLocPerDay = async ({
     team_id: teamId,
     user_id: userId,
     datetime,
-    loc_added: totalAdded + (data?.[0]?.loc_added || 0),
-    loc_removed: totalDeleted + (data?.[0]?.loc_removed || 0),
+    loc_added: totalAdded + (data?.[0]?.loc_added ?? 0),
+    loc_removed: totalDeleted + (data?.[0]?.loc_removed ?? 0),
   });
 };

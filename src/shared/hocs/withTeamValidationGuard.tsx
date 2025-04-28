@@ -19,7 +19,7 @@ export const withTeamValidationGuard = (Component: FC<ArgumentComponentProps>) =
     return <Component teamId={validatedTeamId} />;
   };
 
-  WithTeamValidationGuard.displayName = `WithTeamValidationGuard(${Component.displayName || Component.name})`;
+  WithTeamValidationGuard.displayName = `WithTeamValidationGuard(${Component.displayName ?? Component.name})`;
 
   return WithTeamValidationGuard;
 };

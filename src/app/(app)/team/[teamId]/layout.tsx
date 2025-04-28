@@ -9,10 +9,10 @@ import { HeaderBreadcrumbs } from '@/widgets/header-breadcrumbs/ui';
 export default async function Layout({
   children,
   params,
-}: {
+}: Readonly<{
   children: React.ReactNode;
   params: Promise<{ teamId: string }>;
-}) {
+}>) {
   const { teamId } = await params;
   const { valid, teamId: validatedTeamId } = await validateTeamId(teamId);
   if (!valid || !validatedTeamId) redirect('/team/personal/dashboard');

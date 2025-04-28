@@ -24,7 +24,7 @@ export const addDeveloperTimeSpentPerDay = async ({
     .select('time_spent')
     .eq('date', date)
     .eq('user_id', userId);
-  const currentTimeSpent = existingData.data?.[0]?.time_spent || 0;
+  const currentTimeSpent = existingData.data?.[0]?.time_spent ?? 0;
 
   await table.upsert({
     repo_url: repoUrl,
