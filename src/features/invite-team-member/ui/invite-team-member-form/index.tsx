@@ -7,7 +7,7 @@ import { Button } from '@/shared/shadcn/ui/button';
 import { CopyField } from '@/shared/shadcn/ui/copy-field';
 import { Form } from '@/shared/shadcn/ui/form';
 
-import { createNewInviteLink } from '../../api';
+import { createNewInviteLink } from '../../api/actions';
 
 interface InviteTeamMemberFormProps {
   baseUrl: string;

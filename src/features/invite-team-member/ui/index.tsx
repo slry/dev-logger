@@ -16,12 +16,15 @@ import {
 import { InviteTeamMemberForm } from './invite-team-member-form';
 import { isPersonalTeamQueryOptions } from '../api/queryKeys';
 
-interface InviteTeamMemberProps {
+interface InviteTeamMemberDialogProps {
   teamId: string;
   baseUrl: string;
 }
 
-export const InviteTeamMember: FC<InviteTeamMemberProps> = ({ teamId, baseUrl }) => {
+export const InviteTeamMemberDialog: FC<InviteTeamMemberDialogProps> = ({
+  teamId,
+  baseUrl,
+}) => {
   const [open, setOpen] = useState(false);
 
   const onComplete = async () => {
