@@ -25,7 +25,7 @@ import {
   SelectValue,
 } from '@/shared/shadcn/ui/select';
 
-import { createAPIToken } from '../../api';
+import { createAPIToken } from '../../api/actions';
 import { createAPITokenSchema, CreateAPITokenSchema } from '../../model';
 import { expiresAtLocale } from '../../utils/expiresAtLocale';
 
