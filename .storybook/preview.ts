@@ -9,6 +9,10 @@ const preview: Preview = {
   parameters: {
     nextjs: {
       appDirectory: true,
+      router: {
+        pathname: '/team/[teamId]/dashboard',
+        asPath: '/team/teamId/dashboard',
+      },
     },
     controls: {
       matchers: {

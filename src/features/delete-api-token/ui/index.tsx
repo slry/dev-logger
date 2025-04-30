@@ -18,14 +18,14 @@ import {
 import { Button } from '@/shared/shadcn/ui/button';
 import { getApiTokensListQueryOptions } from '@/views/api-settings/api/queryKeys';
 
-import { deleteAPIToken } from '../api';
+import { deleteAPIToken } from '../api/actions';
 
 interface DeleteApiTokenButtonProps {
   tokenName: string;
   tokenId: number;
 }
 
-export const DeleteApiTokenButton: FC<DeleteApiTokenButtonProps> = ({
+export const DeleteApiTokenDialog: FC<DeleteApiTokenButtonProps> = ({
   tokenName,
   tokenId,
 }) => {
@@ -43,6 +43,7 @@ export const DeleteApiTokenButton: FC<DeleteApiTokenButtonProps> = ({
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger
+        aria-label="Delete API Token"
         title="Delete"
         className="flex h-8 w-8 items-center justify-center"
       >

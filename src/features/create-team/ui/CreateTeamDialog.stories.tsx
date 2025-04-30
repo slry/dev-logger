@@ -11,14 +11,6 @@ import { CreateTeamDialog } from '.';
 import { checkExistingTeam, createTeam } from '../api/mock';
 
 const meta: Meta<typeof CreateTeamDialog> = {
-  parameters: {
-    nextjs: {
-      router: {
-        pathname: '/team/[teamId]/dashboard',
-        asPath: '/team/teamId/dashboard',
-      },
-    },
-  },
   component: CreateTeamDialog,
   beforeEach: () => {
     createTeam.mockResolvedValue({

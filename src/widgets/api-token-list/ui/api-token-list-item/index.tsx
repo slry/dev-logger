@@ -1,7 +1,7 @@
 import { FC } from 'react';
 
 import { APITokenItem } from '@/entities/api-token-item/model';
-import { DeleteApiTokenButton } from '@/features/delete-api-token/ui';
+import { DeleteApiTokenDialog } from '@/features/delete-api-token/ui';
 import { TableCell, TableRow } from '@/shared/ui/table';
 
 export const APITokenListItem: FC<APITokenItem> = ({
@@ -21,7 +21,7 @@ export const APITokenListItem: FC<APITokenItem> = ({
       </TableCell>
       <TableCell>{expiresAt}</TableCell>
       <TableCell>
-        <DeleteApiTokenButton tokenName={name} tokenId={id} />
+        <DeleteApiTokenDialog tokenName={name} tokenId={id} />
       </TableCell>
     </TableRow>
   );
