@@ -1,5 +1,8 @@
 import type { Preview } from '@storybook/react';
 
+import { WithDefaultProviders } from '@/shared/test/decorators/WithDefaultProviders';
+import { WithPortalContext } from '@/shared/test/decorators/WithPortalContext';
+
 import '../src/app/globals.css';
 
 const preview: Preview = {
@@ -11,6 +14,7 @@ const preview: Preview = {
       },
     },
   },
+  decorators: [WithDefaultProviders, WithPortalContext],
 };
 
 export default preview;

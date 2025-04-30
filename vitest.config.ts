@@ -10,6 +10,11 @@ const dirname =
 
 // More info at: https://storybook.js.org/docs/writing-tests/test-addon
 export default defineConfig({
+  resolve: {
+    alias: {
+      '@': path.resolve(dirname, './src'),
+    },
+  },
   test: {
     coverage: {
       // 👇 Add this
@@ -45,6 +50,12 @@ export default defineConfig({
             ],
           },
           setupFiles: ['.storybook/vitest.setup.ts'],
+        },
+      },
+      {
+        test: {
+          name: 'vitest',
+          environment: 'node',
         },
       },
     ],

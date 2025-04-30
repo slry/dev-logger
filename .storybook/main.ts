@@ -1,3 +1,5 @@
+import path from 'path';
+
 import type { StorybookConfig } from '@storybook/experimental-nextjs-vite';
 
 const config: StorybookConfig = {
@@ -18,13 +20,19 @@ const config: StorybookConfig = {
   },
   staticDirs: ['../public'],
   viteFinal: async (config) => {
+    config.plugins = config.plugins || [];
     config.plugins.push({
       name: 'rewrite-api-to-mock',
       enforce: 'pre', // important: run early before resolve
       resolveId(source, importer) {
-        if (source.endsWith('/api')) {
-          // Turn ./some/path/api → ./some/path/api/mock.ts
-          const newPath = source + '/mock.ts';
+        // skip mock.ts
+        if (importer && importer.endsWith('mock.ts')) {
+          return null;
+        }
+
+        if (source.endsWith('/actions')) {
+          // Turn ./some/path/actions.ts → ./some/path/mock.ts
+          const newPath = source.replace(/actions$/, 'mock');
           console.log(`🔁 Rewriting import: ${source} -> ${newPath}`);
           return this.resolve(newPath, importer, { skipSelf: true });
         }
@@ -32,20 +40,19 @@ const config: StorybookConfig = {
       },
     });
 
+    config.resolve = config.resolve || {};
+
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      '@/shared': path.resolve(__dirname, '../src/shared'),
+      '@/app': path.resolve(__dirname, '../src/app'),
+      '@/entities': path.resolve(__dirname, '../src/entities'),
+      '@/features': path.resolve(__dirname, '../src/features'),
+      '@/views': path.resolve(__dirname, '../src/views'),
+      '@/widgets': path.resolve(__dirname, '../src/widgets'),
+    };
+
     return config;
   },
 };
 export default config;
-
-// webpackFinal: async (config) => {
-//   config.plugins = config.plugins || [];
-//   config.plugins.push(
-//     new (require('webpack').NormalModuleReplacementPlugin)(
-//       /\/api$/, // regex match imports ending in /api
-//       (resource) => {
-//         resource.request = resource.request + '/mock.ts';
-//       },
-//     ),
-//   );
-//   return config;
-// },

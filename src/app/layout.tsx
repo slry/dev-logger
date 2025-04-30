@@ -1,7 +1,10 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 
-import Providers from './providers';
+import { PortalProvider } from '@/shared/providers/portal-context';
+
+import Providers from '../shared/providers/providers';
+
 import './globals.css';
 
 const geistSans = Geist({
@@ -29,7 +32,10 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} bg-background antialiased`}
       >
-        <Providers>{children}</Providers>
+        <Providers>
+          <PortalProvider containerId="modal-root">{children}</PortalProvider>
+        </Providers>
+        <div id="modal-root"></div>
       </body>
     </html>
   );
