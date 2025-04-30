@@ -13,7 +13,7 @@ import {
 } from '@/shared/shadcn/ui/form';
 import { PasswordInput } from '@/shared/shadcn/ui/input';
 
-import { integrateGitlabToken } from '../../api';
+import { integrateGitlabToken } from '../../api/actions';
 import { isGitlabIntegratedQueryOptions } from '../../api/queryOptions';
 import { integrateGitlabSchema } from '../../model';
 

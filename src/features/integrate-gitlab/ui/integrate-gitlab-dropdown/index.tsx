@@ -18,7 +18,7 @@ export const IntegrateGitlabDropdown = () => {
 
   return (
     <DropdownMenu modal={false} open={open} onOpenChange={setOpen}>
-      <DropdownMenuTrigger>
+      <DropdownMenuTrigger aria-label="Gitlab Actions">
         <EllipsisVerticalIcon width={16} height={16} />
       </DropdownMenuTrigger>
       <DropdownMenuContent>

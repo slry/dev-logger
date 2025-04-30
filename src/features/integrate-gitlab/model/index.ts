@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { validateGitlabToken } from '../api';
+import { validateGitlabToken } from '../api/actions';
 
 export const integrateGitlabSchema = z.object({
   token: z

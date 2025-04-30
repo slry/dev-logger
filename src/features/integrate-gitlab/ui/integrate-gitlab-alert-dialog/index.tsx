@@ -16,7 +16,7 @@ import {
 import { Button } from '@/shared/shadcn/ui/button';
 import { DropdownMenuItem } from '@/shared/shadcn/ui/dropdown-menu';
 
-import { revokeGitlabToken } from '../../api';
+import { revokeGitlabToken } from '../../api/actions';
 import { isGitlabIntegratedQueryOptions } from '../../api/queryOptions';
 
 interface IntegrateGitlabRevokeAlertDialogProps {
