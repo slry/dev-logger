@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { checkExistingTeam } from '../api';
+import { checkExistingTeam } from '../api/actions';
 
 export const createTeamSchema = z.object({
   name: z

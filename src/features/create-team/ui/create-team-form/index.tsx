@@ -20,7 +20,7 @@ import {
 import { Input } from '@/shared/shadcn/ui/input';
 import { getTeamsListQueryOptions } from '@/widgets/app-sidebar/api/queryKeys';
 
-import { createTeam } from '../../api';
+import { createTeam } from '../../api/actions';
 import { createTeamSchema, CreateTeamSchema } from '../../model';
 
 interface CreateTeamFormProps {
