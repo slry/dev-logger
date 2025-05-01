@@ -23,7 +23,7 @@ import {
   SelectValue,
 } from '@/shared/shadcn/ui/select';
 
-import { addRepoToTeam } from '../../api';
+import { addRepoToTeam } from '../../api/actions';
 import { useGetGitlabReposOptionsQuery } from '../../hooks';
 import { addGitlabRepoFormSchema, AddGitlabRepoFormSchema } from '../../model';
 

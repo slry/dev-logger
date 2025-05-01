@@ -18,7 +18,7 @@ interface AddGitlabRepoProps {
   teamId: string;
 }
 
-export const AddGitlabRepo: FC<AddGitlabRepoProps> = ({ teamId }) => {
+export const AddGitlabRepoDialog: FC<AddGitlabRepoProps> = ({ teamId }) => {
   const query = useGetGitlabReposOptionsQuery(teamId);
   const [open, setOpen] = useState(false);
 
