@@ -17,14 +17,17 @@ import {
 import { Button } from '@/shared/shadcn/ui/button';
 import { getTeamGitlabReposQueryOptions } from '@/widgets/gitlab-repo-list/api/queryKeys';
 
-import { removeGitlabRepo } from '../api';
+import { removeGitlabRepo } from '../api/actions';
 
 interface RemoveGitlabRepoProps {
   teamId: string;
   repoUrl: string;
 }
 
-export const RemoveGitlabRepo: FC<RemoveGitlabRepoProps> = ({ teamId, repoUrl }) => {
+export const RemoveGitlabRepoDialog: FC<RemoveGitlabRepoProps> = ({
+  teamId,
+  repoUrl,
+}) => {
   const [open, setOpen] = useState(false);
   const queryClient = useQueryClient();
   const qo = getTeamGitlabReposQueryOptions(teamId);
@@ -43,7 +46,7 @@ export const RemoveGitlabRepo: FC<RemoveGitlabRepoProps> = ({ teamId, repoUrl })
   });
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
-      <AlertDialogTrigger>
+      <AlertDialogTrigger aria-label="Remove repository">
         <TrashIcon className="size-4" />
       </AlertDialogTrigger>
       <AlertDialogContent>

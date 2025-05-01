@@ -2,7 +2,7 @@ import { LinkIcon } from 'lucide-react';
 import Link from 'next/link';
 import { FC } from 'react';
 
-import { RemoveGitlabRepo } from '@/features/remove-gitlab-repo/ui';
+import { RemoveGitlabRepoDialog } from '@/features/remove-gitlab-repo/ui';
 import { Badge } from '@/shared/shadcn/ui/badge';
 import { TableCell, TableRow } from '@/shared/ui/table';
 
@@ -29,7 +29,7 @@ export const GitlabRepoListItem: FC<GitlabRepoSchema> = ({
       </TableCell>
       <TableCell>{description || 'No project description'}</TableCell>
       <TableCell>
-        <RemoveGitlabRepo teamId={teamId} repoUrl={url} />
+        <RemoveGitlabRepoDialog teamId={teamId} repoUrl={url} />
       </TableCell>
     </TableRow>
   );
