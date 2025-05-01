@@ -1,10 +1,10 @@
 import { headers } from 'next/headers';
 
 import { getTeamMembersListQueryOptions } from '@/entities/team/api/queryKeys';
+import { withTeamValidationGuard } from '@/entities/team/hocs/withTeamValidationGuard';
 import { getReposQueryOptions } from '@/features/add-gitlab-repo/api/queryKeys';
 import { isPersonalTeamQueryOptions } from '@/features/invite-team-member/api/queryKeys';
 import { withHydrationBoundary } from '@/shared/hocs/withHydrationBoundary';
-import { withTeamValidationGuard } from '@/shared/hocs/withTeamValidationGuard';
 import { getTeamGitlabReposQueryOptions } from '@/widgets/gitlab-repo-list/api/queryKeys';
 import { GitlabRepoList } from '@/widgets/gitlab-repo-list/ui';
 import { TeamMembersList } from '@/widgets/team-member-list/ui';

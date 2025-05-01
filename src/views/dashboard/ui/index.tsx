@@ -1,6 +1,6 @@
 import { getTeamMembersListQueryOptions } from '@/entities/team/api/queryKeys';
+import { withTeamValidationGuard } from '@/entities/team/hocs/withTeamValidationGuard';
 import { withHydrationBoundary } from '@/shared/hocs/withHydrationBoundary';
-import { withTeamValidationGuard } from '@/shared/hocs/withTeamValidationGuard';
 
 import { DashboardList } from './dashboard-list';
 
