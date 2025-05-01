@@ -1,9 +1,9 @@
 import { Separator } from '@radix-ui/react-separator';
 
+import { getCurrentTeamQueryOptions } from '@/entities/team/api/queryKeys';
 import { withHydrationBoundary } from '@/shared/hocs/withHydrationBoundary';
 import { Breadcrumb } from '@/shared/shadcn/ui/breadcrumb';
 import { SidebarTrigger } from '@/shared/shadcn/ui/sidebar';
-import { getCurrentTeamQueryOptions } from '@/widgets/app-sidebar/api/queryKeys';
 
 import { BreadcrumbItemsList } from './breadcrumbs-list';
 

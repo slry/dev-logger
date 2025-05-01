@@ -4,7 +4,12 @@ import { useQuery } from '@tanstack/react-query';
 import { ChevronsUpDown, icons as lucideIcons } from 'lucide-react';
 import { FC, useState } from 'react';
 
-import { TeamItem } from '@/entities/team-item/ui';
+import {
+  getCurrentTeamQueryOptions,
+  getTeamsListQueryOptions,
+} from '@/entities/team/api/queryKeys';
+import { teamRoleMapper } from '@/entities/team/model';
+import { TeamItem } from '@/entities/team/ui/team-item';
 import { CreateTeamDialog } from '@/features/create-team/ui';
 import {
   DropdownMenu,
@@ -21,12 +26,7 @@ import {
   useSidebar,
 } from '@/shared/shadcn/ui/sidebar';
 
-import {
-  getCurrentTeamQueryOptions,
-  getPersonalTeamIdQueryOptions,
-  getTeamsListQueryOptions,
-} from '../../api/queryKeys';
-import { mapTeamRoleLabel } from '../../model';
+import { getPersonalTeamIdQueryOptions } from '../../api/queryKeys';
 
 interface TeamSwitcherProps {
   teamId: string;
@@ -72,7 +72,7 @@ export const TeamSwitcher: FC<TeamSwitcherProps> = ({ teamId }) => {
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-semibold">{currentTeam.name}</span>
                 <span className="truncate text-xs">
-                  {mapTeamRoleLabel[currentTeam.role]}
+                  {teamRoleMapper[currentTeam.role]}
                 </span>
               </div>
               <ChevronsUpDown className="ml-auto" />

@@ -5,7 +5,7 @@ import { isUserTeamOwner } from '@/shared/api/is-user-team-owner';
 import { createClient as createNextClient } from '@/shared/api/supabase/next';
 import { createClient as createServerClient } from '@/shared/api/supabase/server';
 
-import { teamMemberSchema } from '../model';
+import { teamSchema, teamMemberSchema, currentTeamSchema } from '../model';
 
 export const getTeamMemberList = async (teamId: string) => {
   const userId = await getUserId();
@@ -52,6 +52,26 @@ export const getTeamMemberList = async (teamId: string) => {
   return teamMemberSchema.array().parse(data);
 };
 
+export const getCurrentTeamById = async (teamId: string) => {
+  const supabaseClient = await createServerClient();
+
+  const { data, error } = await supabaseClient
+    .from('teams')
+    .select('id, name, icon, developer_team ( user_id, role )')
+    .eq('id', teamId)
+    .eq('developer_team.user_id', await getUserId())
+    .single();
+
+  if (error) {
+    throw new Error(`Error fetching team: ${error.message}`);
+  }
+
+  return currentTeamSchema.parse({
+    ...data,
+    role: data.developer_team[0].role,
+  });
+};
+
 export const getTeamById = async (teamId: string) => {
   const supabase = await createNextClient();
 
@@ -93,4 +113,16 @@ export const validateTeamId = async (teamId: string) => {
   const team = await getTeamById(teamId);
   if (!team) return { valid: false, teamId: null };
   return { valid: true, teamId: team.id };
+};
+
+export const getTeamsList = async () => {
+  const supabaseClient = await createServerClient();
+
+  const { data, error } = await supabaseClient.from('teams').select('id, name, icon');
+
+  if (error) {
+    throw new Error(`Error fetching teams: ${error.message}`);
+  }
+
+  return teamSchema.array().parse(data);
 };

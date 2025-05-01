@@ -4,13 +4,13 @@ import { useQuery } from '@tanstack/react-query';
 import { usePathname } from 'next/navigation';
 import { FC, Fragment } from 'react';
 
+import { getCurrentTeamQueryOptions } from '@/entities/team/api/queryKeys';
 import {
   BreadcrumbItem,
   BreadcrumbLink,
   BreadcrumbList,
   BreadcrumbSeparator,
 } from '@/shared/shadcn/ui/breadcrumb';
-import { getCurrentTeamQueryOptions } from '@/widgets/app-sidebar/api/queryKeys';
 
 import { pathToBreadcrumb } from '../../model';
 

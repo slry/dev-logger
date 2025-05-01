@@ -6,6 +6,7 @@ import { icons as lucideIcons } from 'lucide-react';
 import { FC } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
 
+import { getTeamsListQueryOptions } from '@/entities/team/api/queryKeys';
 import { useChangeTeam } from '@/shared/hooks/useChangeTeam';
 import { Button } from '@/shared/shadcn/ui/button';
 import { DialogFooter } from '@/shared/shadcn/ui/dialog';
@@ -18,7 +19,6 @@ import {
   FormMessage,
 } from '@/shared/shadcn/ui/form';
 import { Input } from '@/shared/shadcn/ui/input';
-import { getTeamsListQueryOptions } from '@/widgets/app-sidebar/api/queryKeys';
 
 import { createTeam } from '../../api/actions';
 import { createTeamSchema, CreateTeamSchema } from '../../model';

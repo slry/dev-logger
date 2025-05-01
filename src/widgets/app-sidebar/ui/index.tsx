@@ -1,5 +1,9 @@
 import Link from 'next/link';
 
+import {
+  getCurrentTeamQueryOptions,
+  getTeamsListQueryOptions,
+} from '@/entities/team/api/queryKeys';
 import { userQueryOptions } from '@/entities/user/api/queryKeys';
 import { withHydrationBoundary } from '@/shared/hocs/withHydrationBoundary';
 import {
@@ -15,11 +19,7 @@ import {
 import { menuItems } from '../model';
 import { SidebarFooterUser } from './footer-user';
 import { TeamSwitcher } from './team-switcher';
-import {
-  getCurrentTeamQueryOptions,
-  getPersonalTeamIdQueryOptions,
-  getTeamsListQueryOptions,
-} from '../api/queryKeys';
+import { getPersonalTeamIdQueryOptions } from '../api/queryKeys';
 
 interface AppSidebarProps {
   teamId: string;

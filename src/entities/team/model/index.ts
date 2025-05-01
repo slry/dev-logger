@@ -5,6 +5,22 @@ import { Database } from '@/shared/api/supabase/types';
 import { snakeToCamelCase } from '@/shared/lib/snakeToCamelCase';
 import { Expect, IsSameType } from '@/shared/test/types';
 
+export const teamDTOSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  icon: z.string(),
+});
+
+export const teamSchema = teamDTOSchema.transform(snakeToCamelCase);
+
+export type TeamDTOSchema = z.infer<typeof teamDTOSchema>;
+export type TeamSchema = z.infer<typeof teamSchema>;
+
+// Type Test
+type TeamDTODatabase = Database['public']['Tables']['teams']['Row'];
+
+type _TypeTestTeam = Expect<IsSameType<TeamDTOSchema, TeamDTODatabase>>;
+
 export const teamMemberDTOSchema = z.object({
   user_id: z.string(),
   role: z.enum(['OWNER', 'DEVELOPER']),
@@ -35,4 +51,12 @@ type TeamMemberDTODatabase = Omit<
   'raw_user_metadata'
 >;
 
-type _TypeTest = Expect<IsSameType<TeamMemberDTODatabase, teamMemberDTOSchema>>;
+type _TypeTestTeamMember = Expect<IsSameType<TeamMemberDTODatabase, teamMemberDTOSchema>>;
+
+export const currentTeamSchema = teamDTOSchema
+  .extend({
+    role: z.enum(['OWNER', 'DEVELOPER']),
+  })
+  .transform(snakeToCamelCase);
+
+export type CurrentTeamSchema = z.infer<typeof currentTeamSchema>;
