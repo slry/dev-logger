@@ -1,6 +1,6 @@
 import { queryOptions } from '@tanstack/react-query';
 
-import { getPersonalTeam } from '@/shared/api/validate-team-id';
+import { getPersonalTeam } from '@/entities/team/api/actions';
 
 export const isPersonalTeamQueryOptions = (teamId: string) =>
   queryOptions<boolean>({

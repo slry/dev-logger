@@ -1,7 +1,7 @@
 import { redirect } from 'next/navigation';
 import { FC } from 'react';
 
-import { validateTeamId } from '../api/validate-team-id';
+import { validateTeamId } from '@/entities/team/api/actions';
 
 interface ArgumentComponentProps {
   teamId: string;

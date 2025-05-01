@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation';
 
-import { validateTeamId } from '@/shared/api/validate-team-id';
+import { validateTeamId } from '@/entities/team/api/actions';
 
 import { joinTeam } from '../api';
 

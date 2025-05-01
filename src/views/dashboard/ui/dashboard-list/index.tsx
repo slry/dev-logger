@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import { getTeamMemberList } from '@/entities/team/api';
+import { getTeamMemberList } from '@/entities/team/api/actions';
 
 import { UserDashboard } from '../user-dashboard';
 

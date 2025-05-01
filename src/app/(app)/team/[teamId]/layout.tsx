@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation';
 
-import { validateTeamId } from '@/shared/api/validate-team-id';
+import { validateTeamId } from '@/entities/team/api/actions';
 import { TeamProvider } from '@/shared/providers/team-context';
 import { SidebarInset, SidebarProvider } from '@/shared/shadcn/ui/sidebar';
 import { AppSidebar } from '@/widgets/app-sidebar/ui';

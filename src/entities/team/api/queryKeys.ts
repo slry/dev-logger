@@ -1,6 +1,6 @@
 import { queryOptions } from '@tanstack/react-query';
 
-import { getTeamMemberList } from '.';
+import { getTeamMemberList } from './actions';
 import { TeamMemberSchema } from '../model';
 
 export const getTeamMembersListQueryOptions = (teamId: string) =>
