@@ -28,24 +28,11 @@ export const withHydrationBoundary = <
     | ((props: Props) => FetchQueryOptions<any>),
 >(
   Component: FC<WithHydrationBoundaryComponentProps<Props>>,
-  queryOptions: QueryOptions[],
+  _queryOptions: QueryOptions[],
 ) => {
   const queryClient = new QueryClient();
 
-  const WithHydrationBoundary: FC<Props> = async (props) => {
-    const promises = queryOptions.map((qo) => {
-      const queryOption = typeof qo === 'function' ? qo(props) : qo;
-      const typedQueryOption = queryOption as FetchQueryOptions<any>;
-      // check if query is already in cache
-      if (queryClient.getQueryData(typedQueryOption.queryKey)) {
-        return Promise.resolve();
-      }
-
-      return queryClient.prefetchQuery(typedQueryOption);
-    });
-
-    await Promise.all(promises);
-
+  const WithHydrationBoundary: FC<Props> = (props) => {
     return (
       <HydrationBoundary state={dehydrate(queryClient)}>
         <Component {...props} queryClient={queryClient} />
