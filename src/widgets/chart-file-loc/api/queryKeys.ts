@@ -1,6 +1,6 @@
 import { queryOptions } from '@tanstack/react-query';
 
-import { getLocPerFile } from '.';
+import { getLocPerFile } from './actions';
 import { LocPerFileSchema } from '../model';
 
 export const developerLocPerFileQueryOptions = (teamId: string, userId: string) =>
