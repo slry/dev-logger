@@ -1,3 +1,4 @@
+'use client';
 import { createContext, FC, PropsWithChildren, useEffect, useState } from 'react';
 
 interface PortalProviderProps {

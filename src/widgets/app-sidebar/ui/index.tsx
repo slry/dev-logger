@@ -26,7 +26,7 @@ interface AppSidebarProps {
 }
 
 export const AppSidebar = withHydrationBoundary<AppSidebarProps>(
-  async ({ teamId }) => {
+  ({ teamId }) => {
     return (
       <Sidebar collapsible="icon">
         <SidebarHeader>

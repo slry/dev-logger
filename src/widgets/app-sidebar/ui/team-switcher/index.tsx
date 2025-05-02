@@ -63,6 +63,7 @@ export const TeamSwitcher: FC<TeamSwitcherProps> = ({ teamId }) => {
         <DropdownMenu modal={false} open={open} onOpenChange={setOpen}>
           <DropdownMenuTrigger asChild>
             <SidebarMenuButton
+              aria-label="Switch team"
               size="lg"
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
