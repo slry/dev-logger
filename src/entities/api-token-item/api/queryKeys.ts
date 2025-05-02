@@ -1,8 +1,7 @@
 import { queryOptions } from '@tanstack/react-query';
 
-import { APITokenItem } from '@/entities/api-token-item/model';
-
-import { getAPITokensList } from '.';
+import { APITokenItem } from '../model';
+import { getAPITokensList } from './actions';
 
 export const getApiTokensListQueryOptions = (teamId: string) =>
   queryOptions<APITokenItem[]>({

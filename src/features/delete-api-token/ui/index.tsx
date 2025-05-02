@@ -3,6 +3,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { Trash } from 'lucide-react';
 import { FC, useState } from 'react';
 
+import { getApiTokensListQueryOptions } from '@/entities/api-token-item/api/queryKeys';
 import { useLoadingHandleClick } from '@/shared/hooks/useLoadingHandleClick';
 import { useTeamContext } from '@/shared/providers/team-context';
 import {
@@ -16,7 +17,6 @@ import {
   AlertDialogTrigger,
 } from '@/shared/shadcn/ui/alert-dialog';
 import { Button } from '@/shared/shadcn/ui/button';
-import { getApiTokensListQueryOptions } from '@/views/api-settings/api/queryKeys';
 
 import { deleteAPIToken } from '../api/actions';
 

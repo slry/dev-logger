@@ -1,10 +1,10 @@
 'use client';
 import { useQuery } from '@tanstack/react-query';
 
+import { getApiTokensListQueryOptions } from '@/entities/api-token-item/api/queryKeys';
 import { CreateAPIToken } from '@/features/create-api-token/ui';
 import { useTeamContext } from '@/shared/providers/team-context';
 import { Table, TableBody, TableHead, TableHeader, TableRow } from '@/shared/ui/table';
-import { getApiTokensListQueryOptions } from '@/views/api-settings/api/queryKeys';
 
 import { APITokenListEmpty } from './api-token-list-empty';
 import { APITokenListItem } from './api-token-list-item';

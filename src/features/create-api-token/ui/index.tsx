@@ -3,6 +3,7 @@ import { DialogTitle } from '@radix-ui/react-dialog';
 import { useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 
+import { getApiTokensListQueryOptions } from '@/entities/api-token-item/api/queryKeys';
 import { useTeamContext } from '@/shared/providers/team-context';
 import { Button } from '@/shared/shadcn/ui/button';
 import {
@@ -12,7 +13,6 @@ import {
   DialogHeader,
   DialogTrigger,
 } from '@/shared/shadcn/ui/dialog';
-import { getApiTokensListQueryOptions } from '@/views/api-settings/api/queryKeys';
 
 import { CreateAPITokenForm } from './create-api-token-form';
 

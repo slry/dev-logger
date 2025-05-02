@@ -1,8 +1,9 @@
 'use server';
 
-import { apiTokenSchema } from '@/entities/api-token-item/model';
 import { getUserId } from '@/shared/api/get-user-id';
 import { createClient } from '@/shared/api/supabase/server';
+
+import { apiTokenSchema } from '../model';
 
 export const getAPITokensList = async (teamId: string) => {
   const supabase = await createClient();
