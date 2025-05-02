@@ -1,6 +1,6 @@
 import { queryOptions } from '@tanstack/react-query';
 
-import { getTeamGitlabRepos } from '.';
+import { getTeamGitlabRepos } from './actions';
 import { GitlabRepoSchema } from '../model';
 
 export const getTeamGitlabReposQueryOptions = (teamId: string) =>
