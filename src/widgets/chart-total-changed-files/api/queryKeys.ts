@@ -1,6 +1,6 @@
 import { queryOptions } from '@tanstack/react-query';
 
-import { getFileOperations } from '.';
+import { getFileOperations } from './actions';
 import { FileOperationsSchema } from '../model';
 
 export const developerFileOperationsQueryOptions = (teamId: string, userId: string) =>
