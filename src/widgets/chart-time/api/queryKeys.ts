@@ -1,6 +1,6 @@
 import { queryOptions } from '@tanstack/react-query';
 
-import { getTimeSpentPerDay } from '.';
+import { getTimeSpentPerDay } from './actions';
 import { TimeSpentPerDaySchema } from '../model';
 
 export const developerTimeSpentPerDayQueryOptions = (teamId: string, userId: string) =>
