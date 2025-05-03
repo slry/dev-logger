@@ -4,6 +4,7 @@ import { within } from '@storybook/test';
 
 import { getCurrentTeamById } from '@/entities/team/api/mock';
 import { SidebarProvider } from '@/shared/shadcn/ui/sidebar';
+import { WithSuspense } from '@/shared/test/decorators/WithSuspense';
 
 import { HeaderBreadcrumbs } from '.';
 
@@ -13,6 +14,7 @@ const meta: Meta<typeof HeaderBreadcrumbs> = {
     teamId: 'teamId',
   },
   decorators: [
+    WithSuspense,
     (Story) => (
       <SidebarProvider>
         <Story />

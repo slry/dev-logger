@@ -5,6 +5,7 @@ import { getCurrentTeamById, getTeamsList } from '@/entities/team/api/mock';
 import { getUser } from '@/entities/user/api/mock';
 import { checkExistingTeam, createTeam } from '@/features/create-team/api/mock';
 import { SidebarProvider } from '@/shared/shadcn/ui/sidebar';
+import { WithSuspense } from '@/shared/test/decorators/WithSuspense';
 
 import { AppSidebar } from '.';
 import { getPersonalTeam } from '../api/mock';
@@ -12,6 +13,7 @@ import { getPersonalTeam } from '../api/mock';
 const meta: Meta<typeof AppSidebar> = {
   component: AppSidebar,
   decorators: [
+    WithSuspense,
     (Story) => (
       <SidebarProvider>
         <Story />

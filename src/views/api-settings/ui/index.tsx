@@ -18,7 +18,7 @@ export const ApiSettingsPage = async (props: ApiSettingsPageProps) => {
   return <ApiSettings teamId={validatedTeamId} />;
 };
 
-export const ApiSettings = withHydrationBoundary<{ teamId: string }>(() => {
+const ApiSettings = withHydrationBoundary<{ teamId: string }>(() => {
   return (
     <section className="px-4">
       <APITokenList />
