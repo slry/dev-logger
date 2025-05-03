@@ -1,6 +1,6 @@
 import { queryOptions } from '@tanstack/react-query';
 
-import { getTotalLoc } from '.';
+import { getTotalLoc } from './actions';
 import { TotalLocSchema } from '../model';
 
 export const developerTotalLocQueryOptions = (teamId: string, userId: string) =>
