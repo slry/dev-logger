@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   dehydrate,
@@ -20,7 +21,7 @@ type WithHydrationBoundaryComponentProps<Props extends object> = {
  * @returns A new component that prefetches the queries and wraps the original component.
  */
 export const withHydrationBoundary = <
-  Props extends object,
+  Props extends {},
   QueryOptions extends
     | FetchQueryOptions<any>
     | ((props: Props) => FetchQueryOptions<any>) =
