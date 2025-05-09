@@ -18,7 +18,7 @@ import {
 } from '@/shared/shadcn/ui/form';
 import { Input } from '@/shared/shadcn/ui/input';
 
-import { login } from '../../api';
+import { login } from '../../api/actions';
 import { loginSchema, LoginSchema } from '../../model';
 
 export const LoginForm = () => {
