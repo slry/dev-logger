@@ -17,7 +17,7 @@ import {
 } from '@/shared/shadcn/ui/form';
 import { Input } from '@/shared/shadcn/ui/input';
 
-import { signup } from '../../api';
+import { signup } from '../../api/actions';
 import { signupSchema, SignupSchema } from '../../model';
 
 export const SignupForm = () => {

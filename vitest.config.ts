@@ -25,6 +25,7 @@ export default defineConfig({
         '**/*.stories.*',
         // 👇 This pattern must align with the output directory of `storybook build`
         '**/storybook-static/**',
+        '**/*.config.*',
       ],
     },
     workspace: [

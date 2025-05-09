@@ -1,71 +1,79 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { within, userEvent, expect } from '@storybook/test';
+import { expect, userEvent, within } from '@storybook/test';
 
-import { LoginPage } from '.';
-import { login } from '../api/mock';
+import { SignupPage } from '.';
+import { signup } from '../api/mock';
 
-const meta: Meta<typeof LoginPage> = {
-  component: LoginPage,
+const meta: Meta<typeof SignupPage> = {
+  component: SignupPage,
 };
 
 export default meta;
 
-type Story = StoryObj<typeof LoginPage>;
+type Story = StoryObj<typeof SignupPage>;
 
 export const Default: Story = {};
 
-export const Login: Story = {
+export const Signup: Story = {
   beforeEach: () => {
-    login.mockResolvedValue({
+    signup.mockResolvedValue({
       type: 'success',
-      message: 'Logged in successfully',
+      message: 'Account created successfully',
     });
   },
   play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
 
     await step('Fill in the form', async () => {
+      const nameInput = canvas.getByLabelText('Name');
+      const surnameInput = canvas.getByLabelText('Surname');
       const emailInput = canvas.getByLabelText('Email');
       const passwordInput = canvas.getByLabelText('Password');
 
+      await userEvent.type(nameInput, 'John');
+      await userEvent.type(surnameInput, 'Doe');
       await userEvent.type(emailInput, 'john.doe@example.com');
       await userEvent.type(passwordInput, 'password');
     });
 
     await step('Submit form', async () => {
-      const btn = await canvas.findByRole('button', { name: 'Login' });
+      const btn = await canvas.findByRole('button', { name: 'Sign up' });
       await userEvent.click(btn);
 
-      expect(login).toHaveBeenCalled();
+      expect(signup).toHaveBeenCalled();
     });
   },
 };
 
-export const LoginError: Story = {
+export const SignupError: Story = {
   beforeEach: () => {
-    login.mockResolvedValue({
+    signup.mockResolvedValue({
       type: 'error',
-      message: 'Login failed',
+      message: 'Account creation failed',
     });
   },
   play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
 
     await step('Fill in the form', async () => {
+      const nameInput = canvas.getByLabelText('Name');
+      const surnameInput = canvas.getByLabelText('Surname');
       const emailInput = canvas.getByLabelText('Email');
       const passwordInput = canvas.getByLabelText('Password');
 
+      await userEvent.type(nameInput, 'John');
+      await userEvent.type(surnameInput, 'Doe');
       await userEvent.type(emailInput, 'john.doe@example.com');
       await userEvent.type(passwordInput, 'password');
     });
 
     await step('Submit form', async () => {
-      const btn = await canvas.findByRole('button', { name: 'Login' });
+      const btn = await canvas.findByRole('button', { name: 'Sign up' });
       await userEvent.click(btn);
 
-      expect(login).toHaveBeenCalled();
+      expect(signup).toHaveBeenCalled();
 
-      await canvas.findAllByText('Login failed');
+      await canvas.findByText('Account creation failed');
     });
   },
 };
