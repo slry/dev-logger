@@ -15,7 +15,6 @@ export const validateToken = async (token: string): Promise<ValidateTokenRespons
     .single();
 
   if (error) {
-    console.log(error);
     return { error: 'Invalid token (error during retrieving user_id)', data: null };
   }
 
@@ -23,15 +22,11 @@ export const validateToken = async (token: string): Promise<ValidateTokenRespons
     return { error: 'Invalid token (token not found in db)', data: null };
   }
 
-  try {
-    const { user_id, team_id, expires_at } = data;
+  const { user_id, team_id, expires_at } = data;
 
-    if (new Date(expires_at) < new Date()) {
-      return { error: 'Token expired', data: null };
-    }
-
-    return { error: null, data: { user_id, team_id } };
-  } catch {
-    return { error: 'Invalid token', data: null };
+  if (new Date(expires_at) < new Date()) {
+    return { error: 'Token expired', data: null };
   }
+
+  return { error: null, data: { user_id, team_id } };
 };

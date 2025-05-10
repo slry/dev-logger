@@ -57,7 +57,24 @@ export default defineConfig({
         },
       },
       {
+        extends: true,
         test: {
+          alias: {
+            'server-only': path.resolve(dirname, './src/shared/test/mocks/server-only'),
+            '@/shared/api/supabase/next': path.resolve(
+              dirname,
+              './src/shared/test/mocks/supabase',
+            ),
+            '@/shared/api/supabase/server': path.resolve(
+              dirname,
+              './src/shared/test/mocks/supabase',
+            ),
+            './supabase/next': path.resolve(dirname, './src/shared/test/mocks/supabase'),
+            './supabase/server': path.resolve(
+              dirname,
+              './src/shared/test/mocks/supabase',
+            ),
+          },
           name: 'vitest',
           environment: 'node',
         },
