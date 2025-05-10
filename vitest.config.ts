@@ -28,6 +28,7 @@ export default defineConfig({
         '**/*.config.*',
         '**/app/(app)/**',
         '**/app/(auth)/**',
+        '**/scripts/**',
       ],
     },
     workspace: [
