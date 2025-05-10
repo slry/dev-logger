@@ -13,6 +13,7 @@ export const createSupabaseMockResponse = ({
     insert: vi.fn().mockReturnThis(),
     select: vi.fn().mockReturnThis(),
     single: vi.fn().mockReturnThis(),
+    upsert: vi.fn().mockReturnThis(),
     eq: vi.fn().mockReturnThis(),
     on: vi.fn().mockReturnThis(),
     ...dataMock,
