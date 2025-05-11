@@ -2,18 +2,9 @@ import { NextRequest } from 'next/server';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { validateToken } from '@/shared/api/validate-token';
-import { createClient, createSupabaseMockResponse } from '@/shared/test/mocks/supabase';
+import { withMockedSupabaseResponse } from '@/shared/test/mocks/supabase';
 
 import { POST } from './route';
-
-const mockResponse = createSupabaseMockResponse({});
-createClient.mockResolvedValue(mockResponse);
-vi.mock('@/shared/api/validate-token', async (importOriginal) => {
-  const og = await importOriginal<typeof import('@/shared/api/validate-token')>();
-  return {
-    validateToken: vi.fn().mockImplementation(og.validateToken),
-  };
-});
 
 describe('POST api/loc', () => {
   beforeEach(() => {
@@ -26,27 +17,34 @@ describe('POST api/loc', () => {
       error: null,
     }));
 
-    const req = new NextRequest(new URL('http://localhost:3000/api/loc?token=token'), {
-      method: 'POST',
-      body: JSON.stringify({
-        token: 'token',
-        changes: [
+    await withMockedSupabaseResponse({
+      testFn: async () => {
+        const req = new NextRequest(
+          new URL('http://localhost:3000/api/loc?token=token'),
           {
-            added: 1,
-            deleted: 0,
-            file: 'file1',
+            method: 'POST',
+            body: JSON.stringify({
+              token: 'token',
+              changes: [
+                {
+                  added: 1,
+                  deleted: 0,
+                  file: 'file1',
+                },
+              ],
+              timestamp: '2023-01-01T00:00:00.000Z',
+              repoUrl: 'https://github.com/repo-url',
+            }),
           },
-        ],
-        timestamp: '2023-01-01T00:00:00.000Z',
-        repoUrl: 'https://github.com/repo-url',
-      }),
-    });
+        );
 
-    const res = await POST(req);
-    const response = await res.json();
+        const res = await POST(req);
+        const response = await res.json();
 
-    expect(response).toEqual({
-      success: true,
+        expect(response).toEqual({
+          success: true,
+        });
+      },
     });
   });
 

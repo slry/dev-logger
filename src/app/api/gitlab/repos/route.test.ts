@@ -4,9 +4,9 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { validateToken } from '@/shared/api/validate-token';
 import { withMockedSupabaseResponse } from '@/shared/test/mocks/supabase';
 
-import { POST } from './route';
+import { GET } from './route';
 
-describe('POST api/time', () => {
+describe('GET api/gitlab/repos', () => {
   beforeEach(() => {
     vi.restoreAllMocks();
   });
@@ -20,23 +20,28 @@ describe('POST api/time', () => {
     await withMockedSupabaseResponse({
       testFn: async () => {
         const req = new NextRequest(
-          new URL('http://localhost:3000/api/time?token=token'),
+          new URL('http://localhost:3000/api/gitlab/repos?token=token'),
           {
-            method: 'POST',
-            body: JSON.stringify({
-              time: 10,
-              timestamp: '2023-01-01T00:00:00.000Z',
-              repoUrl: 'https://github.com/repo-url',
-            }),
+            method: 'GET',
           },
         );
 
-        const res = await POST(req);
+        const res = await GET(req);
         const response = await res.json();
 
         expect(response).toEqual({
           success: true,
+          data: ['https://github.com/repo-url'],
         });
+      },
+      mockResponse: {
+        dataMock: {
+          data: [
+            {
+              url: 'https://github.com/repo-url',
+            },
+          ],
+        },
       },
     });
   });
@@ -47,19 +52,11 @@ describe('POST api/time', () => {
       error: null,
     }));
 
-    const req = new NextRequest(new URL('http://localhost:3000/api/time'), {
-      method: 'POST',
-      body: JSON.stringify({
-        time: 10,
-        timestamp: '2023-01-01T00:00:00.000Z',
-        repoUrl: 'https://github.com/repo-url',
-      }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
+    const req = new NextRequest(new URL('http://localhost:3000/api/gitlab/repos'), {
+      method: 'GET',
     });
 
-    const res = await POST(req);
+    const res = await GET(req);
     const response = await res.json();
 
     expect(response).toEqual('Missing token');
@@ -71,16 +68,14 @@ describe('POST api/time', () => {
       error: 'error',
     }));
 
-    const req = new NextRequest(new URL('http://localhost:3000/api/time?token=token'), {
-      method: 'POST',
-      body: JSON.stringify({
-        time: 10,
-        timestamp: '2023-01-01T00:00:00.000Z',
-        repoUrl: 'https://github.com/repo-url',
-      }),
-    });
+    const req = new NextRequest(
+      new URL('http://localhost:3000/api/gitlab/repos?token=token'),
+      {
+        method: 'GET',
+      },
+    );
 
-    const res = await POST(req);
+    const res = await GET(req);
     const response = await res.json();
 
     expect(response).toEqual('error');

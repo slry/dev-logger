@@ -1,19 +1,37 @@
 import { NextSupabaseClient } from '@/shared/api/supabase/next';
+import { Database } from '@/shared/api/supabase/types';
 
 interface GetTeamReposParams {
   supabaseClient: NextSupabaseClient;
   teamId: string;
 }
 
-export const getTeamRepos = async ({ supabaseClient, teamId }: GetTeamReposParams) => {
+type Result<T, E> = Success<T> | Error<E>;
+
+interface Success<T> {
+  success: true;
+  data: T;
+}
+
+interface Error<E> {
+  success: false;
+  error: E;
+}
+
+type Data = Pick<Database['public']['Tables']['gitlab_repos']['Row'], 'url'>[];
+
+export const getTeamRepos = async ({
+  supabaseClient,
+  teamId,
+}: GetTeamReposParams): Promise<Result<Data, string>> => {
   const { data, error } = await supabaseClient
     .from('gitlab_repos')
     .select('url')
     .eq('team_id', teamId);
 
   if (error) {
-    throw new Error(`Error fetching team repos: ${error.message}`);
+    return { error: error.message, success: false };
   }
 
-  return data;
+  return { data, success: true };
 };

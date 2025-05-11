@@ -9,15 +9,19 @@ export const GET = withTokenValidationQuery({
   handler: async ({ teamId }) => {
     const supabase = await createClient();
 
-    const reposUrls = await getTeamRepos({
+    const res = await getTeamRepos({
       supabaseClient: supabase,
       teamId,
     });
 
+    if (!res.success) {
+      return NextResponse.json(res.error, { status: 400 });
+    }
+
     return NextResponse.json(
       {
         success: true,
-        data: reposUrls.map(({ url }) => url),
+        data: res.data.map(({ url }) => url),
       },
       { status: 200 },
     );

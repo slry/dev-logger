@@ -29,4 +29,18 @@ export const createSupabaseMockResponse = ({
   return client;
 };
 
+interface WithMockedSupabaseResponseParams {
+  testFn: () => Promise<void>;
+  mockResponse?: SupabaseClientMockParams;
+}
+
 export const createClient = vi.fn();
+
+export const withMockedSupabaseResponse = async ({
+  testFn,
+  mockResponse = {},
+}: WithMockedSupabaseResponseParams) => {
+  const mockClient = createSupabaseMockResponse(mockResponse);
+  createClient.mockResolvedValue(mockClient);
+  await testFn();
+};
