@@ -8,6 +8,7 @@ import { POST } from './route';
 
 const mockResponse = createSupabaseMockResponse({});
 createClient.mockResolvedValue(mockResponse);
+
 vi.mock('@/shared/api/validate-token', async (importOriginal) => {
   const og = await importOriginal<typeof import('@/shared/api/validate-token')>();
   return {
@@ -15,7 +16,7 @@ vi.mock('@/shared/api/validate-token', async (importOriginal) => {
   };
 });
 
-describe('POST api/loc', () => {
+describe('POST api/time', () => {
   beforeEach(() => {
     vi.restoreAllMocks();
   });
@@ -26,17 +27,10 @@ describe('POST api/loc', () => {
       error: null,
     }));
 
-    const req = new NextRequest(new URL('http://localhost:3000/api/loc?token=token'), {
+    const req = new NextRequest(new URL('http://localhost:3000/api/time?token=token'), {
       method: 'POST',
       body: JSON.stringify({
-        token: 'token',
-        changes: [
-          {
-            added: 1,
-            deleted: 0,
-            file: 'file1',
-          },
-        ],
+        time: 10,
         timestamp: '2023-01-01T00:00:00.000Z',
         repoUrl: 'https://github.com/repo-url',
       }),
@@ -56,19 +50,16 @@ describe('POST api/loc', () => {
       error: null,
     }));
 
-    const req = new NextRequest(new URL('http://localhost:3000/api/loc'), {
+    const req = new NextRequest(new URL('http://localhost:3000/api/time'), {
       method: 'POST',
       body: JSON.stringify({
-        changes: [
-          {
-            added: 1,
-            deleted: 0,
-            file: 'file1',
-          },
-        ],
+        time: 10,
         timestamp: '2023-01-01T00:00:00.000Z',
         repoUrl: 'https://github.com/repo-url',
       }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
     });
 
     const res = await POST(req);
@@ -83,16 +74,10 @@ describe('POST api/loc', () => {
       error: 'error',
     }));
 
-    const req = new NextRequest(new URL('http://localhost:3000/api/loc?token=token'), {
+    const req = new NextRequest(new URL('http://localhost:3000/api/time?token=token'), {
       method: 'POST',
       body: JSON.stringify({
-        changes: [
-          {
-            added: 1,
-            deleted: 0,
-            file: 'file1',
-          },
-        ],
+        time: 10,
         timestamp: '2023-01-01T00:00:00.000Z',
         repoUrl: 'https://github.com/repo-url',
       }),
