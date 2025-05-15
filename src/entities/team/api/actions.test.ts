@@ -4,7 +4,12 @@ import { getUserId } from '@/shared/api/get-user-id';
 import { isUserTeamOwner } from '@/shared/api/is-user-team-owner';
 import { withMockedSupabaseResponse } from '@/shared/test/mocks/supabase';
 
-import { getTeamMemberList } from './actions';
+import {
+  getCurrentTeamById,
+  getPersonalTeam,
+  getTeamById,
+  getTeamMemberList,
+} from './actions';
 
 vi.mock('@/shared/api/get-user-id', () => ({
   getUserId: vi.fn(),
@@ -130,6 +135,145 @@ describe('getTeamMemberList', () => {
             },
           },
           error: 'error',
+        },
+      },
+    });
+  });
+});
+
+describe('getCurrentTeamById', async () => {
+  beforeEach(() => {
+    vi.restoreAllMocks();
+  });
+
+  it('default case', async () => {
+    vi.mocked(getUserId).mockResolvedValue('user-id');
+    await withMockedSupabaseResponse({
+      testFn: async () => {
+        const currentTeam = await getCurrentTeamById('team-id');
+        expect(currentTeam).toEqual({
+          id: 'team-id',
+          name: 'name',
+          icon: 'icon',
+          role: 'OWNER',
+        });
+      },
+      mockResponse: {
+        dataMock: {
+          data: {
+            id: 'team-id',
+            name: 'name',
+            icon: 'icon',
+            developer_team: [
+              {
+                user_id: 'user-id',
+                role: 'OWNER',
+              },
+            ],
+          },
+        },
+      },
+    });
+  });
+
+  it('error case', async () => {
+    vi.mocked(getUserId).mockResolvedValue('user-id');
+    await withMockedSupabaseResponse({
+      testFn: async () => {
+        try {
+          await getCurrentTeamById('team-id');
+        } catch (error) {
+          if (error instanceof Error) {
+            expect(error.message).toEqual('Error fetching team: error');
+          }
+        }
+      },
+      mockResponse: {
+        dataMock: {
+          error: new Error('error'),
+        },
+      },
+    });
+  });
+});
+
+describe('getTeamById', async () => {
+  beforeEach(() => {
+    vi.restoreAllMocks();
+  });
+
+  it('default case', async () => {
+    await withMockedSupabaseResponse({
+      testFn: async () => {
+        const team = await getTeamById('team-id');
+        expect(team).toEqual({
+          id: 'team-id',
+          name: 'name',
+          icon: 'icon',
+        });
+      },
+      mockResponse: {
+        dataMock: {
+          data: {
+            id: 'team-id',
+            name: 'name',
+            icon: 'icon',
+          },
+        },
+      },
+    });
+  });
+
+  it('error case', async () => {
+    await withMockedSupabaseResponse({
+      testFn: async () => {
+        const team = await getTeamById('team-id');
+        expect(team).toEqual(null);
+      },
+      mockResponse: {
+        dataMock: {
+          error: new Error('error'),
+        },
+      },
+    });
+  });
+});
+
+describe('getPersonalTeam', async () => {
+  beforeEach(() => {
+    vi.restoreAllMocks();
+  });
+
+  it('default case', async () => {
+    await withMockedSupabaseResponse({
+      testFn: async () => {
+        const personalTeam = await getPersonalTeam();
+        expect(personalTeam).toEqual({
+          user_id: 'user-id',
+          personal_team_id: 'team-id',
+        });
+      },
+      mockResponse: {
+        dataMock: {
+          data: {
+            user_id: 'user-id',
+            personal_team_id: 'team-id',
+          },
+        },
+      },
+    });
+  });
+
+  it('error case', async () => {
+    vi.mocked(getUserId).mockResolvedValue('user-id');
+    await withMockedSupabaseResponse({
+      testFn: async () => {
+        const personalTeam = await getPersonalTeam();
+        expect(personalTeam).toEqual(null);
+      },
+      mockResponse: {
+        dataMock: {
+          error: new Error('error'),
         },
       },
     });
