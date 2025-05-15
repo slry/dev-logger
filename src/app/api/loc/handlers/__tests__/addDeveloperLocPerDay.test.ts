@@ -6,7 +6,7 @@ import { createClient, createSupabaseMockResponse } from '@/shared/test/mocks/su
 import { addDeveloperLocPerDay } from '../addDeveloperLocPerDay';
 
 describe('addDeveloperLocPerDay', () => {
-  it('should pass', async () => {
+  it('Default case', async () => {
     const mockResponse = createSupabaseMockResponse({});
     createClient.mockResolvedValue(mockResponse);
     await addDeveloperLocPerDay({
