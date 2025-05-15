@@ -2,7 +2,7 @@ import { redirect } from 'next/navigation';
 
 import { validateTeamId } from '@/entities/team/api/actions';
 
-import { joinTeam } from '../api';
+import { joinTeam } from '../api/actions';
 
 export const InvitePage = async ({
   params,

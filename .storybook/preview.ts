@@ -41,6 +41,9 @@ const preview: Preview = {
       router: {
         pathname: '/team/[teamId]/dashboard',
         asPath: '/team/teamId/dashboard',
+        query: {
+          teamId: 'teamId',
+        },
       },
     },
     controls: {
