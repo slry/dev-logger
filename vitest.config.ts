@@ -26,9 +26,10 @@ export default defineConfig({
         // 👇 This pattern must align with the output directory of `storybook build`
         '**/storybook-static/**',
         '**/*.config.*',
-        '**/app/(app)/**',
-        '**/app/(auth)/**',
         '**/scripts/**',
+        '**/app/**/{page,layout}.tsx',
+        '**/shared/api/supabase/**',
+        '**/shared/shadcn/**',
       ],
     },
     workspace: [

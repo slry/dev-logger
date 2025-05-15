@@ -1,12 +1,32 @@
 import { vi } from 'vitest';
 
 interface SupabaseClientMockParams {
-  authUser?: { id: string };
+  authUser?: {
+    data: {
+      user: {
+        id: string;
+        user_metadata: {
+          name: string;
+          surname: string;
+          email: string;
+        };
+      };
+    };
+    error: string | null;
+  };
   dataMock?: Record<string, unknown>;
 }
 
 export const createSupabaseMockResponse = ({
-  authUser = { id: 'user-id' },
+  authUser = {
+    data: {
+      user: {
+        id: 'user-id',
+        user_metadata: { name: 'name', surname: 'surname', email: 'email' },
+      },
+    },
+    error: null,
+  },
   dataMock,
 }: SupabaseClientMockParams) => {
   const fromChain = {
@@ -21,9 +41,11 @@ export const createSupabaseMockResponse = ({
 
   const client = {
     auth: {
-      signUp: vi.fn().mockResolvedValue({ data: { user: authUser }, error: null }),
+      signUp: vi.fn().mockResolvedValue(authUser),
+      getUser: vi.fn().mockResolvedValue(authUser),
     },
     from: vi.fn(() => fromChain),
+    rpc: vi.fn().mockResolvedValue(dataMock),
   };
 
   return client;
@@ -31,7 +53,7 @@ export const createSupabaseMockResponse = ({
 
 interface WithMockedSupabaseResponseParams {
   testFn: () => Promise<void>;
-  mockResponse?: SupabaseClientMockParams;
+  mockResponse?: SupabaseClientMockParams | SupabaseClientMockParams[];
 }
 
 export const createClient = vi.fn();
@@ -40,7 +62,15 @@ export const withMockedSupabaseResponse = async ({
   testFn,
   mockResponse = {},
 }: WithMockedSupabaseResponseParams) => {
-  const mockClient = createSupabaseMockResponse(mockResponse);
-  createClient.mockResolvedValue(mockClient);
+  if (Array.isArray(mockResponse)) {
+    mockResponse.forEach((mock) => {
+      createClient.mockResolvedValueOnce(createSupabaseMockResponse(mock));
+    });
+  } else {
+    const mockClient = createSupabaseMockResponse(mockResponse);
+    createClient.mockResolvedValue(mockClient);
+  }
+
   await testFn();
+  createClient.mockReset();
 };
