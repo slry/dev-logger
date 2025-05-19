@@ -40,9 +40,9 @@ export const TeamSwitcher: FC<TeamSwitcherProps> = ({ teamId }) => {
   const { data: personalTeamId } = useQuery(getPersonalTeamIdQueryOptions);
   const { data: currentTeam } = useQuery(getCurrentTeamQueryOptions(teamId));
 
-  if (!teams) return null;
-  if (!currentTeam) return null;
-  if (!personalTeamId) return null;
+  console.log('currentTeam', currentTeam);
+
+  if (!teams || !currentTeam || !personalTeamId) return null;
 
   const teamsList = teams
     .filter((team) => team.id !== teamId)

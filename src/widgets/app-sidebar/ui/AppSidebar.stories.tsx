@@ -2,6 +2,7 @@ import { Meta, StoryObj } from '@storybook/react';
 import { expect, userEvent, within } from '@storybook/test';
 
 import { getCurrentTeamById, getTeamsList } from '@/entities/team/api/mock';
+import { CurrentTeamSchema } from '@/entities/team/model';
 import { getUser } from '@/entities/user/api/mock';
 import { checkExistingTeam, createTeam } from '@/features/create-team/api/mock';
 import { SidebarProvider } from '@/shared/shadcn/ui/sidebar';
@@ -23,7 +24,14 @@ const meta: Meta<typeof AppSidebar> = {
   args: {
     teamId: 'teamId',
   },
-  beforeEach: () => {
+};
+
+export default meta;
+
+type Story = StoryObj<typeof AppSidebar>;
+
+export const Default: Story = {
+  beforeEach: async () => {
     getUser.mockResolvedValue({
       id: '1',
       name: 'John',
@@ -50,13 +58,6 @@ const meta: Meta<typeof AppSidebar> = {
       role: 'OWNER',
     });
   },
-};
-
-export default meta;
-
-type Story = StoryObj<typeof AppSidebar>;
-
-export const Default: Story = {
   play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
 
@@ -80,15 +81,27 @@ export const Default: Story = {
 };
 
 export const CreateTeam: Story = {
-  beforeEach: () => {
+  beforeEach: async () => {
     getUser.mockResolvedValue({
       id: '1',
       name: 'John',
       surname: 'Doe',
       email: 'john@doe.com',
     });
+    getPersonalTeam.mockResolvedValue({
+      id: 'teamId',
+      name: 'Personal',
+      icon: 'Person',
+      role: 'OWNER',
+    });
+    getCurrentTeamById.mockResolvedValue({
+      id: 'teamId',
+      name: 'Personal',
+      icon: 'Person',
+      role: 'OWNER',
+    });
     getTeamsList
-      .mockResolvedValueOnce([
+      .mockResolvedValue([
         {
           id: 'teamId',
           name: 'Personal',
@@ -107,18 +120,6 @@ export const CreateTeam: Story = {
           icon: 'Person',
         },
       ]);
-    getPersonalTeam.mockResolvedValue({
-      id: 'teamId',
-      name: 'Personal',
-      icon: 'Person',
-      role: 'OWNER',
-    });
-    getCurrentTeamById.mockResolvedValue({
-      id: 'teamId',
-      name: 'Personal',
-      icon: 'Person',
-      role: 'OWNER',
-    });
     createTeam.mockResolvedValue({
       id: 'newTeamId',
     });
@@ -146,6 +147,38 @@ export const CreateTeam: Story = {
     await step('Check if team was created', async () => {
       const teamName = await canvas.findByText('My Team');
       expect(teamName).toBeInTheDocument();
+    });
+  },
+};
+
+export const TeamSwitcherNotLoaded: Story = {
+  beforeEach: async () => {
+    getUser.mockResolvedValue({
+      id: '1',
+      name: 'John',
+      surname: 'Doe',
+      email: 'john@doe.com',
+    });
+    getTeamsList.mockResolvedValue([
+      {
+        id: 'teamId',
+        name: 'Personal',
+        icon: 'Person',
+      },
+    ]);
+    getPersonalTeam.mockResolvedValue({
+      id: 'teamId',
+      name: 'Personal',
+      icon: 'Person',
+      role: 'OWNER',
+    });
+    getCurrentTeamById.mockResolvedValue(null as unknown as CurrentTeamSchema);
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement);
+
+    await step('Check if team switcher is not loaded', async () => {
+      expect(canvas.queryByRole('button', { name: 'Switch team' })).toBeNull();
     });
   },
 };

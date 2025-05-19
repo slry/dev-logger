@@ -36,6 +36,17 @@ const config: StorybookConfig = {
           console.log(`🔁 Rewriting import: ${source} -> ${newPath}`);
           return this.resolve(newPath, importer, { skipSelf: true });
         }
+
+        if (source.endsWith('/withHydrationBoundary')) {
+          // Turn ./some/path/withHydrationBoundary.ts → ./some/path/withHydrationBoundary.mock.ts
+          const newPath = source.replace(
+            /withHydrationBoundary$/,
+            'withHydrationBoundary.mock',
+          );
+          console.log(`🔁 Rewriting import: ${source} -> ${newPath}`);
+          return this.resolve(newPath, importer, { skipSelf: true });
+        }
+
         return null;
       },
     });

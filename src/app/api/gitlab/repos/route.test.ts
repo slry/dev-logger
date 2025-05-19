@@ -80,4 +80,32 @@ describe('GET api/gitlab/repos', () => {
 
     expect(response).toEqual('error');
   });
+
+  it('getTeamRepos error case', async () => {
+    vi.mocked(validateToken).mockImplementation(async () => ({
+      data: { user_id: 'user-id', team_id: 'team-id' },
+      error: null,
+    }));
+
+    await withMockedSupabaseResponse({
+      testFn: async () => {
+        const req = new NextRequest(
+          new URL('http://localhost:3000/api/gitlab/repos?token=token'),
+          {
+            method: 'GET',
+          },
+        );
+
+        const res = await GET(req);
+        const response = await res.json();
+
+        expect(response).toEqual('error');
+      },
+      mockResponse: {
+        dataMock: {
+          error: new Error('error'),
+        },
+      },
+    });
+  });
 });
